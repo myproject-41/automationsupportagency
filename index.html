@@ -1484,30 +1484,19 @@ async function submitForm(e) {
   };
 
   try {
-    const res = await fetch(WEBHOOK_URL, {
+    await fetch(WEBHOOK_URL, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       body: JSON.stringify(data)
     });
 
-    const responseText = await res.text();
-
-    if (!res.ok) {
-      throw new Error(responseText || `Webhook returned ${res.status}`);
-    }
-
-    showMessage('success', responseText || 'Thank you! We received your request and will contact you within 24 hours.');
+    showMessage('success', 'Thank you! We received your request and will contact you within 24 hours.');
     form.reset();
   } catch (err) {
-    const isCorsOrNetworkError = err instanceof TypeError;
     showMessage(
       'error',
-      isCorsOrNetworkError
-        ? 'The webhook was blocked by the browser. Enable CORS on the n8n webhook response, then try again.'
-        : `Something went wrong: ${err.message}`
+      `Something went wrong. Please email us directly at automaationsupportagency@gmail.com`
     );
   }
 
