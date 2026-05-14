@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automation Support Agency | Smart Solutions. Stronger Business.</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #030d1f;
+    --navy2: #061428;
+    --blue: #0047cc;
+    --blue-bright: #1a6aff;
+    --blue-electric: #00aaff;
+    --blue-glow: #0070ff;
+    --white: #ffffff;
+    --gray: #a0b4cc;
+    --gray-light: #d0ddef;
+    --card-bg: #071830;
+    --border: rgba(0,120,255,0.25);
+    --glow: 0 0 30px rgba(0,150,255,0.35);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--navy2); }
+  ::-webkit-scrollbar-thumb { background: var(--blue-bright); border-radius: 3px; }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    height: 70px;
+    background: rgba(3,13,31,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--blue-electric); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue-electric); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: #fff !important;
+    padding: 0.45rem 1.2rem;
+    border-radius: 3px;
+    border: 1px solid var(--blue-bright);
+    transition: background 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--blue-bright) !important; box-shadow: var(--glow) !important; color: #fff !important; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 5% 60px;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,120,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,120,255,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .orb1 { width: 600px; height: 600px; background: rgba(0,80,200,0.18); top: -100px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(0,160,255,0.12); bottom: -50px; left: 10%; }
+
+  /* Circuit lines animation */
+  .circuit-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .circuit-lines::before,
+  .circuit-lines::after {
+    content: '';
+    position: absolute;
+    background: var(--blue-electric);
+    opacity: 0.15;
+    animation: circuit-flow 8s linear infinite;
+  }
+  .circuit-lines::before {
+    width: 2px;
+    height: 0;
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+    box-shadow: 0 0 8px var(--blue-electric);
+  }
+  .circuit-lines::after {
+    width: 0;
+    height: 2px;
+    top: 60%;
+    left: 5%;
+    animation-delay: 3s;
+    box-shadow: 0 0 8px var(--blue-electric);
+  }
+
+  @keyframes circuit-flow {
+    0% { opacity: 0; width: 2px; height: 0; }
+    20% { opacity: 0.2; height: 200px; }
+    80% { opacity: 0.15; }
+    100% { opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 650px;
+    animation: fadeUp 0.9s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,80,200,0.2);
+    border: 1px solid rgba(0,160,255,0.4);
+    border-radius: 2px;
+    padding: 6px 14px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--blue-electric);
+    box-shadow: 0 0 8px var(--blue-electric);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title .line2 { color: var(--blue-electric); }
+
+  .hero-sub {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    letter-spacing: 0.25em;
+    color: var(--blue-electric);
+    margin-bottom: 1.5rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--gray);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: #fff;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--blue-bright);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.4s;
+  }
+  .btn-primary:hover::before { left: 100%; }
+  .btn-primary:hover { background: var(--blue-bright); box-shadow: var(--glow); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--blue-electric);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border: 1px solid rgba(0,170,255,0.5);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: rgba(0,170,255,0.1); box-shadow: 0 0 20px rgba(0,170,255,0.2); transform: translateY(-2px); }
+
+  /* Stats row */
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--blue-electric);
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Hero visual right side */
+  .hero-visual {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: min(420px, 40vw);
+    animation: fadeUp 1.2s ease 0.3s both;
+  }
+
+  .gear-ring {
+    width: 100%;
+    aspect-ratio: 1;
+    position: relative;
+  }
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,120,255,0.3);
+    animation: spin linear infinite;
+  }
+  .ring1 { inset: 0; animation-duration: 20s; }
+  .ring2 { inset: 8%; animation-duration: 15s; animation-direction: reverse; border-style: dashed; }
+  .ring3 { inset: 18%; animation-duration: 25s; border-color: rgba(0,200,255,0.2); }
+
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  .ring-center {
+    position: absolute;
+    inset: 30%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,100,255,0.3), rgba(0,0,50,0.8));
+    border: 2px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0,100,255,0.4);
+  }
+
+  .ring-icon {
+    font-size: 3rem;
+    animation: spin 8s linear infinite;
+  }
+
+  /* Dots on rings */
+  .ring-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--blue-electric);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--blue-electric);
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; z-index: 1; }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .section-tag {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    display: block;
+    margin-bottom: 0.75rem;
+    opacity: 0.85;
+  }
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--white);
+  }
+  .section-title span { color: var(--blue-electric); }
+  .section-desc {
+    margin-top: 1rem;
+    color: var(--gray);
+    font-size: 1.05rem;
+    font-weight: 400;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* divider */
+  .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-electric));
+    margin: 1.2rem auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── FEATURES ── */
+  #features {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy2) 100%);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-electric));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-6px); border-color: rgba(0,170,255,0.5); box-shadow: 0 20px 40px rgba(0,80,200,0.2); }
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, rgba(0,80,200,0.3), rgba(0,160,255,0.15));
+    border: 1px solid rgba(0,120,255,0.4);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .feature-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+  .feature-desc {
+    font-size: 0.95rem;
+    color: var(--gray);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    padding: 100px 0;
+    background: var(--navy);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,80,200,0.2); }
+
+  .service-header {
+    padding: 1.4rem 1.5rem;
+    background: linear-gradient(135deg, rgba(0,60,180,0.3), rgba(0,30,80,0.5));
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .service-icon-wrap {
+    width: 42px; height: 42px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(0,100,255,0.4);
+  }
+  .service-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .service-body {
+    padding: 1.2rem 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+  }
+  .service-card.open .service-body { max-height: 500px; }
+  .service-body ul { list-style: none; }
+  .service-body li {
+    padding: 0.4rem 0;
+    font-size: 0.92rem;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-weight: 400;
+  }
+  .service-body li:last-child { border-bottom: none; }
+  .service-body li::before {
+    content: '▸';
+    color: var(--blue-electric);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .service-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+  }
+  .toggle-arrow {
+    width: 20px; height: 20px;
+    border: 1px solid rgba(0,170,255,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--blue-electric);
+    transition: transform 0.3s;
+    flex-shrink: 0;
+  }
+  .service-card.open .toggle-arrow { transform: rotate(180deg); }
+
+  /* ── HOW IT WORKS ── */
+  #how {
+    padding: 100px 0;
+    background: var(--navy2);
+  }
+
+  .steps {
+    display: flex;
+    gap: 0;
+    position: relative;
+    flex-wrap: wrap;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: calc(40px + 5%);
+    right: calc(40px + 5%);
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-electric), var(--blue));
+    z-index: 0;
+  }
+
+  .step {
+    flex: 1;
+    min-width: 180px;
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.6s ease both;
+  }
+  .step:nth-child(2) { animation-delay: 0.15s; }
+  .step:nth-child(3) { animation-delay: 0.3s; }
+  .step:nth-child(4) { animation-delay: 0.45s; }
+
+  .step-num {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), #003090);
+    border: 3px solid var(--blue-electric);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--white);
+    box-shadow: 0 0 25px rgba(0,100,255,0.4);
+  }
+  .step-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+  .step-desc {
+    font-size: 0.95rem;
+    color: var(--gray);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    padding: 100px 0;
+    background: var(--navy);
+    position: relative;
+  }
+  #contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,80,200,0.07), transparent);
+    pointer-events: none;
+  }
+
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .contact-info h3 span { color: var(--blue-electric); }
+  .contact-info p { color: var(--gray); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; font-weight: 400; }
+
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: rgba(0,80,200,0.2);
+    border: 1px solid rgba(0,120,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .contact-text-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    margin-bottom: 2px;
+  }
+  .contact-text-val {
+    font-size: 0.95rem;
+    color: var(--gray-light);
+    font-weight: 500;
+  }
+
+  /* Form */
+  .contact-form-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-form-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-electric), var(--blue));
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  .form-group label {
+    display: block;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(0,20,60,0.6);
+    border: 1px solid rgba(0,100,200,0.3);
+    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--blue-electric);
+    box-shadow: 0 0 0 3px rgba(0,170,255,0.12);
+  }
+  .form-group select option { background: #071830; color: #fff; }
+  .form-group select optgroup { font-family: 'Rajdhani', sans-serif; font-weight: 700; color: var(--blue-electric); background: #040f25; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(160,180,200,0.5); }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.5s;
+  }
+  .submit-btn:hover::before { left: 100%; }
+  .submit-btn:hover { box-shadow: 0 0 30px rgba(0,120,255,0.5); transform: translateY(-2px); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .form-msg {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: none;
+    text-align: center;
+  }
+  .form-msg.success { background: rgba(0,200,100,0.15); border: 1px solid rgba(0,200,100,0.4); color: #00cc66; display: block; }
+  .form-msg.error { background: rgba(255,60,60,0.12); border: 1px solid rgba(255,60,60,0.4); color: #ff5555; display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #020b18;
+    border-top: 1px solid var(--border);
+    padding: 3rem 5% 1.5rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .footer-brand .logo span { color: var(--blue-electric); }
+  .footer-brand p { color: var(--gray); font-size: 0.92rem; line-height: 1.7; font-weight: 400; }
+
+  .footer-col h4 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.6rem; }
+  .footer-col a { color: var(--gray); font-size: 0.92rem; text-decoration: none; font-weight: 400; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--blue-electric); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 1rem;
+  }
+  .footer-bottom p { color: var(--gray); font-size: 0.85rem; font-weight: 400; }
+  .footer-tagline {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    opacity: 0.7;
+  }
+
+  /* ── UTILITY ── */
+  .tag-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+  .tag-line::before, .tag-line::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .tag-line span {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue-electric);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-visual { display: none; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .steps::before { display: none; }
+    .steps { flex-direction: column; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 680px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(3,13,31,0.97); padding: 1.5rem 5%; gap: 1rem; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 2rem; }
+  }
+
+  /* Scroll-reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Ticker */
+  .ticker-wrap {
+    background: var(--blue);
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker {
+    display: inline-block;
+    animation: ticker 25s linear infinite;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+  }
+  @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
+  .ticker-sep { margin: 0 2rem; opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">AUTOMATION <span>SUPPORT</span> AGENCY</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#features">Why Us</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap" style="margin-top:70px;">
+  <span class="ticker">
+    🤖 AUTOMATE TODAY &nbsp;<span class="ticker-sep">///</span>&nbsp; EMPOWER TOMORROW &nbsp;<span class="ticker-sep">///</span>&nbsp; SMART AUTOMATION. REAL RESULTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AI-POWERED WORKFLOWS &nbsp;<span class="ticker-sep">///</span>&nbsp; BOOST EFFICIENCY. CUT COSTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AUTOMATION ISN'T THE FUTURE — IT'S THE PRESENT &nbsp;<span class="ticker-sep">///</span>&nbsp; SMART SOLUTIONS. STRONGER BUSINESS. &nbsp;<span class="ticker-sep">///</span>&nbsp;
+  </span>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="circuit-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Business Automation Experts</div>
+    <h1 class="hero-title">
+      SMART SOLUTIONS.<br>
+      <span class="line2">STRONGER BUSINESS.</span>
+    </h1>
+    <p class="hero-sub">Automate Today. Empower Tomorrow.</p>
+    <p class="hero-desc">
+      We help businesses eliminate manual work, reduce costs, and scale faster through intelligent automation. From AI-powered workflows to seamless integrations — we build systems that work while you sleep.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">⚡ Start Automating</a>
+      <a href="#services" class="btn-outline">▸ Explore Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Automation Categories</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">150+</div>
+        <div class="stat-label">Services Offered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Smart Support</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animated Visual -->
+  <div class="hero-visual">
+    <div class="gear-ring">
+      <div class="ring ring1"></div>
+      <div class="ring ring2"></div>
+      <div class="ring ring3"></div>
+      <div class="ring-center">
+        <div class="ring-icon">⚙️</div>
+      </div>
+      <!-- Orbiting dots -->
+      <div style="position:absolute;inset:0;animation:spin 6s linear infinite;">
+        <div class="ring-dot" style="top:-4px;left:calc(50% - 4px);"></div>
+      </div>
+      <div style="position:absolute;inset:8%;animation:spin 10s linear infinite reverse;">
+        <div class="ring-dot" style="bottom:-4px;left:calc(50% - 4px);background:#0047cc;box-shadow:0 0 10px #0047cc;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">Why Choose Us</span>
+      <h2 class="section-title">Built to <span>Automate</span>, Designed to <span>Perform</span></h2>
+      <div class="divider"></div>
+      <p class="section-desc">From streamlining operations to scaling your revenue — we deliver automation that actually works.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">Automate</div>
+        <p class="feature-desc">Streamline repetitive processes and free up your team to focus on what truly matters.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">📈</div>
+        <div class="feature-title">Optimize</div>
+        <p class="feature-desc">Improve efficiency and reduce operational costs through intelligent workflow design.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon">🎧</div>
+        <div class="feature-title">Support</div>
+        <p class="feature-desc">Reliable expert support available when you need it — fast, responsive, and solutions-focused.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-4">
+        <div class="feature-icon">🏆</div>
+        <div class="feature-title">Succeed</div>
+        <p class="feature-desc">Focus on growth while we handle the automation. We build systems, you build your business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">Our <span>Automation</span> Services</h2>
+      <div class="divider"></div>
+      <p class="section-desc">Click any category to explore the full list of services we offer in each domain.</p>
+    </div>
+
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">The Process</span>
+      <h2 class="section-title">How It <span>Works</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3 class="step-title">Consult</h3>
+        <p class="step-desc">We analyze your business processes and identify the best automation opportunities.</p>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <h3 class="step-title">Design</h3>
+        <p class="step-desc">Our team designs a custom automation strategy tailored to your goals.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <h3 class="step-title">Build</h3>
+        <p class="step-desc">We implement and integrate automation systems into your existing workflows.</p>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <h3 class="step-title">Scale</h3>
+        <p class="step-desc">Monitor, optimize, and scale your automations as your business grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-tag">Get In Touch</span>
+      <h2 class="section-title">Ready to <span>Automate</span> Your Business?</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="contact-wrap">
+      <!-- Left Info -->
+      <div class="contact-info reveal">
+        <h3>Let's Build Your <span>Automation Engine</span></h3>
+        <p>Tell us about your business and the areas you want to automate. Our team will reach out with a customized plan to help you save time and scale faster.</p>
+
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-text-label">Email</div>
+            <div class="contact-text-val">automaationsupportagency@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🌐</div>
+          <div>
+            <div class="contact-text-label">Website</div>
+            <div class="contact-text-val">www.automationsupport.com</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-text-label">Address</div>
+            <div class="contact-text-val">Front of Law College, Sukhnagar,<br>Purnea, Bihar 854301</div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem;padding:1.2rem;background:rgba(0,80,200,0.12);border:1px solid rgba(0,120,255,0.25);border-radius:8px;">
+          <p style="font-family:'Orbitron',monospace;font-size:0.72rem;letter-spacing:0.1em;color:var(--blue-electric);margin-bottom:0.4rem;">SMART AUTOMATION. REAL RESULTS.</p>
+          <p style="font-size:0.92rem;color:var(--gray);margin:0;font-weight:400;">Automation isn't the future — it's the present. Start today and let your business run smarter.</p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form-wrap reveal reveal-delay-2">
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" name="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="lastName" placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Gmail / Email *</label>
+            <input type="email" id="email" name="email" placeholder="yourname@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+          </div>
+          <div class="form-group">
+            <label for="service">Select Service *</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>— Choose a Service Category —</option>
+              <optgroup label="🚀 Marketing Automation">
+                <option>Email campaigns</option>
+                <option>Lead nurturing</option>
+                <option>Social media posting</option>
+                <option>Personalized ads</option>
+                <option>SMS marketing</option>
+                <option>Customer segmentation</option>
+                <option>Campaign scheduling</option>
+                <option>Retargeting automation</option>
+                <option>AI content generation</option>
+                <option>Newsletter automation</option>
+              </optgroup>
+              <optgroup label="💼 Sales Automation">
+                <option>Lead capture</option>
+                <option>CRM updates</option>
+                <option>Lead scoring</option>
+                <option>Follow-up reminders</option>
+                <option>Proposal generation</option>
+                <option>Sales pipeline management</option>
+                <option>Auto quotations</option>
+                <option>Appointment booking</option>
+                <option>Deal tracking</option>
+                <option>Sales reporting</option>
+              </optgroup>
+              <optgroup label="🎧 Customer Support Automation">
+                <option>AI chatbot</option>
+                <option>WhatsApp auto reply</option>
+                <option>AI voice receptionist</option>
+                <option>Ticket management</option>
+                <option>FAQ automation</option>
+                <option>Customer onboarding</option>
+                <option>Live chat routing</option>
+                <option>Support escalation</option>
+                <option>Feedback collection</option>
+                <option>Review requests</option>
+              </optgroup>
+              <optgroup label="🔧 Workflow Automation">
+                <option>App integrations</option>
+                <option>Data syncing</option>
+                <option>Task automation</option>
+                <option>Approval workflows</option>
+                <option>File management</option>
+                <option>Notification systems</option>
+                <option>Document processing</option>
+                <option>Form automation</option>
+                <option>Report generation</option>
+                <option>Database updates</option>
+              </optgroup>
+              <optgroup label="👥 HR Automation">
+                <option>Employee onboarding</option>
+                <option>Attendance tracking</option>
+                <option>Payroll processing</option>
+                <option>Interview scheduling</option>
+                <option>Leave management</option>
+                <option>Employee notifications</option>
+                <option>Resume screening</option>
+                <option>Performance tracking</option>
+                <option>Training workflows</option>
+                <option>HR document automation</option>
+              </optgroup>
+              <optgroup label="💰 Finance Automation">
+                <option>Invoice generation</option>
+                <option>Expense tracking</option>
+                <option>Payment reminders</option>
+                <option>Accounting reports</option>
+                <option>Tax calculations</option>
+                <option>Billing automation</option>
+                <option>Subscription management</option>
+                <option>Financial dashboards</option>
+                <option>Purchase approvals</option>
+                <option>Receipt processing</option>
+              </optgroup>
+              <optgroup label="🛒 E-commerce Automation">
+                <option>Order processing</option>
+                <option>Inventory management</option>
+                <option>Cart abandonment recovery</option>
+                <option>Shipping notifications</option>
+                <option>Customer follow-ups</option>
+                <option>Product recommendations</option>
+                <option>Refund workflows</option>
+                <option>Price updates</option>
+                <option>Review collection</option>
+                <option>Loyalty programs</option>
+              </optgroup>
+              <optgroup label="🤖 AI Automation">
+                <option>AI voice agents</option>
+                <option>AI calling systems</option>
+                <option>AI customer support</option>
+                <option>AI content writing</option>
+                <option>AI lead qualification</option>
+                <option>AI email replies</option>
+                <option>AI appointment booking</option>
+                <option>AI sales assistant</option>
+                <option>AI analytics</option>
+                <option>AI workflow generation</option>
+              </optgroup>
+              <optgroup label="📡 Communication Automation">
+                <option>Email replies</option>
+                <option>SMS alerts</option>
+                <option>WhatsApp messaging</option>
+                <option>Team notifications</option>
+                <option>Internal announcements</option>
+                <option>Call routing</option>
+                <option>Auto reminders</option>
+                <option>Meeting scheduling</option>
+                <option>Broadcast messaging</option>
+                <option>Multi-channel messaging</option>
+              </optgroup>
+              <optgroup label="⚙️ Operations Automation">
+                <option>Inventory alerts</option>
+                <option>Vendor management</option>
+                <option>Procurement workflows</option>
+                <option>Quality checks</option>
+                <option>Logistics tracking</option>
+                <option>Production monitoring</option>
+                <option>Maintenance scheduling</option>
+                <option>Asset tracking</option>
+                <option>Delivery coordination</option>
+                <option>Compliance workflows</option>
+              </optgroup>
+              <optgroup label="📊 Data & Analytics Automation">
+                <option>Dashboard updates</option>
+                <option>KPI tracking</option>
+                <option>Data collection</option>
+                <option>Data cleaning</option>
+                <option>Automated reports</option>
+                <option>Predictive analytics</option>
+                <option>Customer insights</option>
+                <option>Performance monitoring</option>
+                <option>Business intelligence</option>
+                <option>Real-time alerts</option>
+              </optgroup>
+              <optgroup label="🔒 Security Automation">
+                <option>Access management</option>
+                <option>Threat detection</option>
+                <option>Backup automation</option>
+                <option>Password resets</option>
+                <option>User verification</option>
+                <option>Compliance monitoring</option>
+                <option>Fraud detection</option>
+                <option>Security alerts</option>
+                <option>Device monitoring</option>
+                <option>Audit logging</option>
+              </optgroup>
+              <optgroup label="🏥 Healthcare Automation">
+                <option>Appointment reminders</option>
+                <option>Patient follow-ups</option>
+                <option>Prescription alerts</option>
+                <option>Medical record management</option>
+                <option>Billing automation</option>
+                <option>Telemedicine workflows</option>
+                <option>Patient onboarding</option>
+                <option>Lab report notifications</option>
+                <option>Insurance processing</option>
+                <option>Health monitoring</option>
+              </optgroup>
+              <optgroup label="🎓 Education Automation">
+                <option>Student enrollment</option>
+                <option>Attendance systems</option>
+                <option>Assignment reminders</option>
+                <option>Online class scheduling</option>
+                <option>Fee reminders</option>
+                <option>Exam notifications</option>
+                <option>Certificate generation</option>
+                <option>Learning progress tracking</option>
+                <option>Student support automation</option>
+                <option>Parent communication</option>
+              </optgroup>
+              <optgroup label="🏠 Real Estate Automation">
+                <option>Property inquiry handling</option>
+                <option>Lead follow-up</option>
+                <option>Site visit scheduling</option>
+                <option>Client reminders</option>
+                <option>Document automation</option>
+                <option>Rental management</option>
+                <option>Property alerts</option>
+                <option>CRM updates (Real Estate)</option>
+                <option>AI property assistant</option>
+                <option>Deal tracking (Real Estate)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Tell Us About Your Business</label>
+            <textarea id="message" name="message" placeholder="Describe your business and what you'd like to automate..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="submitBtn">
+            ⚡ SEND REQUEST
+          </button>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">AUTOMATION <span>SUPPORT</span> AGENCY</span>
+      <p>Smart automation solutions for modern businesses. We build intelligent workflows that save time, reduce costs, and drive growth.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Marketing Automation</a></li>
+        <li><a href="#services">Sales Automation</a></li>
+        <li><a href="#services">AI Automation</a></li>
+        <li><a href="#services">Workflow Automation</a></li>
+        <li><a href="#services">HR & Finance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="mailto:automaationsupportagency@gmail.com">Email Us</a></li>
+        <li><a href="https://www.automationsupport.com" target="_blank">Website</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Automation Support Agency. Front of Law College, Sukhnagar, Purnea, Bihar 854301</p>
+    <span class="footer-tagline">Automation Isn't The Future — It's The Present.</span>
+  </div>
+</footer>
+
+<script>
+// ── Services Data ──
+const SERVICES = [
+  { icon:'🚀', name:'Marketing Automation', items:['Email campaigns','Lead nurturing','Social media posting','Personalized ads','SMS marketing','Customer segmentation','Campaign scheduling','Retargeting automation','AI content generation','Newsletter automation'] },
+  { icon:'💼', name:'Sales Automation', items:['Lead capture','CRM updates','Lead scoring','Follow-up reminders','Proposal generation','Sales pipeline management','Auto quotations','Appointment booking','Deal tracking','Sales reporting'] },
+  { icon:'🎧', name:'Customer Support Automation', items:['AI chatbot','WhatsApp auto reply','AI voice receptionist','Ticket management','FAQ automation','Customer onboarding','Live chat routing','Support escalation','Feedback collection','Review requests'] },
+  { icon:'🔧', name:'Workflow Automation', items:['App integrations','Data syncing','Task automation','Approval workflows','File management','Notification systems','Document processing','Form automation','Report generation','Database updates'] },
+  { icon:'👥', name:'HR Automation', items:['Employee onboarding','Attendance tracking','Payroll processing','Interview scheduling','Leave management','Employee notifications','Resume screening','Performance tracking','Training workflows','HR document automation'] },
+  { icon:'💰', name:'Finance Automation', items:['Invoice generation','Expense tracking','Payment reminders','Accounting reports','Tax calculations','Billing automation','Subscription management','Financial dashboards','Purchase approvals','Receipt processing'] },
+  { icon:'🛒', name:'E-commerce Automation', items:['Order processing','Inventory management','Cart abandonment recovery','Shipping notifications','Customer follow-ups','Product recommendations','Refund workflows','Price updates','Review collection','Loyalty programs'] },
+  { icon:'🤖', name:'AI Automation', items:['AI voice agents','AI calling systems','AI customer support','AI content writing','AI lead qualification','AI email replies','AI appointment booking','AI sales assistant','AI analytics','AI workflow generation'] },
+  { icon:'📡', name:'Communication Automation', items:['Email replies','SMS alerts','WhatsApp messaging','Team notifications','Internal announcements','Call routing','Auto reminders','Meeting scheduling','Broadcast messaging','Multi-channel messaging'] },
+  { icon:'⚙️', name:'Operations Automation', items:['Inventory alerts','Vendor management','Procurement workflows','Quality checks','Logistics tracking','Production monitoring','Maintenance scheduling','Asset tracking','Delivery coordination','Compliance workflows'] },
+  { icon:'📊', name:'Data & Analytics Automation', items:['Dashboard updates','KPI tracking','Data collection','Data cleaning','Automated reports','Predictive analytics','Customer insights','Performance monitoring','Business intelligence','Real-time alerts'] },
+  { icon:'🔒', name:'Security Automation', items:['Access management','Threat detection','Backup automation','Password resets','User verification','Compliance monitoring','Fraud detection','Security alerts','Device monitoring','Audit logging'] },
+  { icon:'🏥', name:'Healthcare Automation', items:['Appointment reminders','Patient follow-ups','Prescription alerts','Medical record management','Billing automation','Telemedicine workflows','Patient onboarding','Lab report notifications','Insurance processing','Health monitoring'] },
+  { icon:'🎓', name:'Education Automation', items:['Student enrollment','Attendance systems','Assignment reminders','Online class scheduling','Fee reminders','Exam notifications','Certificate generation','Learning progress tracking','Student support automation','Parent communication'] },
+  { icon:'🏠', name:'Real Estate Automation', items:['Property inquiry handling','Lead follow-up','Site visit scheduling','Client reminders','Document automation','Rental management','Property alerts','CRM updates','AI property assistant','Deal tracking'] },
+];
+
+// Render service cards
+const grid = document.getElementById('servicesGrid');
+SERVICES.forEach((svc, i) => {
+  const card = document.createElement('div');
+  card.className = 'service-card reveal';
+  if (i % 3 === 1) card.classList.add('reveal-delay-1');
+  if (i % 3 === 2) card.classList.add('reveal-delay-2');
+
+  card.innerHTML = `
+    <div class="service-header">
+      <button class="service-toggle" onclick="toggleService(this)">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="service-icon-wrap">${svc.icon}</div>
+          <span class="service-name">${svc.name}</span>
+        </div>
+        <div class="toggle-arrow">▾</div>
+      </button>
+    </div>
+    <div class="service-body">
+      <ul>
+        ${svc.items.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+function toggleService(btn) {
+  const card = btn.closest('.service-card');
+  card.classList.toggle('open');
+}
+
+// ── Form Submit ──
+async function submitForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('formMsg');
+  const form = document.getElementById('contactForm');
+
+  btn.disabled = true;
+  btn.textContent = 'SENDING...';
+  msg.className = 'form-msg';
+  msg.style.display = 'none';
+
+  const data = {
+    firstName: form.firstName.value,
+    lastName: form.lastName.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    service: form.service.value,
+    message: form.message.value,
+    submittedAt: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch('https://automationsupport.app.n8n.cloud/webhook/automationsupportagency', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok || res.status === 200) {
+      msg.className = 'form-msg success';
+      msg.textContent = '✅ Thank you! We received your request and will contact you within 24 hours.';
+      form.reset();
+    } else {
+      throw new Error('Server error');
+    }
+  } catch (err) {
+    // Attempt as no-cors fallback
+    try {
+      await fetch('https://automationsupport.app.n8n.cloud/webhook/automationsupportagency', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      msg.className = 'form-msg success';
+      msg.textContent = '✅ Request submitted! We will reach out to you shortly.';
+      form.reset();
+    } catch {
+      msg.className = 'form-msg error';
+      msg.textContent = '❌ Something went wrong. Please email us directly at automaationsupportagency@gmail.com';
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⚡ SEND REQUEST';
+}
+
+// ── Scroll Reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
