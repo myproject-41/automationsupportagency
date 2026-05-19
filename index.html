@@ -1199,7 +1199,7 @@
 
       <!-- Form -->
       <div class="contact-form-wrap reveal reveal-delay-2">
-        <form id="contactForm" onsubmit="submitForm(event)">
+        <form id="contactForm" action="https://automationsupport.app.n8n.cloud/webhook/automationsupportagency" method="POST" target="webhookFrame" enctype="application/x-www-form-urlencoded" onsubmit="submitForm(event)">
           <div class="form-row">
             <div class="form-group">
               <label for="firstName"><span data-icon="users"></span> First Name *</label>
@@ -1413,6 +1413,7 @@
           </button>
           <div class="form-msg" id="formMsg"></div>
         </form>
+        <iframe id="webhookFrame" name="webhookFrame" title="Webhook submission" style="display:none;"></iframe>
       </div>
     </div>
   </div>
@@ -1537,59 +1538,42 @@ function toggleService(btn) {
 
 const WEBHOOK_URL = 'https://automationsupport.app.n8n.cloud/webhook/automationsupportagency';
 
-function postToWebhook(data) {
-  return new Promise((resolve) => {
-    const iframeName = `webhookTarget_${Date.now()}`;
-    const iframe = document.createElement('iframe');
-    iframe.name = iframeName;
-    iframe.style.display = 'none';
+function setHiddenField(form, name, value) {
+  let input = form.querySelector(`input[name="${name}"]`);
+  if (!input) {
+    input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    form.appendChild(input);
+  }
+  input.value = value == null ? '' : String(value);
+}
 
-    const fields = {
+function postToWebhook(form, data) {
+  return new Promise((resolve) => {
+    const iframe = document.getElementById('webhookFrame');
+    let resolved = false;
+
+    Object.entries({
       ...data,
       payload: JSON.stringify(data),
       text: data.leadSummary
-    };
+    }).forEach(([name, value]) => setHiddenField(form, name, value));
 
-    const query = new URLSearchParams({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phone: data.phone,
-      service: data.service,
-      leadSummary: data.leadSummary
-    });
-
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = `${WEBHOOK_URL}?${query.toString()}`;
-    form.target = iframeName;
-    form.enctype = 'application/x-www-form-urlencoded';
-    form.style.display = 'none';
-
-    Object.entries(fields).forEach(([name, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = name;
-      input.value = value == null ? '' : String(value);
-      form.appendChild(input);
-    });
-
-    let resolved = false;
     const finish = () => {
       if (resolved) return;
       resolved = true;
-      setTimeout(() => {
-        form.remove();
-        iframe.remove();
-      }, 500);
+      iframe.removeEventListener('load', finish);
       resolve();
     };
 
     iframe.addEventListener('load', finish);
-    document.body.appendChild(iframe);
-    document.body.appendChild(form);
+    form.action = WEBHOOK_URL;
+    form.method = 'POST';
+    form.target = 'webhookFrame';
+    form.enctype = 'application/x-www-form-urlencoded';
     form.submit();
-    setTimeout(finish, 2500);
+    setTimeout(finish, 3000);
   });
 }
 
@@ -1608,6 +1592,8 @@ async function submitForm(e) {
 
   const data = {
     source: 'Automation Support Agency Website',
+    formName: 'Business Automation Lead Form',
+    eventName: 'New Website Lead',
     firstName: form.firstName.value.trim(),
     lastName: form.lastName.value.trim(),
     email: form.email.value.trim(),
@@ -1620,7 +1606,7 @@ async function submitForm(e) {
   };
 
   try {
-    await postToWebhook(data);
+    await postToWebhook(form, data);
     msg.className = 'form-msg success';
     msg.textContent = 'Thank you. Your request was sent to our automation system. We will contact you within 24 hours.';
     msg.style.display = 'block';
