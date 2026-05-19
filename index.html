@@ -40,16 +40,46 @@
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
   .hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
 
-  #hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 100px 5% 60px; overflow: hidden; }
-  .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,120,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,120,255,0.06) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; }
-  .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; pointer-events: none; }
-  .orb1 { width: 600px; height: 600px; background: rgba(0,80,200,0.18); top: -100px; right: -100px; }
-  .orb2 { width: 400px; height: 400px; background: rgba(0,160,255,0.12); bottom: -50px; left: 10%; }
-  .circuit-lines { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-  .circuit-lines::before, .circuit-lines::after { content: ''; position: absolute; background: var(--blue-electric); opacity: 0.15; animation: circuit-flow 8s linear infinite; }
-  .circuit-lines::before { width: 2px; height: 0; top: 20%; left: 15%; animation-delay: 0s; box-shadow: 0 0 8px var(--blue-electric); }
-  .circuit-lines::after { width: 0; height: 2px; top: 60%; left: 5%; animation-delay: 3s; box-shadow: 0 0 8px var(--blue-electric); }
-  @keyframes circuit-flow { 0% { opacity: 0; width: 2px; height: 0; } 20% { opacity: 0.2; height: 200px; } 80% { opacity: 0.15; } 100% { opacity: 0; } }
+  /* ─── HERO ─────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 100px 5% 60px;
+    overflow: hidden;
+    /* subtle grid kept as cheap CSS layer */
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,120,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,120,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* ambient orbs kept for depth */
+  .hero-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; }
+  .orb1 { width: 600px; height: 600px; background: rgba(0,80,200,0.14); top: -120px; right: -120px; }
+  .orb2 { width: 400px; height: 400px; background: rgba(0,160,255,0.09); bottom: -60px; left: 10%; }
+
+  /* ── Particle canvas — fills the entire hero, shifted 10px right ── */
+  #hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 100px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  /* But we DO want mouse events from the hero section itself */
+  #hero { cursor: none; }
+  /* Restore normal cursor on interactive elements inside hero */
+  #hero a, #hero button { cursor: pointer; }
 
   .hero-content { position: relative; z-index: 2; max-width: 650px; animation: fadeUp 0.9s ease forwards; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -70,25 +100,26 @@
   .hero-stats { display: flex; gap: 3rem; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
   .stat-num { font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 900; color: var(--blue-electric); }
   .stat-label { font-size: 0.85rem; font-weight: 500; color: var(--gray); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px; }
+
+  /* Rotating ring (right visual) – kept but hidden on small screens */
   .hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); z-index: 2; width: min(420px, 40vw); animation: fadeUp 1.2s ease 0.3s both; }
-  .hero-particles { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.72; }
   .gear-ring { width: 100%; aspect-ratio: 1; position: relative; }
-  .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(0,120,255,0.3); animation: spin linear infinite; }
+  .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(0,120,255,0.25); animation: spin linear infinite; }
   .ring1 { inset: 0; animation-duration: 20s; }
   .ring2 { inset: 8%; animation-duration: 15s; animation-direction: reverse; border-style: dashed; }
-  .ring3 { inset: 18%; animation-duration: 25s; border-color: rgba(0,200,255,0.2); }
+  .ring3 { inset: 18%; animation-duration: 25s; border-color: rgba(0,200,255,0.18); }
   @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
   @keyframes core-pulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(0,170,255,0.45)); } 50% { transform: scale(1.08); filter: drop-shadow(0 0 28px rgba(0,170,255,0.8)); } }
   .ring-center { position: absolute; inset: 30%; border-radius: 50%; background: radial-gradient(circle, rgba(0,100,255,0.3), rgba(0,0,50,0.8)); border: 2px solid var(--blue); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(0,100,255,0.4); }
   .ring-icon { color: var(--blue-electric); animation: core-pulse 3.8s ease-in-out infinite; }
   .ring-icon .premium-icon { width: 58px; height: 58px; }
-  .ring-dot { position: absolute; width: 8px; height: 8px; background: var(--blue-electric); border-radius: 50%; box-shadow: 0 0 12px var(--blue-electric); }
+  .ring-dot { position: absolute; width: 8px; height: 8px; background: var(--blue-electric); border-radius: 50%; box-shadow: 0 0 12px var(--blue-electric); animation: dot-glow 2.4s ease-in-out infinite; }
+  @keyframes dot-glow { 0%, 100% { transform: scale(1); opacity: .92; } 50% { transform: scale(1.35); opacity: 1; } }
 
   section { position: relative; z-index: 1; }
   .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
   .section-header { text-align: center; margin-bottom: 4rem; }
   .section-tag { font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blue-electric); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 0.75rem; opacity: 0.85; }
-  .section-tag .premium-icon { width: 16px; height: 16px; }
   .section-title { font-family: 'Orbitron', monospace; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; line-height: 1.15; color: var(--white); }
   .section-title span { color: var(--blue-electric); }
   .section-desc { margin-top: 1rem; color: var(--gray); font-size: 1.05rem; font-weight: 400; max-width: 560px; margin-left: auto; margin-right: auto; }
@@ -173,10 +204,6 @@
   .footer-bottom p { color: var(--gray); font-size: 0.85rem; font-weight: 400; }
   .footer-tagline { font-family: 'Orbitron', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue-electric); opacity: 0.7; }
 
-  .tag-line { display: flex; align-items: center; gap: 12px; margin-bottom: 3rem; overflow: hidden; }
-  .tag-line::before, .tag-line::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .tag-line span { font-family: 'Orbitron', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blue-electric); white-space: nowrap; opacity: 0.7; }
-
   .ticker-wrap { background: var(--blue); padding: 10px 0; overflow: hidden; white-space: nowrap; box-shadow: 0 0 24px rgba(0,170,255,.18); }
   .ticker { display: inline-block; animation: ticker 25s linear infinite; font-family: 'Orbitron', monospace; font-size: 0.68rem; letter-spacing: 0.15em; font-weight: 600; color: rgba(255,255,255,0.9); }
   @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
@@ -185,13 +212,8 @@
   .premium-icon { width: 1.15em; height: 1.15em; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; }
   .feature-icon .premium-icon, .service-icon-wrap .premium-icon, .contact-icon .premium-icon { width: 24px; height: 24px; }
   .btn-primary .premium-icon, .btn-outline .premium-icon, .nav-cta .premium-icon { width: 16px; height: 16px; }
-  .feature-card, .service-card, .step { will-change: transform; }
   .feature-card:hover .feature-icon, .service-card:hover .service-icon-wrap, .contact-detail:hover .contact-icon { animation: icon-float 1.6s ease-in-out infinite; }
-  .hero-content { animation: fadeUp 0.9s ease forwards, hero-breathe 8s ease-in-out infinite 1s; }
-  .ring-dot { animation: dot-glow 2.4s ease-in-out infinite; }
   @keyframes icon-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-  @keyframes hero-breathe { 0%, 100% { filter: drop-shadow(0 0 0 rgba(0,170,255,0)); } 50% { filter: drop-shadow(0 0 18px rgba(0,170,255,.12)); } }
-  @keyframes dot-glow { 0%, 100% { transform: scale(1); opacity: .92; } 50% { transform: scale(1.35); opacity: 1; } }
 
   @media (max-width: 900px) {
     .hero-visual { display: none; }
@@ -200,6 +222,7 @@
     .steps::before { display: none; }
     .steps { flex-direction: column; gap: 2.5rem; }
     .form-row { grid-template-columns: 1fr; }
+    #hero { cursor: auto; }
   }
   @media (max-width: 680px) {
     .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(3,13,31,0.97); padding: 1.5rem 5%; gap: 1rem; border-bottom: 1px solid var(--border); }
@@ -207,6 +230,7 @@
     .hamburger { display: flex; }
     .hero-stats { gap: 2rem; }
   }
+
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
@@ -243,7 +267,10 @@
   <div class="hero-grid-bg"></div>
   <div class="hero-orb orb1"></div>
   <div class="hero-orb orb2"></div>
-  <div class="circuit-lines"></div>
+
+  <!-- ★ ENHANCED PARTICLE CANVAS ★ -->
+  <canvas id="hero-canvas"></canvas>
+
   <div class="hero-content">
     <div class="hero-badge"><span data-icon="briefcase"></span> Business Automation Experts</div>
     <h1 class="hero-title">
@@ -262,22 +289,8 @@
       <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Smart Support</div></div>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="gear-ring">
-      <div class="ring ring1"></div>
-      <div class="ring ring2"></div>
-      <div class="ring ring3"></div>
-      <div class="ring-center">
-        <div class="ring-icon"><span data-icon="cpu"></span></div>
-      </div>
-      <div style="position:absolute;inset:0;animation:spin 6s linear infinite;">
-        <div class="ring-dot" style="top:-4px;left:calc(50% - 4px);"></div>
-      </div>
-      <div style="position:absolute;inset:8%;animation:spin 10s linear infinite reverse;">
-        <div class="ring-dot" style="bottom:-4px;left:calc(50% - 4px);background:#0047cc;box-shadow:0 0 10px #0047cc;"></div>
-      </div>
-    </div>
-  </div>
+
+
 </section>
 
 <!-- FEATURES -->
@@ -374,7 +387,6 @@
         </div>
       </div>
 
-      <!-- Form — no action/target/enctype needed; JS handles submission -->
       <div class="contact-form-wrap reveal reveal-delay-2">
         <form id="contactForm" onsubmit="submitForm(event)">
           <div class="form-row">
@@ -494,61 +506,64 @@
 </footer>
 
 <script>
-const ICONS = {
-  "bar-chart": '<path d="M4 19V9"/><path d="M12 19V5"/><path d="M20 19v-7"/>',
-  "bot": '<path d="M12 8V4"/><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M9 13h.01"/><path d="M15 13h.01"/><path d="M9 17h6"/>',
-  "briefcase": '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
-  "clock": '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
-  "cpu": '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4"/><path d="M15 2v4"/><path d="M9 18v4"/><path d="M15 18v4"/><path d="M2 9h4"/><path d="M2 15h4"/><path d="M18 9h4"/><path d="M18 15h4"/><path d="M10 10h4v4h-4z"/>',
-  "factory": '<path d="M3 21V9l6 4V9l6 4h6v8H3Z"/><path d="M17 13V5h3v8"/>',
-  "globe": '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/>',
+/* ══════════════════════════════════════════════════════════════
+   ICONS
+══════════════════════════════════════════════════════════════ */
+var ICONS = {
+  "bar-chart":      '<path d="M4 19V9"/><path d="M12 19V5"/><path d="M20 19v-7"/>',
+  "bot":            '<path d="M12 8V4"/><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M9 13h.01"/><path d="M15 13h.01"/><path d="M9 17h6"/>',
+  "briefcase":      '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
+  "clock":          '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  "cpu":            '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4"/><path d="M15 2v4"/><path d="M9 18v4"/><path d="M15 18v4"/><path d="M2 9h4"/><path d="M2 15h4"/><path d="M18 9h4"/><path d="M18 15h4"/><path d="M10 10h4v4h-4z"/>',
+  "factory":        '<path d="M3 21V9l6 4V9l6 4h6v8H3Z"/><path d="M17 13V5h3v8"/>',
+  "globe":          '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/>',
   "graduation-cap": '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',
-  "headphones": '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M21 14v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M3 14v4a2 2 0 0 0 2 2h1v-7H5a2 2 0 0 0-2 2Z"/>',
-  "heart-pulse": '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/><path d="M3.5 12H8l2-3 4 6 2-3h4.5"/>',
-  "home": '<path d="m3 11 9-8 9 8"/><path d="M5 10v11h14V10"/><path d="M9 21v-6h6v6"/>',
-  "layers": '<path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
-  "line-chart": '<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',
-  "mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
-  "map-pin": '<path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
+  "headphones":     '<path d="M3 14a9 9 0 0 1 18 0"/><path d="M21 14v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M3 14v4a2 2 0 0 0 2 2h1v-7H5a2 2 0 0 0-2 2Z"/>',
+  "heart-pulse":    '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/><path d="M3.5 12H8l2-3 4 6 2-3h4.5"/>',
+  "home":           '<path d="m3 11 9-8 9 8"/><path d="M5 10v11h14V10"/><path d="M9 21v-6h6v6"/>',
+  "layers":         '<path d="m12 2 10 5-10 5L2 7l10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
+  "line-chart":     '<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>',
+  "mail":           '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  "map-pin":        '<path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
   "message-square": '<path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/>',
-  "send": '<path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/>',
-  "shield-check": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/>',
-  "shopping-bag": '<path d="M6 8h12l1 13H5L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
-  "users": '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-  "wallet": '<path d="M20 7V6a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10H5a3 3 0 0 1-3-3V7"/><path d="M16 14h.01"/>',
-  "workflow": '<path d="M6 3h6v6H6z"/><path d="M12 6h4a2 2 0 0 1 2 2v3"/><path d="M18 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M6 12v3"/>'
+  "send":           '<path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/>',
+  "shield-check":   '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/>',
+  "shopping-bag":   '<path d="M6 8h12l1 13H5L6 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
+  "users":          '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  "wallet":         '<path d="M20 7V6a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h15v10H5a3 3 0 0 1-3-3V7"/><path d="M16 14h.01"/>',
+  "workflow":       '<path d="M6 3h6v6H6z"/><path d="M12 6h4a2 2 0 0 1 2 2v3"/><path d="M18 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M6 12v3"/>'
 };
 
 function icon(name) {
-  return '<svg class="premium-icon" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || ICONS.workflow) + '</svg>';
+  return '<svg class="premium-icon" viewBox="0 0 24 24" aria-hidden="true">' +
+    (ICONS[name] || ICONS.workflow) + '</svg>';
 }
-
 function hydrateIcons(root) {
-  root = root || document;
-  root.querySelectorAll("[data-icon]").forEach(function(el) {
-    var name = el.getAttribute("data-icon");
-    var svg = document.createRange().createContextualFragment(icon(name));
+  (root || document).querySelectorAll('[data-icon]').forEach(function(el) {
+    var svg = document.createRange().createContextualFragment(icon(el.getAttribute('data-icon')));
     el.parentNode.replaceChild(svg, el);
   });
 }
 
-// ── Services Data ──
+/* ══════════════════════════════════════════════════════════════
+   SERVICES
+══════════════════════════════════════════════════════════════ */
 var SERVICES = [
-  { icon:'line-chart', name:'Marketing Automation', items:['Email campaigns','Lead nurturing','Social media posting','Personalized ads','SMS marketing','Customer segmentation','Campaign scheduling','Retargeting automation','AI content generation','Newsletter automation'] },
-  { icon:'briefcase', name:'Sales Automation', items:['Lead capture','CRM updates','Lead scoring','Follow-up reminders','Proposal generation','Sales pipeline management','Auto quotations','Appointment booking','Deal tracking','Sales reporting'] },
-  { icon:'headphones', name:'Customer Support Automation', items:['AI chatbot','WhatsApp auto reply','AI voice receptionist','Ticket management','FAQ automation','Customer onboarding','Live chat routing','Support escalation','Feedback collection','Review requests'] },
-  { icon:'workflow', name:'Workflow Automation', items:['App integrations','Data syncing','Task automation','Approval workflows','File management','Notification systems','Document processing','Form automation','Report generation','Database updates'] },
-  { icon:'users', name:'HR Automation', items:['Employee onboarding','Attendance tracking','Payroll processing','Interview scheduling','Leave management','Employee notifications','Resume screening','Performance tracking','Training workflows','HR document automation'] },
-  { icon:'wallet', name:'Finance Automation', items:['Invoice generation','Expense tracking','Payment reminders','Accounting reports','Tax calculations','Billing automation','Subscription management','Financial dashboards','Purchase approvals','Receipt processing'] },
-  { icon:'shopping-bag', name:'E-commerce Automation', items:['Order processing','Inventory management','Cart abandonment recovery','Shipping notifications','Customer follow-ups','Product recommendations','Refund workflows','Price updates','Review collection','Loyalty programs'] },
-  { icon:'bot', name:'AI Automation', items:['AI voice agents','AI calling systems','AI customer support','AI content writing','AI lead qualification','AI email replies','AI appointment booking','AI sales assistant','AI analytics','AI workflow generation'] },
-  { icon:'message-square', name:'Communication Automation', items:['Email replies','SMS alerts','WhatsApp messaging','Team notifications','Internal announcements','Call routing','Auto reminders','Meeting scheduling','Broadcast messaging','Multi-channel messaging'] },
-  { icon:'factory', name:'Operations Automation', items:['Inventory alerts','Vendor management','Procurement workflows','Quality checks','Logistics tracking','Production monitoring','Maintenance scheduling','Asset tracking','Delivery coordination','Compliance workflows'] },
-  { icon:'bar-chart', name:'Data & Analytics Automation', items:['Dashboard updates','KPI tracking','Data collection','Data cleaning','Automated reports','Predictive analytics','Customer insights','Performance monitoring','Business intelligence','Real-time alerts'] },
-  { icon:'shield-check', name:'Security Automation', items:['Access management','Threat detection','Backup automation','Password resets','User verification','Compliance monitoring','Fraud detection','Security alerts','Device monitoring','Audit logging'] },
-  { icon:'heart-pulse', name:'Healthcare Automation', items:['Appointment reminders','Patient follow-ups','Prescription alerts','Medical record management','Billing automation','Telemedicine workflows','Patient onboarding','Lab report notifications','Insurance processing','Health monitoring'] },
-  { icon:'graduation-cap', name:'Education Automation', items:['Student enrollment','Attendance systems','Assignment reminders','Online class scheduling','Fee reminders','Exam notifications','Certificate generation','Learning progress tracking','Student support automation','Parent communication'] },
-  { icon:'home', name:'Real Estate Automation', items:['Property inquiry handling','Lead follow-up','Site visit scheduling','Client reminders','Document automation','Rental management','Property alerts','CRM updates','AI property assistant','Deal tracking'] },
+  { icon:'line-chart',     name:'Marketing Automation',       items:['Email campaigns','Lead nurturing','Social media posting','Personalized ads','SMS marketing','Customer segmentation','Campaign scheduling','Retargeting automation','AI content generation','Newsletter automation'] },
+  { icon:'briefcase',      name:'Sales Automation',           items:['Lead capture','CRM updates','Lead scoring','Follow-up reminders','Proposal generation','Sales pipeline management','Auto quotations','Appointment booking','Deal tracking','Sales reporting'] },
+  { icon:'headphones',     name:'Customer Support Automation',items:['AI chatbot','WhatsApp auto reply','AI voice receptionist','Ticket management','FAQ automation','Customer onboarding','Live chat routing','Support escalation','Feedback collection','Review requests'] },
+  { icon:'workflow',       name:'Workflow Automation',        items:['App integrations','Data syncing','Task automation','Approval workflows','File management','Notification systems','Document processing','Form automation','Report generation','Database updates'] },
+  { icon:'users',          name:'HR Automation',              items:['Employee onboarding','Attendance tracking','Payroll processing','Interview scheduling','Leave management','Employee notifications','Resume screening','Performance tracking','Training workflows','HR document automation'] },
+  { icon:'wallet',         name:'Finance Automation',         items:['Invoice generation','Expense tracking','Payment reminders','Accounting reports','Tax calculations','Billing automation','Subscription management','Financial dashboards','Purchase approvals','Receipt processing'] },
+  { icon:'shopping-bag',   name:'E-commerce Automation',      items:['Order processing','Inventory management','Cart abandonment recovery','Shipping notifications','Customer follow-ups','Product recommendations','Refund workflows','Price updates','Review collection','Loyalty programs'] },
+  { icon:'bot',            name:'AI Automation',              items:['AI voice agents','AI calling systems','AI customer support','AI content writing','AI lead qualification','AI email replies','AI appointment booking','AI sales assistant','AI analytics','AI workflow generation'] },
+  { icon:'message-square', name:'Communication Automation',   items:['Email replies','SMS alerts','WhatsApp messaging','Team notifications','Internal announcements','Call routing','Auto reminders','Meeting scheduling','Broadcast messaging','Multi-channel messaging'] },
+  { icon:'factory',        name:'Operations Automation',      items:['Inventory alerts','Vendor management','Procurement workflows','Quality checks','Logistics tracking','Production monitoring','Maintenance scheduling','Asset tracking','Delivery coordination','Compliance workflows'] },
+  { icon:'bar-chart',      name:'Data & Analytics Automation',items:['Dashboard updates','KPI tracking','Data collection','Data cleaning','Automated reports','Predictive analytics','Customer insights','Performance monitoring','Business intelligence','Real-time alerts'] },
+  { icon:'shield-check',   name:'Security Automation',        items:['Access management','Threat detection','Backup automation','Password resets','User verification','Compliance monitoring','Fraud detection','Security alerts','Device monitoring','Audit logging'] },
+  { icon:'heart-pulse',    name:'Healthcare Automation',      items:['Appointment reminders','Patient follow-ups','Prescription alerts','Medical record management','Billing automation','Telemedicine workflows','Patient onboarding','Lab report notifications','Insurance processing','Health monitoring'] },
+  { icon:'graduation-cap', name:'Education Automation',       items:['Student enrollment','Attendance systems','Assignment reminders','Online class scheduling','Fee reminders','Exam notifications','Certificate generation','Learning progress tracking','Student support automation','Parent communication'] },
+  { icon:'home',           name:'Real Estate Automation',     items:['Property inquiry handling','Lead follow-up','Site visit scheduling','Client reminders','Document automation','Rental management','Property alerts','CRM updates','AI property assistant','Deal tracking'] },
 ];
 
 var grid = document.getElementById('servicesGrid');
@@ -572,17 +587,16 @@ function toggleService(btn) {
   btn.closest('.service-card').classList.toggle('open');
 }
 
-// ── WEBHOOK ─────────────────────────────────────────────────────────────────
-// Uses fetch() with mode:'no-cors' so the request goes straight to n8n
-// without needing CORS response headers. The promise always resolves on
-// network success, so we treat resolution as a confirmed delivery.
+/* ══════════════════════════════════════════════════════════════
+   WEBHOOK
+══════════════════════════════════════════════════════════════ */
 var WEBHOOK_URL = 'https://automationsupport.app.n8n.cloud/webhook/automationsupportagency';
 
 async function submitForm(e) {
   e.preventDefault();
-  var form   = document.getElementById('contactForm');
-  var btn    = document.getElementById('submitBtn');
-  var msg    = document.getElementById('formMsg');
+  var form    = document.getElementById('contactForm');
+  var btn     = document.getElementById('submitBtn');
+  var msg     = document.getElementById('formMsg');
   var origHTML = btn.innerHTML;
 
   btn.disabled = true;
@@ -609,15 +623,12 @@ async function submitForm(e) {
   };
 
   try {
-    // no-cors sends a simple cross-origin POST; n8n receives full body.
-    // Response is opaque (we can't read it), but the request IS delivered.
     await fetch(WEBHOOK_URL, {
       method:  'POST',
       mode:    'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body:    new URLSearchParams(data).toString()
     });
-
     msg.className   = 'form-msg success';
     msg.textContent = 'Thank you. Your request was sent to our automation system. We will contact you within 24 hours.';
     msg.style.display = 'block';
@@ -632,131 +643,197 @@ async function submitForm(e) {
   btn.disabled = false;
   btn.innerHTML = origHTML;
 }
-// ────────────────────────────────────────────────────────────────────────────
 
-hydrateIcons();
-
-// Scroll Reveal
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
-
+/* ══════════════════════════════════════════════════════════════
+   ★ ENHANCED PARTICLE NETWORK  (hero only)
+   – particle ↔ particle lines
+   – mouse ↔ particle lines (with click burst)
+   – custom cursor dot (hero only)
+   – touch support
+══════════════════════════════════════════════════════════════ */
 (function () {
-  var hero = document.querySelector('#hero');
-  if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var isMobile = window.innerWidth < 768;
+  var hero   = document.getElementById('hero');
+  var canvas = document.getElementById('hero-canvas');
+  var ctx    = canvas.getContext('2d');
 
-  var canvas = document.createElement('canvas');
-  canvas.className = 'hero-particles';
-  hero.insertBefore(canvas, hero.firstChild);
+  /* mouse / touch state */
+  var mx = -9999, my = -9999, clicked = false;
 
-  var ctx = canvas.getContext('2d');
-  var W = 0;
-  var H = 0;
-  var particles = [];
-  var mouse = { x: -999, y: -999 };
-  var count = window.innerWidth < 768 ? 35 : 70;
-  var maxDist = window.innerWidth < 768 ? 100 : 140;
-
-  function Particle() {
-    this.reset();
+  /* DPI-aware sizing */
+  var W = 0, H = 0, ratio = 1;
+  function resize() {
+    ratio  = Math.min(window.devicePixelRatio || 1, 2);
+    W      = hero.offsetWidth;
+    H      = hero.offsetHeight;
+    canvas.width  = Math.floor(W * ratio);
+    canvas.height = Math.floor(H * ratio);
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    isMobile = W < 768;
+    spawnParticles();
   }
 
-  Particle.prototype.reset = function() {
-    this.x = Math.random() * W;
-    this.y = Math.random() * H;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.r = Math.random() * 2 + 1;
-    this.alpha = Math.random() * 0.5 + 0.3;
-    this.pulse = Math.random() * Math.PI * 2;
-    this.pulseSpeed = Math.random() * 0.03 + 0.01;
+  /* ── Particle ── */
+  var COUNT_DESKTOP = 80, COUNT_MOBILE = 45;
+  var pts = [];
+
+  function Particle() { this.init(); }
+  Particle.prototype.init = function () {
+    this.x   = Math.random() * W;
+    this.y   = Math.random() * H;
+    this.vx  = (Math.random() - 0.5) * 0.55;
+    this.vy  = (Math.random() - 0.5) * 0.55;
+    this.r   = Math.random() * 2 + 1;
+    this.base = Math.random() * 0.45 + 0.2;
+    this.p   = Math.random() * Math.PI * 2;
+    this.ps  = Math.random() * 0.025 + 0.008;
   };
 
-  Particle.prototype.update = function() {
-    this.pulse += this.pulseSpeed;
-    this.x += this.vx;
-    this.y += this.vy;
+  function spawnParticles() {
+    var count = isMobile ? COUNT_MOBILE : COUNT_DESKTOP;
+    /* keep existing ones if count matches */
+    while (pts.length < count) pts.push(new Particle());
+    if (pts.length > count) pts.length = count;
+  }
 
-    if (this.x < 0 || this.x > W) this.vx *= -1;
-    if (this.y < 0 || this.y > H) this.vy *= -1;
+  /* ── Mouse / touch input (relative to hero) ── */
+  hero.addEventListener('mousemove', function (e) {
+    var r = hero.getBoundingClientRect();
+    mx = e.clientX - r.left;
+    my = e.clientY - r.top;
+  });
+  hero.addEventListener('mouseleave', function () { mx = -9999; my = -9999; });
+  hero.addEventListener('mousedown',  function () { clicked = true;  });
+  hero.addEventListener('mouseup',    function () { clicked = false; });
 
-    var dx = this.x - mouse.x;
-    var dy = this.y - mouse.y;
-    var dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > 0 && dist < 100) {
-      this.x += (dx / dist) * 1.5;
-      this.y += (dy / dist) * 1.5;
-    }
-  };
+  hero.addEventListener('touchmove', function (e) {
+    var r = hero.getBoundingClientRect();
+    mx = e.touches[0].clientX - r.left;
+    my = e.touches[0].clientY - r.top;
+  }, { passive: true });
+  hero.addEventListener('touchend', function () { mx = -9999; my = -9999; });
 
-  Particle.prototype.draw = function() {
-    var a = this.alpha * (0.7 + 0.3 * Math.sin(this.pulse));
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0,170,255,' + a + ')';
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = '#00aaff';
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  };
+  /* ── Draw loop ── */
+  var LINK_DIST_PP   = 145;  /* particle → particle */
+  var LINK_DIST_MP   = 210;  /* mouse → particle */
+  var REPEL_DIST     = 120;
 
   function drawConnections() {
-    for (var i = 0; i < particles.length; i++) {
-      for (var j = i + 1; j < particles.length; j++) {
-        var dx = particles[i].x - particles[j].x;
-        var dy = particles[i].y - particles[j].y;
-        var d = Math.sqrt(dx * dx + dy * dy);
-        if (d < maxDist) {
+    /* particle ↔ particle */
+    for (var i = 0; i < pts.length; i++) {
+      for (var j = i + 1; j < pts.length; j++) {
+        var dx = pts[i].x - pts[j].x;
+        var dy = pts[i].y - pts[j].y;
+        var d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < LINK_DIST_PP) {
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(0,120,255,' + ((1 - d / maxDist) * 0.35) + ')';
-          ctx.lineWidth = 0.8;
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(pts[j].x, pts[j].y);
+          ctx.strokeStyle = 'rgba(0,120,255,' + ((1 - d / LINK_DIST_PP) * 0.38) + ')';
+          ctx.lineWidth   = 0.9;
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* mouse ↔ nearby particles */
+    if (mx > -100) {
+      for (var i = 0; i < pts.length; i++) {
+        var dx = pts[i].x - mx;
+        var dy = pts[i].y - my;
+        var d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < LINK_DIST_MP) {
+          var a = (1 - d / LINK_DIST_MP) * (clicked ? 0.75 : 0.42);
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x, pts[i].y);
+          ctx.lineTo(mx, my);
+          ctx.strokeStyle = 'rgba(0,170,255,' + a + ')';
+          ctx.lineWidth   = clicked ? 1.1 : 0.65;
           ctx.stroke();
         }
       }
     }
   }
 
-  function resize() {
-    var ratio = Math.min(window.devicePixelRatio || 1, 2);
-    W = hero.offsetWidth;
-    H = hero.offsetHeight;
-    canvas.width = Math.floor(W * ratio);
-    canvas.height = Math.floor(H * ratio);
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    count = window.innerWidth < 768 ? 35 : 70;
-    maxDist = window.innerWidth < 768 ? 100 : 140;
-    particles = Array.from({ length: count }, function() { return new Particle(); });
+  function updateAndDrawParticles() {
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      p.p += p.ps;
+
+      /* mouse repulsion */
+      var dx = p.x - mx, dy = p.y - my;
+      var d  = Math.sqrt(dx*dx + dy*dy);
+      if (d < REPEL_DIST && d > 0) {
+        var force = clicked ? 4.5 : 1.8;
+        p.x += (dx / d) * force;
+        p.y += (dy / d) * force;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0)  { p.x = 0; p.vx *= -1; }
+      if (p.x > W)  { p.x = W; p.vx *= -1; }
+      if (p.y < 0)  { p.y = 0; p.vy *= -1; }
+      if (p.y > H)  { p.y = H; p.vy *= -1; }
+
+      var a = p.base * (0.65 + 0.35 * Math.sin(p.p));
+
+      ctx.shadowBlur  = clicked ? 14 : 9;
+      ctx.shadowColor = 'rgba(0,170,255,0.7)';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,170,255,' + a + ')';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  function drawCursor() {
+    if (mx < 0) return;
+    /* inner dot */
+    var dotR = clicked ? 6 : 3.5;
+    ctx.beginPath();
+    ctx.arc(mx, my, dotR, 0, Math.PI * 2);
+    ctx.fillStyle   = clicked ? 'rgba(255,255,255,0.95)' : 'rgba(0,210,255,0.88)';
+    ctx.shadowBlur  = clicked ? 28 : 16;
+    ctx.shadowColor = '#00aaff';
+    ctx.fill();
+    ctx.shadowBlur  = 0;
+
+    /* outer ring */
+    ctx.beginPath();
+    ctx.arc(mx, my, clicked ? 13 : 17, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(0,170,255,' + (clicked ? 0.55 : 0.28) + ')';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
   }
 
   function loop() {
     ctx.clearRect(0, 0, W, H);
     drawConnections();
-    particles.forEach(function(p) {
-      p.update();
-      p.draw();
-    });
+    updateAndDrawParticles();
+    if (!isMobile) drawCursor();
     requestAnimationFrame(loop);
   }
 
-  resize();
   window.addEventListener('resize', resize);
-  hero.addEventListener('mousemove', function(e) {
-    var rect = hero.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-  hero.addEventListener('mouseleave', function() {
-    mouse.x = -999;
-    mouse.y = -999;
-  });
-
+  resize();
   loop();
 })();
+
+/* ══════════════════════════════════════════════════════════════
+   HYDRATE + SCROLL REVEAL
+══════════════════════════════════════════════════════════════ */
+hydrateIcons();
+
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
 </script>
 </body>
 </html>
