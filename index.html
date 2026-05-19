@@ -1537,6 +1537,62 @@ function toggleService(btn) {
 
 const WEBHOOK_URL = 'https://automationsupport.app.n8n.cloud/webhook/automationsupportagency';
 
+function postToWebhook(data) {
+  return new Promise((resolve) => {
+    const iframeName = `webhookTarget_${Date.now()}`;
+    const iframe = document.createElement('iframe');
+    iframe.name = iframeName;
+    iframe.style.display = 'none';
+
+    const fields = {
+      ...data,
+      payload: JSON.stringify(data),
+      text: data.leadSummary
+    };
+
+    const query = new URLSearchParams({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      service: data.service,
+      leadSummary: data.leadSummary
+    });
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `${WEBHOOK_URL}?${query.toString()}`;
+    form.target = iframeName;
+    form.enctype = 'application/x-www-form-urlencoded';
+    form.style.display = 'none';
+
+    Object.entries(fields).forEach(([name, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value == null ? '' : String(value);
+      form.appendChild(input);
+    });
+
+    let resolved = false;
+    const finish = () => {
+      if (resolved) return;
+      resolved = true;
+      setTimeout(() => {
+        form.remove();
+        iframe.remove();
+      }, 500);
+      resolve();
+    };
+
+    iframe.addEventListener('load', finish);
+    document.body.appendChild(iframe);
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(finish, 2500);
+  });
+}
+
 // Form Submit
 async function submitForm(e) {
   e.preventDefault();
@@ -1559,18 +1615,14 @@ async function submitForm(e) {
     service: form.service.value,
     message: form.message.value.trim(),
     pageUrl: window.location.href,
+    leadSummary: `New website lead: ${form.firstName.value.trim()} ${form.lastName.value.trim()} | ${form.email.value.trim()} | ${form.phone.value.trim()} | ${form.service.value}`,
     submittedAt: new Date().toISOString()
   };
 
   try {
-    await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-      body: JSON.stringify(data)
-    });
+    await postToWebhook(data);
     msg.className = 'form-msg success';
-    msg.textContent = 'Thank you. Your request was submitted successfully. We will contact you within 24 hours.';
+    msg.textContent = 'Thank you. Your request was sent to our automation system. We will contact you within 24 hours.';
     msg.style.display = 'block';
     form.reset();
   } catch (err) {
