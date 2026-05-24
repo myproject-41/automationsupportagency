@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | N2N Automation</title>
+<meta name="title" content="Blog | N2N Automation">
+<meta name="description" content="Read N2N Automation insights on AI workflows, business automation, operations systems, and smarter growth for modern companies.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://n2nautomation.in/blog.html">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #050816;
+    --navy2: #0a1024;
+    --blue: #2459ff;
+    --mint: #2ee8c7;
+    --amber: #ffcf5a;
+    --white: #ffffff;
+    --gray: #aab5c8;
+    --gray-light: #dce5f7;
+    --border: rgba(80, 209, 255, 0.22);
+    --card: rgba(12, 20, 42, 0.84);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { min-height: 100vh; background: radial-gradient(circle at 18% 0%, rgba(46,232,199,0.08), transparent 28%), radial-gradient(circle at 88% 18%, rgba(255,207,90,0.08), transparent 24%), var(--navy); color: var(--white); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(46,232,199,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(57,213,255,0.035) 1px, transparent 1px); background-size: 64px 64px; opacity: 0.5; }
+  a { color: inherit; }
+  nav { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 70px; padding: 0 5%; background: rgba(5,8,22,0.92); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+  .logo { color: var(--white); font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 800; letter-spacing: 0.04em; text-decoration: none; }
+  .logo span, h1 span, .footer-brand span span { color: var(--mint); }
+  .nav-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .nav-link { color: var(--gray-light); font-size: 0.95rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; }
+  .nav-link:hover { color: var(--mint); }
+  main { position: relative; z-index: 1; padding: 76px 5% 92px; }
+  .wrap { max-width: 1160px; margin: 0 auto; }
+  .eyebrow { color: var(--mint); font-family: 'Orbitron', monospace; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; }
+  h1 { max-width: 920px; margin: 0.9rem 0 0.8rem; font-family: 'Orbitron', monospace; font-size: clamp(2.25rem, 5vw, 4.4rem); line-height: 1.08; letter-spacing: 0; }
+  .intro { max-width: 760px; color: var(--gray-light); font-size: 1.16rem; line-height: 1.72; }
+  .hero-panel { position: relative; margin-top: 2.6rem; border: 1px solid var(--border); border-radius: 8px; background: linear-gradient(145deg, rgba(12,20,42,0.92), rgba(8,13,28,0.72)); overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,0.28); animation: riseIn 0.8s ease both; }
+  .hero-panel::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0%, rgba(46,232,199,0.09) 45%, transparent 70%); transform: translateX(-80%); animation: sweep 8s ease-in-out infinite; }
+  @keyframes sweep { 0%, 42%, 100% { transform: translateX(-85%); opacity: 0; } 58% { transform: translateX(85%); opacity: 1; } }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .featured { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 2rem; padding: clamp(1.4rem, 4vw, 3rem); }
+  .meta { color: var(--mint); font-family: 'Orbitron', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  h2 { margin: 0.75rem 0; font-family: 'Orbitron', monospace; font-size: clamp(1.5rem, 3vw, 2.4rem); line-height: 1.15; letter-spacing: 0; }
+  p { color: var(--gray-light); font-size: 1.08rem; line-height: 1.72; }
+  .read-link { display: inline-flex; margin-top: 1.2rem; color: var(--mint); font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; }
+  .signal-card { align-self: stretch; border: 1px solid rgba(46,232,199,0.2); border-radius: 8px; padding: 1.2rem; background: rgba(5,8,22,0.62); }
+  .signal-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid rgba(80,209,255,0.14); }
+  .signal-row:last-child { border-bottom: 0; }
+  .signal-row b { color: var(--amber); font-family: 'Orbitron', monospace; }
+  .signal-row span { color: var(--gray); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 1.6rem; }
+  .section-label { margin: 2.6rem 0 0.4rem; font-family: 'Orbitron', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--mint); text-transform: uppercase; }
+  .post { display: block; min-height: 100%; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 1.4rem; text-decoration: none; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; }
+  .post:hover { transform: translateY(-6px); border-color: rgba(46,232,199,0.48); box-shadow: 0 22px 55px rgba(0,0,0,0.22); }
+  .post h3 { margin: 0.65rem 0; font-family: 'Orbitron', monospace; font-size: 1rem; line-height: 1.35; letter-spacing: 0.02em; }
+  .post p { color: var(--gray); font-size: 1rem; }
+  footer { position: relative; z-index: 1; padding: 3rem 5% 1.5rem; border-top: 1px solid var(--border); background: #030714; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+  .footer-brand .logo-text { display: block; margin-bottom: 0.8rem; font-family: 'Orbitron', monospace; font-weight: 800; }
+  .footer-brand p, .footer-bottom, .footer-col a { color: var(--gray); }
+  .footer-col h3 { margin-bottom: 0.8rem; color: var(--mint); font-family: 'Orbitron', monospace; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .footer-col a { display: block; margin-bottom: 0.45rem; text-decoration: none; }
+  .footer-col a:hover { color: var(--mint); }
+  .footer-bottom { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1.4rem; border-top: 1px solid var(--border); }
+  @media (max-width: 900px) { .featured, .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .nav-actions { gap: 0.8rem; } .footer-grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">N2N <span>Automation</span></a>
+  <div class="nav-actions">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="privacy-policy.html">Privacy</a>
+    <a class="nav-link" href="index.html#contact">Contact</a>
+  </div>
+</nav>
+<main>
+  <div class="wrap">
+    <p class="eyebrow">N2N Automation Blog</p>
+    <h1>Ideas for businesses ready to make automation <span>part of everyday work.</span></h1>
+    <p class="intro">Practical notes from N2N Automation on AI workflows, sales systems, support automation, dashboards, and the operational habits that make automation useful instead of noisy.</p>
+
+    <section class="hero-panel">
+      <div class="featured">
+        <article>
+          <p class="meta">Featured Article</p>
+          <h2>Grow Your Business with N2N Automation</h2>
+          <p>Growth becomes easier when the daily work behind sales, support, marketing, and reporting runs smoothly. N2N Automation helps businesses replace repeated manual tasks with reliable workflows, AI-assisted replies, CRM updates, lead follow-ups, and dashboards that keep teams moving.</p>
+          <p>This featured guide explains how automation turns scattered work into a cleaner operating system for your business.</p>
+          <a class="read-link" href="GrowBusinesswithn2nAutomation.html">Read Full Blog</a>
+        </article>
+        <aside class="signal-card" aria-label="Automation signals">
+          <div class="signal-row"><span>Lead routing</span><b>Fast</b></div>
+          <div class="signal-row"><span>Manual entry</span><b>Lower</b></div>
+          <div class="signal-row"><span>Follow-up</span><b>24/7</b></div>
+          <div class="signal-row"><span>Reporting</span><b>Live</b></div>
+        </aside>
+      </div>
+    </section>
+
+    <p class="section-label">More From N2N Automation</p>
+    <section class="grid" aria-label="Blog articles">
+      <a class="post" href="GrowBusinesswithn2nAutomation.html">
+        <p class="meta">Growth</p>
+        <h3>Grow Your Business with N2N Automation</h3>
+        <p>See how automation improves follow-ups, operations, customer response speed, and daily execution for growing companies.</p>
+      </a>
+      <a class="post" href="StartWithRepetitiveWork.html">
+        <p class="meta">Operations</p>
+        <h3>Start With Repetitive Work, Not Random Tools</h3>
+        <p>The best automation ideas usually come from the tasks your team repeats every day: copying data, sending reminders, updating sheets, assigning leads, or checking status.</p>
+      </a>
+      <a class="post" href="AIAgentsForBusiness.html">
+        <p class="meta">AI Systems</p>
+        <h3>Where AI Agents Help a Business Most</h3>
+        <p>AI agents are strongest when they have a clear role, good context, and simple escalation rules. They can qualify leads, draft replies, summarize requests, and schedule next steps.</p>
+      </a>
+      <a class="post" href="AutomationMakesTeamsFaster.html">
+        <p class="meta">Growth</p>
+        <h3>Automation Should Make Teams Feel Faster</h3>
+        <p>Good workflows reduce friction without hiding the business from the people running it. The result should feel calm, clear, and easier to manage.</p>
+      </a>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-text">N2N <span>Automation</span></span>
+      <p>AI automation systems for businesses that want cleaner operations, faster teams, and less manual work.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#how">How It Works</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h3>Company</h3>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Service</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>(c) 2026 N2N Automation</span>
+    <span>Built for business. Powered by automation.</span>
+  </div>
+</footer>
+</body>
+</html>
