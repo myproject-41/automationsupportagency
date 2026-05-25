@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N2N Automation | AI Automation Systems for Businesses</title>
-<meta name="title" content="N2N Automation | AI Automation Systems for Businesses">
-<meta name="description" content="N2N Automation builds AI automation, workflow systems, marketing automation, sales automation, and customer support solutions for growing businesses.">
-<meta name="keywords" content="N2N Automation, business automation agency, AI automation solutions, workflow automation, marketing automation, sales automation, customer support automation, automation agency India">
+<title>N2N Automation | AI Automation Agency for Business Growth</title>
+<meta name="title" content="N2N Automation | AI Automation Agency for Business Growth">
+<meta name="description" content="N2N Automation builds AI automation systems, AI agents, workflow automation, CRM automation, sales automation, marketing automation, and customer support automation for growing businesses.">
+<meta name="keywords" content="N2N Automation, AI automation agency, AI automation services, AI agents for business, business automation agency, workflow automation, CRM automation, marketing automation, sales automation, customer support automation, automation agency India">
 <meta name="author" content="N2N Automation">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://n2nautomation.in/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="N2N Automation">
-<meta property="og:title" content="N2N Automation | Business Automation Agency">
-<meta property="og:description" content="AI automation and workflow solutions that help businesses save time, reduce manual work, and scale faster.">
+<meta property="og:title" content="N2N Automation | AI Automation Agency">
+<meta property="og:description" content="AI automation systems, AI agents, and workflow automation that help businesses save time, reduce manual work, and scale faster.">
 <meta property="og:url" content="https://n2nautomation.in/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="N2N Automation | Business Automation Agency">
-<meta name="twitter:description" content="AI automation, workflow systems, marketing automation, sales automation, and support automation for growing businesses.">
+<meta name="twitter:title" content="N2N Automation | AI Automation Agency">
+<meta name="twitter:description" content="AI automation systems, AI agents, workflow automation, marketing automation, sales automation, and support automation for growing businesses.">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
@@ -26,7 +26,7 @@
   "name": "N2N Automation",
   "url": "https://n2nautomation.in/",
   "email": "automaationsupportagency@gmail.com",
-  "description": "Business automation agency providing AI automation, workflow automation, marketing automation, sales automation, and customer support automation solutions.",
+  "description": "AI automation agency providing AI agents, workflow automation, CRM automation, marketing automation, sales automation, and customer support automation solutions.",
   "areaServed": "Worldwide",
   "address": {
     "@type": "PostalAddress",
@@ -349,7 +349,7 @@
 <!-- TICKER -->
 <div class="ticker-wrap" style="margin-top:70px;">
   <span class="ticker">
-    N2N AUTOMATION &nbsp;<span class="ticker-sep">///</span>&nbsp; WE BUILD SYSTEMS FOR BUSINESS &nbsp;<span class="ticker-sep">///</span>&nbsp; SMOOTH AUTOMATION. REAL RESULTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AI-POWERED WORKFLOWS &nbsp;<span class="ticker-sep">///</span>&nbsp; BOOST EFFICIENCY. CUT COSTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AUTOMATION THAT WORKS WHILE YOU GROW &nbsp;<span class="ticker-sep">///</span>&nbsp; STRONGER OPERATIONS. FASTER TEAMS. &nbsp;<span class="ticker-sep">///</span>&nbsp;
+    N2N Automation &nbsp;<span class="ticker-sep">///</span>&nbsp; WE BUILD SYSTEMS FOR BUSINESS &nbsp;<span class="ticker-sep">///</span>&nbsp; SMOOTH AUTOMATION. REAL RESULTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AI-POWERED WORKFLOWS &nbsp;<span class="ticker-sep">///</span>&nbsp; BOOST EFFICIENCY. CUT COSTS. &nbsp;<span class="ticker-sep">///</span>&nbsp; AUTOMATION THAT WORKS WHILE YOU GROW &nbsp;<span class="ticker-sep">///</span>&nbsp; STRONGER OPERATIONS. FASTER TEAMS. &nbsp;<span class="ticker-sep">///</span>&nbsp;
   </span>
 </div>
 
@@ -487,7 +487,7 @@
         <p>Tell us about your business and the work you want to automate. We will review your use case and suggest a practical system that saves time, reduces errors, and supports growth.</p>
         <div class="contact-detail">
           <div class="contact-icon"><span data-icon="mail"></span></div>
-          <div><div class="contact-text-label">Email</div><div class="contact-text-val">business@n2nautomation.in</div></div>
+          <div><div class="contact-text-label">Email</div><div class="contact-text-val">automaationsupportagency@gmail.com</div></div>
         </div>
         <div class="contact-detail">
           <div class="contact-icon"><span data-icon="globe"></span></div>
@@ -620,7 +620,7 @@
   </div>
   <div class="footer-bottom">
     <p>(c) 2026 N2N Automation. Front of Law College, Sukhnagar, Purnea, Bihar 854301</p>
-    <span class="footer-tagline">Built for business. Powered by automation.</span>
+    <span class="footer-tagline">Built for business. Powered by AI automation.</span>
   </div>
 </footer>
 
@@ -709,7 +709,7 @@ function toggleService(btn) {
 /* ══════════════════════════════════════════════════════════════
    WEBHOOK
 ══════════════════════════════════════════════════════════════ */
-var WEBHOOK_URL = 'https://automationsupport.app.n8n.cloud/webhook/automationsupportagency';
+var WEBHOOK_URL = 'https://n2nagency.app.n8n.cloud/webhook/automationsupportagency';
 
 async function submitForm(e) {
   e.preventDefault();
@@ -723,21 +723,32 @@ async function submitForm(e) {
   msg.className = 'form-msg';
   msg.style.display = 'none';
 
+  var firstName = form.firstName.value.trim();
+  var lastName  = form.lastName.value.trim();
+  var email     = form.email.value.trim();
+  var phone     = form.phone.value.trim();
+  var service   = form.service.value;
+  var message   = form.message.value.trim();
+
   var data = {
     source:      'N2N Automation Website',
+    brand:       'N2N Automation',
     formName:    'Business Automation Lead Form',
     eventName:   'New Website Lead',
-    firstName:   form.firstName.value.trim(),
-    lastName:    form.lastName.value.trim(),
-    email:       form.email.value.trim(),
-    phone:       form.phone.value.trim(),
-    service:     form.service.value,
-    message:     form.message.value.trim(),
+    firstName:   firstName,
+    lastName:    lastName,
+    fullName:    (firstName + ' ' + lastName).trim(),
+    email:       email,
+    phone:       phone,
+    service:     service,
+    message:     message,
     pageUrl:     window.location.href,
-    leadSummary: 'New website lead: ' + form.firstName.value.trim() + ' ' + form.lastName.value.trim() +
-                 ' | ' + form.email.value.trim() +
-                 ' | ' + form.phone.value.trim() +
-                 ' | ' + form.service.value,
+    pageTitle:   document.title,
+    userAgent:   navigator.userAgent,
+    leadSummary: 'New website lead: ' + (firstName + ' ' + lastName).trim() +
+                 ' | ' + email +
+                 ' | ' + phone +
+                 ' | ' + service,
     submittedAt: new Date().toISOString()
   };
 
