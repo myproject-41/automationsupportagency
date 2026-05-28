@@ -133,8 +133,72 @@
 
   .hero-content { position: relative; z-index: 2; max-width: 700px; animation: fadeUp 0.9s ease forwards; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,232,199,0.1); border: 1px solid rgba(46,232,199,0.36); border-radius: 2px; padding: 7px 14px; font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-electric); margin-bottom: 1.5rem; }
+  .hero-topline { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,232,199,0.1); border: 1px solid rgba(46,232,199,0.36); border-radius: 2px; padding: 7px 14px; font-family: 'Orbitron', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-electric); }
   .hero-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-electric); box-shadow: 0 0 8px var(--blue-electric); animation: pulse 2s infinite; }
+  .join-actions { display: inline-flex; align-items: center; gap: 0.5rem; }
+  .join-open-btn, .join-list-btn { border: 1px solid rgba(46,232,199,0.4); background: rgba(7,18,38,0.72); color: var(--white); border-radius: 5px; cursor: pointer; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+  .join-open-btn { min-height: 34px; padding: 0.45rem 0.85rem; font-family: 'Orbitron', monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .join-list-btn { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 900; color: var(--blue-electric); }
+  .join-open-btn:hover, .join-list-btn:hover { transform: translateY(-2px); border-color: var(--blue-electric); box-shadow: 0 0 18px rgba(46,232,199,0.2); }
+  .join-panel { display: none; position: relative; z-index: 4; margin: 1rem 0 2rem; border: 1px solid rgba(46,232,199,0.28); background: rgba(7,14,31,0.9); border-radius: 8px; padding: 1.2rem; box-shadow: 0 24px 60px rgba(0,0,0,0.32); backdrop-filter: blur(14px); }
+  .join-panel.open { display: block; }
+  .join-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+  .join-panel-title { font-family: 'Orbitron', monospace; color: var(--white); font-size: 0.84rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .join-panel-copy { color: var(--gray); font-size: 0.95rem; line-height: 1.5; }
+  .join-close { width: 30px; height: 30px; border: 1px solid rgba(46,232,199,0.28); background: rgba(0,20,60,0.5); color: var(--gray-light); border-radius: 5px; cursor: pointer; font-size: 1.2rem; line-height: 1; }
+  .join-layout { display: grid; grid-template-columns: minmax(0, 1fr) 132px; gap: 1rem; align-items: start; }
+  .join-form .form-group { margin-bottom: 0.85rem; }
+  .join-form .submit-btn { margin-top: 0; }
+  .join-choice-copy { color: var(--gray); font-size: 0.88rem; margin: -0.2rem 0 0.65rem; }
+  .join-file-input { padding: 0.65rem !important; }
+  .avatar-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.55rem; }
+  .avatar-option { position: relative; cursor: pointer; }
+  .avatar-option input { position: absolute; opacity: 0; pointer-events: none; }
+  .avatar-face { width: 100%; aspect-ratio: 1; border: 1px solid rgba(46,232,199,0.24); border-radius: 8px; display: block; overflow: hidden; background: rgba(0,20,60,0.55); transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+  .avatar-option input:checked + .avatar-face { border-color: var(--blue-electric); box-shadow: 0 0 0 3px rgba(46,232,199,0.14), 0 0 22px rgba(46,232,199,0.2); transform: translateY(-2px); }
+  .human-avatar { --skin: #d9a077; --hair: #1a1621; --shirt: #2459ff; --bg1: #39d5ff; --bg2: #2459ff; position: relative; display: block; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; background: radial-gradient(circle at 32% 20%, rgba(255,255,255,0.34), transparent 18%), linear-gradient(135deg, var(--bg1), var(--bg2)); }
+  .human-avatar .face { position: absolute; left: 50%; top: 27%; width: 42%; height: 42%; transform: translateX(-50%); border-radius: 45% 45% 50% 50%; background: var(--skin); box-shadow: inset 0 -8px 0 rgba(90,40,20,0.08); z-index: 2; }
+  .human-avatar .hair { position: absolute; left: 28%; top: 18%; width: 44%; height: 30%; border-radius: 48% 48% 34% 34%; background: var(--hair); z-index: 3; }
+  .human-avatar .hair::after { content: ''; position: absolute; right: -8%; bottom: -24%; width: 30%; height: 72%; border-radius: 50%; background: var(--hair); }
+  .human-avatar .eye { position: absolute; top: 46%; width: 8%; height: 8%; border-radius: 50%; background: #151826; z-index: 4; }
+  .human-avatar .eye.left { left: 38%; }
+  .human-avatar .eye.right { right: 38%; }
+  .human-avatar .smile { position: absolute; left: 50%; top: 57%; width: 18%; height: 8%; transform: translateX(-50%); border-bottom: 2px solid rgba(80,36,24,0.55); border-radius: 50%; z-index: 4; }
+  .human-avatar .neck { position: absolute; left: 43%; top: 62%; width: 14%; height: 14%; border-radius: 4px; background: var(--skin); z-index: 1; }
+  .human-avatar .body { position: absolute; left: 22%; right: 22%; bottom: -10%; height: 34%; border-radius: 46% 46% 0 0; background: var(--shirt); z-index: 1; }
+  .human-avatar.av2 { --skin:#8f5f43; --hair:#111827; --shirt:#0aa68f; --bg1:#7cffb2; --bg2:#2459ff; }
+  .human-avatar.av3 { --skin:#f0c6a4; --hair:#5b321e; --shirt:#ffcf5a; --bg1:#ffcf5a; --bg2:#0f6b70; }
+  .human-avatar.av4 { --skin:#c9895d; --hair:#0e1220; --shirt:#39d5ff; --bg1:#2459ff; --bg2:#2ee8c7; }
+  .human-avatar.av5 { --skin:#6f4634; --hair:#27151a; --shirt:#7cffb2; --bg1:#0f6b70; --bg2:#101831; }
+  .human-avatar.av6 { --skin:#e2ad82; --hair:#c88a2f; --shirt:#2459ff; --bg1:#dce5f7; --bg2:#39d5ff; }
+  .human-avatar.av7 { --skin:#b66f4d; --hair:#22131a; --shirt:#ffcf5a; --bg1:#2ee8c7; --bg2:#2459ff; }
+  .human-avatar.av8 { --skin:#f1d0b7; --hair:#2a2438; --shirt:#0aa68f; --bg1:#39d5ff; --bg2:#0a1024; }
+  .human-avatar.av9 { --skin:#9d6444; --hair:#10131b; --shirt:#2ee8c7; --bg1:#2459ff; --bg2:#ffcf5a; }
+  .human-avatar.av10 { --skin:#ddb18d; --hair:#4b2d22; --shirt:#39d5ff; --bg1:#7cffb2; --bg2:#137c86; }
+  .human-avatar.av11 { --skin:#754a35; --hair:#0a1024; --shirt:#2459ff; --bg1:#ffcf5a; --bg2:#2459ff; }
+  .human-avatar.av12 { --skin:#ecc19d; --hair:#7b4b2a; --shirt:#2ee8c7; --bg1:#dce5f7; --bg2:#2459ff; }
+  .human-avatar.av13 { --skin:#bd7d58; --hair:#151018; --shirt:#ffcf5a; --bg1:#39d5ff; --bg2:#101831; }
+  .human-avatar.av14 { --skin:#f3c9a5; --hair:#1f2937; --shirt:#0aa68f; --bg1:#2ee8c7; --bg2:#0a1024; }
+  .human-avatar.av15 { --skin:#a86a4a; --hair:#332016; --shirt:#2459ff; --bg1:#ffcf5a; --bg2:#0f6b70; }
+  .join-image-preview { display: none; align-items: center; gap: 0.65rem; margin-top: 0.65rem; color: var(--gray-light); font-size: 0.9rem; }
+  .join-image-preview.open { display: flex; }
+  .join-preview-media, .join-person-media { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(46,232,199,0.38); object-fit: cover; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Orbitron', monospace; font-size: 0.68rem; font-weight: 800; color: var(--white); background: linear-gradient(135deg, rgba(36,89,255,0.55), rgba(46,232,199,0.3)); }
+  .join-preview-media .human-avatar, .join-person-media .human-avatar { border-radius: 50%; }
+  .join-qr { border: 1px solid rgba(57,213,255,0.24); background: rgba(255,255,255,0.96); border-radius: 8px; padding: 0.45rem; text-align: center; }
+  .join-qr img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+  .join-qr span { display: block; margin-top: 0.35rem; color: #071830; font-family: 'Orbitron', monospace; font-size: 0.48rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .join-people { display: none; margin-top: 1rem; border-top: 1px solid rgba(46,232,199,0.18); padding-top: 1rem; }
+  .join-people.open { display: block; }
+  .join-people-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.7rem; }
+  .join-people-head strong { font-family: 'Orbitron', monospace; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue-electric); }
+  .join-count { color: var(--gray); font-size: 0.9rem; }
+  .join-list { display: grid; gap: 0.6rem; max-height: 180px; overflow-y: auto; padding-right: 0.25rem; }
+  .join-person { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border: 1px solid rgba(57,213,255,0.18); background: rgba(0,20,60,0.35); border-radius: 6px; padding: 0.65rem 0.75rem; }
+  .join-person-main { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+  .join-person b { display: block; color: var(--white); font-size: 0.98rem; }
+  .join-person span { display: block; color: var(--gray); font-size: 0.88rem; }
+  .join-empty { color: var(--gray); font-size: 0.95rem; padding: 0.7rem; border: 1px dashed rgba(46,232,199,0.22); border-radius: 6px; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
   .hero-title { font-family: 'Orbitron', monospace; font-size: clamp(2.65rem, 5.8vw, 5.2rem); font-weight: 900; line-height: 0.98; letter-spacing: 0; margin-bottom: 1rem; }
   .hero-title .line2 { color: var(--blue-electric); text-shadow: 0 0 24px rgba(46,232,199,0.28); }
@@ -295,7 +359,7 @@
 
   .premium-icon { width: 1.15em; height: 1.15em; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; }
   .feature-icon .premium-icon, .service-icon-wrap .premium-icon, .contact-icon .premium-icon { width: 24px; height: 24px; }
-  .btn-primary .premium-icon, .btn-outline .premium-icon, .nav-cta .premium-icon { width: 16px; height: 16px; }
+  .btn-primary .premium-icon, .btn-outline .premium-icon, .nav-cta .premium-icon, .join-open-btn .premium-icon { width: 16px; height: 16px; }
   .feature-card:hover .feature-icon, .service-card:hover .service-icon-wrap, .contact-detail:hover .contact-icon { animation: icon-float 1.6s ease-in-out infinite; }
   @keyframes icon-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 
@@ -316,6 +380,12 @@
     .hero-stats { gap: 2rem; }
     .hero-title { font-size: clamp(2.25rem, 14vw, 3.4rem); }
     .hero-sub { letter-spacing: 0.14em; }
+    .hero-topline { align-items: stretch; }
+    .join-actions { width: 100%; }
+    .join-open-btn { flex: 1; }
+    .join-layout { grid-template-columns: 1fr; }
+    .avatar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .join-qr { max-width: 150px; }
   }
 
   .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -360,13 +430,82 @@
   <canvas id="hero-canvas"></canvas>
 
   <div class="hero-content">
-    <div class="hero-badge"><span data-icon="briefcase"></span> Business Automation Studio</div>
+    <div class="hero-topline">
+      <div class="hero-badge"><span data-icon="briefcase"></span> Business Automation Studio</div>
+      <div class="join-actions">
+        <button class="join-open-btn" type="button" onclick="openJoinPanel(false)"><span data-icon="users"></span> Join</button>
+        <button class="join-list-btn" type="button" aria-label="Show joined people" onclick="openJoinPanel(true)">&gt;</button>
+      </div>
+    </div>
     <h1 class="hero-title">
       N2N Automation<br>
       <span class="line2">built for business</span>
     </h1>
     <p class="hero-sub">AI workflows. Lean operations. Real growth.</p>
     <p class="hero-desc">We build automation systems for businesses that want fewer manual tasks, faster follow-ups, cleaner operations, and more room to grow. From AI agents to CRM workflows and reporting dashboards, N2N Automation turns daily work into reliable systems.</p>
+    <div class="join-panel" id="joinPanel">
+      <div class="join-panel-head">
+        <div>
+          <div class="join-panel-title">Join N2N Automation</div>
+          <p class="join-panel-copy">Fill your name and profession to join. Scan the QR code to open this join form on any phone.</p>
+        </div>
+        <button class="join-close" type="button" aria-label="Close join panel" onclick="closeJoinPanel()">&times;</button>
+      </div>
+      <div class="join-layout">
+        <form class="join-form" id="joinForm" onsubmit="submitJoin(event)">
+          <div class="form-group">
+            <label for="joinName"><span data-icon="users"></span> Name</label>
+            <input type="text" id="joinName" name="joinName" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="joinProfession"><span data-icon="briefcase"></span> Profession</label>
+            <input type="text" id="joinProfession" name="joinProfession" placeholder="Your profession" required>
+          </div>
+          <div class="form-group">
+            <label for="joinPhoto"><span data-icon="users"></span> Profile Photo</label>
+            <p class="join-choice-copy">Upload a photo or select one avatar. One image option is required.</p>
+            <input class="join-file-input" type="file" id="joinPhoto" name="joinPhoto" accept="image/*">
+            <div class="join-image-preview" id="joinImagePreview">
+              <span class="join-preview-media" id="joinPreviewMedia">AV</span>
+              <span id="joinPreviewText">Profile selected</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label><span data-icon="users"></span> Select Avatar</label>
+            <div class="avatar-grid" id="avatarGrid">
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A1" data-label="Avatar 1" data-avatar-class="av1"><span class="avatar-face"><span class="human-avatar av1"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A2" data-label="Avatar 2" data-avatar-class="av2"><span class="avatar-face"><span class="human-avatar av2"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A3" data-label="Avatar 3" data-avatar-class="av3"><span class="avatar-face"><span class="human-avatar av3"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A4" data-label="Avatar 4" data-avatar-class="av4"><span class="avatar-face"><span class="human-avatar av4"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A5" data-label="Avatar 5" data-avatar-class="av5"><span class="avatar-face"><span class="human-avatar av5"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A6" data-label="Avatar 6" data-avatar-class="av6"><span class="avatar-face"><span class="human-avatar av6"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A7" data-label="Avatar 7" data-avatar-class="av7"><span class="avatar-face"><span class="human-avatar av7"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A8" data-label="Avatar 8" data-avatar-class="av8"><span class="avatar-face"><span class="human-avatar av8"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A9" data-label="Avatar 9" data-avatar-class="av9"><span class="avatar-face"><span class="human-avatar av9"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A10" data-label="Avatar 10" data-avatar-class="av10"><span class="avatar-face"><span class="human-avatar av10"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A11" data-label="Avatar 11" data-avatar-class="av11"><span class="avatar-face"><span class="human-avatar av11"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A12" data-label="Avatar 12" data-avatar-class="av12"><span class="avatar-face"><span class="human-avatar av12"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A13" data-label="Avatar 13" data-avatar-class="av13"><span class="avatar-face"><span class="human-avatar av13"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A14" data-label="Avatar 14" data-avatar-class="av14"><span class="avatar-face"><span class="human-avatar av14"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+              <label class="avatar-option"><input type="radio" name="joinAvatar" value="A15" data-label="Avatar 15" data-avatar-class="av15"><span class="avatar-face"><span class="human-avatar av15"><span class="hair"></span><span class="face"></span><span class="eye left"></span><span class="eye right"></span><span class="smile"></span><span class="neck"></span><span class="body"></span></span></span></label>
+            </div>
+          </div>
+          <button class="submit-btn" type="submit" id="joinSubmitBtn">Join Now</button>
+          <div class="form-msg" id="joinMsg"></div>
+        </form>
+        <div class="join-qr">
+          <img id="joinQr" alt="QR code for N2N Automation join form">
+          <span>Scan to join</span>
+        </div>
+      </div>
+      <div class="join-people" id="joinPeople">
+        <div class="join-people-head">
+          <strong>Joined People</strong>
+          <span class="join-count" id="joinCount">0 people</span>
+        </div>
+        <div class="join-list" id="joinList"></div>
+      </div>
+    </div>
     <div class="hero-btns">
       <a href="#contact" class="btn-primary"><span data-icon="send"></span> Start Building</a>
       <a href="#services" class="btn-outline"><span data-icon="layers"></span> Explore Systems</a>
@@ -706,6 +845,228 @@ function toggleService(btn) {
   btn.closest('.service-card').classList.toggle('open');
 }
 
+var JOIN_STORAGE_KEY = 'n2nJoinedPeople';
+
+function getJoinUrl() {
+  if (window.location.protocol === 'file:') return 'https://n2nautomation.in/#join';
+  return window.location.origin + window.location.pathname + '#join';
+}
+
+function getJoinedPeople() {
+  try {
+    return JSON.parse(localStorage.getItem(JOIN_STORAGE_KEY)) || [];
+  } catch (err) {
+    return [];
+  }
+}
+
+function saveJoinedPeople(people) {
+  localStorage.setItem(JOIN_STORAGE_KEY, JSON.stringify(people));
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, function(ch) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+  });
+}
+
+function renderAvatar(className, wrapperClass, id) {
+  var safeClass = escapeHTML(className || 'av1');
+  var idAttr = id ? ' id="' + escapeHTML(id) + '"' : '';
+  return '<span class="' + wrapperClass + '"' + idAttr + '>' +
+    '<span class="human-avatar ' + safeClass + '">' +
+      '<span class="hair"></span><span class="face"></span>' +
+      '<span class="eye left"></span><span class="eye right"></span>' +
+      '<span class="smile"></span><span class="neck"></span><span class="body"></span>' +
+    '</span>' +
+  '</span>';
+}
+
+function getAvatarSelection() {
+  var avatar = document.querySelector('input[name="joinAvatar"]:checked');
+  if (!avatar) return null;
+  return {
+    value: avatar.value,
+    label: avatar.getAttribute('data-label') || 'Avatar',
+    avatarClass: avatar.getAttribute('data-avatar-class') || 'av1'
+  };
+}
+
+function fileToDataUrl(file) {
+  return new Promise(function(resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function() { resolve(reader.result); };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function updateJoinPreview() {
+  var preview = document.getElementById('joinImagePreview');
+  var media = document.getElementById('joinPreviewMedia');
+  var text = document.getElementById('joinPreviewText');
+  var photo = document.getElementById('joinPhoto');
+  var avatar = getAvatarSelection();
+  if (!preview || !media || !text || !photo) return;
+
+  if (photo.files && photo.files[0]) {
+    media.outerHTML = '<img class="join-preview-media" id="joinPreviewMedia" src="' + URL.createObjectURL(photo.files[0]) + '" alt="">';
+    text.textContent = 'Uploaded photo selected';
+    preview.classList.add('open');
+    return;
+  }
+
+  if (avatar) {
+    media.outerHTML = renderAvatar(avatar.avatarClass, 'join-preview-media', 'joinPreviewMedia');
+    text.textContent = 'Avatar selected';
+    preview.classList.add('open');
+    return;
+  }
+
+  preview.classList.remove('open');
+}
+
+function renderJoinedPeople() {
+  var people = getJoinedPeople();
+  var list = document.getElementById('joinList');
+  var count = document.getElementById('joinCount');
+  if (!list || !count) return;
+
+  count.textContent = people.length + (people.length === 1 ? ' person' : ' people');
+
+  if (!people.length) {
+    list.innerHTML = '<div class="join-empty">No one has joined yet.</div>';
+    return;
+  }
+
+  list.innerHTML = people.map(function(person) {
+    var media = person.photoData ?
+      '<img class="join-person-media" src="' + escapeHTML(person.photoData) + '" alt="">' :
+      (person.avatarClass ?
+        renderAvatar(person.avatarClass, 'join-person-media') :
+      (person.avatarImage ?
+        '<img class="join-person-media" src="' + escapeHTML(person.avatarImage) + '" alt="">' :
+        '<span class="join-person-media">' + escapeHTML(person.avatarLabel || 'AV') + '</span>'));
+
+    return '<div class="join-person">' +
+      '<div class="join-person-main">' + media +
+        '<div><b>' + escapeHTML(person.name) + '</b><span>' + escapeHTML(person.profession) + '</span></div>' +
+      '</div>' +
+      '<span>' + escapeHTML(person.joinedAtLabel) + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+function openJoinPanel(showPeople) {
+  var panel = document.getElementById('joinPanel');
+  var people = document.getElementById('joinPeople');
+  if (!panel || !people) return;
+
+  panel.classList.add('open');
+  if (showPeople) people.classList.add('open');
+  renderJoinedPeople();
+  window.location.hash = 'join';
+
+  if (!showPeople) {
+    var name = document.getElementById('joinName');
+    if (name) name.focus();
+  }
+}
+
+function closeJoinPanel() {
+  var panel = document.getElementById('joinPanel');
+  if (panel) panel.classList.remove('open');
+}
+
+async function submitJoin(e) {
+  e.preventDefault();
+  var form = document.getElementById('joinForm');
+  var msg = document.getElementById('joinMsg');
+  var peopleBox = document.getElementById('joinPeople');
+  var name = form.elements.joinName.value.trim();
+  var profession = form.elements.joinProfession.value.trim();
+  var photo = form.elements.joinPhoto.files[0];
+  var avatar = getAvatarSelection();
+
+  if (!name || !profession) {
+    msg.className = 'form-msg error';
+    msg.textContent = 'Name and profession are required.';
+    msg.style.display = 'block';
+    return;
+  }
+
+  if (!photo && !avatar) {
+    msg.className = 'form-msg error';
+    msg.textContent = 'Please upload a profile photo or select an avatar.';
+    msg.style.display = 'block';
+    return;
+  }
+
+  var photoData = '';
+  if (photo) {
+    if (!photo.type.match(/^image\//)) {
+      msg.className = 'form-msg error';
+      msg.textContent = 'Please upload a valid image file.';
+      msg.style.display = 'block';
+      return;
+    }
+    if (photo.size > 700000) {
+      msg.className = 'form-msg error';
+      msg.textContent = 'Please upload an image smaller than 700 KB.';
+      msg.style.display = 'block';
+      return;
+    }
+    photoData = await fileToDataUrl(photo);
+  }
+
+  var now = new Date();
+  var people = getJoinedPeople();
+  people.unshift({
+    name: name,
+    profession: profession,
+    photoData: photoData,
+    avatarLabel: avatar ? avatar.label : '',
+    avatarClass: avatar ? avatar.avatarClass : '',
+    joinedAt: now.toISOString(),
+    joinedAtLabel: now.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+  });
+  saveJoinedPeople(people);
+  form.reset();
+  updateJoinPreview();
+
+  msg.className = 'form-msg success';
+  msg.textContent = 'Joined successfully. Your details are now visible in the joined people list.';
+  msg.style.display = 'block';
+
+  if (peopleBox) peopleBox.classList.add('open');
+  renderJoinedPeople();
+}
+
+function setupJoinPanel() {
+  var qr = document.getElementById('joinQr');
+  if (qr) {
+    qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(getJoinUrl());
+  }
+  var photo = document.getElementById('joinPhoto');
+  var avatars = document.querySelectorAll('input[name="joinAvatar"]');
+  if (photo) {
+    photo.addEventListener('change', function() {
+      if (photo.files && photo.files[0]) {
+        avatars.forEach(function(avatar) { avatar.checked = false; });
+      }
+      updateJoinPreview();
+    });
+  }
+  avatars.forEach(function(avatar) {
+    avatar.addEventListener('change', function() {
+      if (photo) photo.value = '';
+      updateJoinPreview();
+    });
+  });
+  renderJoinedPeople();
+  if (window.location.hash === '#join') openJoinPanel(false);
+}
+
 /* ══════════════════════════════════════════════════════════════
    WEBHOOK
 ══════════════════════════════════════════════════════════════ */
@@ -957,6 +1318,7 @@ async function submitForm(e) {
    HYDRATE + SCROLL REVEAL
 ══════════════════════════════════════════════════════════════ */
 hydrateIcons();
+setupJoinPanel();
 
 var observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
