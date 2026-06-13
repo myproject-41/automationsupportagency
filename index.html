@@ -341,22 +341,26 @@ footer{
   background:var(--bg2);border-top:1px solid var(--borderW);
   padding:4rem 5rem 2.5rem;position:relative;z-index:1;
 }
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:3rem;}
-.footer-brand p{color:var(--text2);font-size:.88rem;line-height:1.7;margin:.9rem 0 1.5rem;max-width:260px;}
+.footer-top,.footer-bottom{width:100%;max-width:1280px;margin-left:auto;margin-right:auto;}
+.footer-top{display:grid;grid-template-columns:minmax(280px,1.7fr) repeat(3,minmax(150px,1fr));gap:clamp(2rem,4vw,4.5rem);margin-bottom:3rem;}
+.footer-brand .logo{align-items:flex-start;}
+.footer-brand .logo-text{line-height:1.2;}
+.footer-brand p{color:var(--text2);font-size:.88rem;line-height:1.7;margin:.9rem 0 1.5rem;max-width:420px;}
 .footer-social{display:flex;gap:.8rem;}
 .social-btn{
   width:36px;height:36px;background:var(--bg3);border:1px solid var(--borderW);border-radius:9px;
   display:flex;align-items:center;justify-content:center;font-size:.9rem;
-  transition:border-color .2s,background .2s;text-decoration:none;
+  color:var(--text2);font-weight:700;
+  transition:border-color .2s,background .2s,color .2s;text-decoration:none;
 }
-.social-btn:hover{border-color:var(--border);background:rgba(255,107,0,.08);}
+.social-btn:hover{border-color:var(--border);background:rgba(255,107,0,.08);color:var(--orange);}
 .footer-col h4{font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:1.2rem;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
-.footer-col ul a{color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .2s;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
+.footer-col ul a,.footer-col ul span{color:var(--text2);text-decoration:none;font-size:.88rem;line-height:1.5;transition:color .2s;overflow-wrap:anywhere;}
 .footer-col ul a:hover{color:var(--orange);}
 .footer-bottom{border-top:1px solid var(--borderW);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
 .footer-copy{color:var(--text3);font-size:.8rem;}
-.footer-legal{display:flex;gap:1.5rem;}
+.footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap;}
 .footer-legal a{color:var(--text3);text-decoration:none;font-size:.8rem;transition:color .2s;}
 .footer-legal a:hover{color:var(--orange);}
 
@@ -382,10 +386,19 @@ footer{
   .cases-grid{grid-template-columns:1fr;}
   .testi-grid{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr 1fr;gap:2rem;}
+  .footer-brand{grid-column:1/-1;}
   .hero-img-strip{display:none;}
   footer{padding:3rem 2rem 2rem;}
   .clients-logos{gap:1.5rem 2rem;}
   #clients{padding:4rem 2rem;}
+}
+@media(max-width:640px){
+  footer{padding:3rem 1.25rem 2rem;}
+  .footer-top{grid-template-columns:1fr;gap:2.25rem;margin-bottom:2.5rem;}
+  .footer-brand{grid-column:auto;}
+  .footer-brand p{max-width:none;}
+  .footer-bottom{align-items:flex-start;flex-direction:column;}
+  .footer-legal{gap:.75rem 1.25rem;}
 }
 </style>
 </head>
@@ -419,15 +432,15 @@ footer{
 <section id="hero">
   <div class="hero-eyebrow">
     <span class="hero-eyebrow-dot"></span>
-    Next-Gen Industrial Automation
+    Next-Gen AI Automation
   </div>
   <h1>
-    We Automate<br>
-    <span class="h1-line2">
-      <span class="h1-grad">Everything</span> That Slows<br>You Down
-    </span>
-  </h1>
-  <p class="hero-sub">N2N Automation engineers intelligent systems — RPA, AI workflows, IoT networks and cloud infrastructure — that eliminate friction and multiply output across every layer of your business.</p>
+  AI Agents That<br>
+  <span class="h1-line2">
+    <span class="h1-grad">Work</span> 24/7
+  </span>
+</h1>
+  <p class="hero-sub">We design AI agents, automated workflows, and business systems that eliminate manual work, increase efficiency, and drive measurable growth.</p>
   <div class="hero-btns">
     <a href="#cases" class="btn-primary">Explore Our Work</a>
     <a href="#cta" class="btn-outline">Book Free Audit →</a>
@@ -466,7 +479,7 @@ footer{
 <!-- ─── STATS ─── -->
 <div class="stats-bar">
   <div class="stat-item">
-    <div class="stat-num" data-count="340" data-suffix="+">0+</div>
+    <div class="stat-num" data-count="40" data-suffix="+">0+</div>
     <div class="stat-lbl">Projects Delivered Worldwide</div>
   </div>
   <div class="stat-item">
@@ -478,7 +491,7 @@ footer{
     <div class="stat-lbl">Industries Served</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num" data-count="60" data-suffix="K+">0K+</div>
+    <div class="stat-num" data-count="12" data-suffix="K+">0K+</div>
     <div class="stat-lbl">Hours Saved Per Month</div>
   </div>
 </div>
@@ -488,7 +501,7 @@ footer{
   <div class="services-top reveal">
     <div>
       <span class="section-tag">What We Do</span>
-      <h2>Automation That Runs<br>at Machine Speed</h2>
+     <h2>AI Solutions Built<br>for Business Growth</h2>
     </div>
     <p class="section-lead">Our focus is on building practical automation workflows that save time, reduce manual effort, and improve operational efficiency.From workflow automation and AI agents to system integrations and process optimization, we create solutions tailored to your business needs..</p>
   </div>
@@ -498,7 +511,7 @@ footer{
       <div class="service-card-body">
         <h3>How We Deliver Automation</h3>
         <p>From discovery to deployment, we follow a proven approach to create efficient, scalable, and reliable automation solutions.</p>
-        <span class="service-pill">UiPath · Blue Prism · AA</span>
+       <span class="service-pill">AI Agents · Workflow Automation · Integrations</span>
       </div>
     </div>
     <div class="service-card reveal" style="transition-delay:.1s">
@@ -506,7 +519,7 @@ footer{
       <div class="service-card-body">
         <h3>Support That Never Stops</h3>
         <p>Smarter Customer Support, ticket handling, and follow-ups to deliver reliable and efficient support at scale.</p>
-        <span class="service-pill">GPT-4 · Claude · LangChain</span>
+        <span class="service-pill">Customer Service · Helpdesk · AI Agents</span>
       </div>
     </div>
     <div class="service-card reveal" style="transition-delay:.2s">
@@ -514,7 +527,7 @@ footer{
       <div class="service-card-body">
         <h3>Supply Chain Intelligence</h3>
         <p>Gain visibility across procurement, inventory, logistics, and distribution with intelligent automation and data-driven insights.</p>
-        <span class="service-pill">MQTT · AWS IoT · Edge ML</span>
+       <span class="service-pill">Supply Chain · Warehouse · Automation</span>
       </div>
     </div>
     <div class="service-card reveal" style="transition-delay:.05s">
@@ -522,7 +535,7 @@ footer{
       <div class="service-card-body">
         <h3>Data & Analytics Automation</h3>
         <p>Transform business data into actionable insights with automated reporting, real-time dashboards, and intelligent analytics workflows.</p>
-        <span class="service-pill">SAP · Salesforce · REST APIs</span>
+        <span class="service-pill">Business Intelligence · Analytics · KPIs</span>
       </div>
     </div>
     <div class="service-card reveal" style="transition-delay:.15s">
@@ -530,7 +543,7 @@ footer{
       <div class="service-card-body">
         <h3>ERP & System Integration</h3>
         <p>Connect your business applications, databases, and workflows into one unified ecosystem for seamless operations and real-time data flow.</p>
-        <span class="service-pill">Power BI · Python · BigQuery</span>
+        <span class="service-pill">ERP Systems · APIs · Data Sync</span>
       </div>
     </div>
     <div class="service-card reveal" style="transition-delay:.25s">
@@ -538,7 +551,7 @@ footer{
       <div class="service-card-body">
         <h3>HR Automation</h3>
         <p>Simplify recruitment, onboarding, attendance, and employee management with automated workflows that reduce manual effort and improve productivity.</p>
-        <span class="service-pill">Kubernetes · Terraform · GitHub Actions</span>
+        <span class="service-pill">Recruitment · Onboarding · HR Workflows</span>
       </div>
     </div>
   </div>
@@ -561,7 +574,7 @@ footer{
     </div>
     <div class="about-content reveal" style="transition-delay:.15s">
       <span class="section-tag">Who We Are</span>
-      <h2>Engineers Who Think<br>in Systems</h2>
+      <h2>Experts Who Build<br>Intelligent Automation</h2>
       <p>Founded in 2025, N2N Automation is a specialized team of AI automation engineers, workflow architects, and integration experts helping businesses transform operations through intelligent automation and connected systems.</p>
       <p>We don't believe in one-size-fits-all solutions. We design and implement custom AI-powered workflows that seamlessly integrate with your existing tools, processes, and business objectives.</p>
       <ul class="about-list">
@@ -661,11 +674,11 @@ footer{
         <span class="case-cat">Manufacturing</span>
       </div>
       <div class="case-body">
-        <h3>Smart Factory Monitoring — TechCore Industries</h3>
-        <p>Deployed 200+ IoT sensors across production lines with edge ML models predicting equipment failure 48 hours in advance. Fully integrated with legacy SAP ERP.</p>
+        <h3>Smart Factory Monitoring</h3>
+        <p>Monitor machines, production lines, and operational performance in real time. Detect issues early, reduce downtime, and improve overall manufacturing efficiency.</p>
         <div class="case-metrics">
           <div><div class="metric-val">73%</div><div class="metric-lbl">Downtime Reduced</div></div>
-          <div><div class="metric-val">₹2.4Cr</div><div class="metric-lbl">Annual Savings</div></div>
+          <div><div class="metric-val">₹10L</div><div class="metric-lbl">Annual Savings</div></div>
           <div><div class="metric-val">6 wks</div><div class="metric-lbl">Deployment Time</div></div>
         </div>
       </div>
@@ -720,62 +733,60 @@ footer{
   </div>
 </section>
 
-<!-- ─── TESTIMONIALS ─── -->
-<section id="testimonials">
-  <div class="reveal" style="text-align:center;margin-bottom:1rem;">
-    <span class="section-tag">Client Voices</span>
-    <h2>Trusted by Industry Leaders</h2>
-  </div>
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"N2N completely transformed our invoice processing. What took a team of 12 people three days now runs in four hours with a single bot. The ROI was visible in the first month."</p>
-      <div class="testi-author">
-        <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Rajiv">
-        <div>
-          <div class="testi-name">Rajiv Menon</div>
-          <div class="testi-role">CFO, Apex Finance Group</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal" style="transition-delay:.1s">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"The IoT monitoring system N2N built for us caught a compressor failure before it happened — saving us an estimated ₹18 lakh in repairs and a week of production downtime."</p>
-      <div class="testi-author">
-        <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Priya">
-        <div>
-          <div class="testi-name">Priya Sharma</div>
-          <div class="testi-role">COO, TechCore Industries</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal" style="transition-delay:.2s">
-      <div class="testi-stars">★★★★★</div>
-      <p class="testi-text">"We evaluated five automation vendors. N2N was the only team that truly understood our clinical workflows. Their patient record system has become essential infrastructure for us."</p>
-      <div class="testi-author">
-        <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Dr Kumar">
-        <div>
-          <div class="testi-name">Dr. Arjun Kumar</div>
-          <div class="testi-role">CTO, CareSync Hospitals</div>
-        </div>
-      </div>
+<div class="testi-card reveal">
+  <div class="testi-stars">★★★★★</div>
+  <p class="testi-text">
+    "The AI customer support agent now handles over 70% of our routine inquiries automatically. Our response times dropped from hours to seconds, and our team can focus on complex customer issues."
+  </p>
+  <div class="testi-author">
+    <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="David Chen">
+    <div>
+      <div class="testi-name">David Chen</div>
+      <div class="testi-role">Head of Customer Success</div>
     </div>
   </div>
-</section>
+</div>
 
+<div class="testi-card reveal" style="transition-delay:.1s">
+  <div class="testi-stars">★★★★★</div>
+  <p class="testi-text">
+    "Their workflow automation eliminated countless manual tasks between our CRM, email, and internal systems. What used to require several hours each day now runs automatically in the background."
+  </p>
+  <div class="testi-author">
+    <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Mitchell">
+    <div>
+      <div class="testi-name">Sarah Mitchell</div>
+      <div class="testi-role">Operations Manager</div>
+    </div>
+  </div>
+</div>
+
+<div class="testi-card reveal" style="transition-delay:.2s">
+  <div class="testi-stars">★★★★★</div>
+  <p class="testi-text">
+    "The team integrated our ERP, CRM, and reporting tools into a single automated workflow. We now have real-time visibility across departments and make decisions with far greater confidence."
+  </p>
+  <div class="testi-author">
+    <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Michael Roberts">
+    <div>
+      <div class="testi-name">Michael Roberts</div>
+      <div class="testi-role">Director of Operations</div>
+    </div>
+  </div>
+</div>
 <!-- ─── CLIENTS ─── -->
 <div id="clients">
   <div class="clients-wrap reveal">
-    <div class="clients-label">Trusted by 10+ companies across India & Southeast Asia</div>
+    <div class="clients-label">Services trusted by 10+ companies across India & Southeast Asia</div>
     <div class="clients-logos">
-      <span class="client-logo">TechCore</span>
-      <span class="client-logo">Apex Finance</span>
-      <span class="client-logo">CareSync</span>
-      <span class="client-logo">MegaMart</span>
-      <span class="client-logo">InfraGrid</span>
-      <span class="client-logo">BankNovex</span>
-      <span class="client-logo">AeroFab</span>
-      <span class="client-logo">PharmaLink</span>
+      <span class="client-logo">Agency</span>
+      <span class="client-logo">Medico</span>
+      <span class="client-logo">Marketing</span>
+      <span class="client-logo">Custome Service</span>
+      <span class="client-logo">Retail</span>
+      <span class="client-logo">Health Care</span>
+      <span class="client-logo">ecommerece</span>
+      <span class="client-logo">SaaS Companies</span>
     </div>
   </div>
 </div>
@@ -788,19 +799,13 @@ footer{
   <div class="cta-inner reveal">
     <span class="section-tag">Get Started Today</span>
     <h2>Ready to Automate Everything<br>That Slows You Down?</h2>
-    <p>Tell us your biggest operational bottleneck. We'll map a tailored solution and deliver a no-obligation audit report within 48 hours.</p>
+    <p>Tell us about your business, and we'll show you how AI and automation can streamline operations and drive measurable results.</p>
     <div class="cta-form">
       <input type="email" placeholder="your@company.com">
       <a href="#" class="btn-primary">Get My Free Audit →</a>
     </div>
     <p class="cta-note">No spam. Honest assessment. We respond within one business day.</p>
-    <div class="cta-trust">
-      <span class="trust-item"><span class="trust-dot"></span>No commitment required</span>
-      <span class="trust-item"><span class="trust-dot"></span>48-hour response guarantee</span>
-      <span class="trust-item"><span class="trust-dot"></span>ISO 27001 certified</span>
-      <span class="trust-item"><span class="trust-dot"></span>8 cities across India</span>
-    </div>
-  </div>
+   
 </section>
 
 <!-- ─── FOOTER ─── -->
@@ -812,19 +817,14 @@ footer{
         <span class="logo-text">N2N Automation Service</span>
       </div>
       <p>N2N Automation helps businesses streamline repetitive processes through intelligent AI-powered workflows and seamless system integrations. We design scalable automation solutions that save time, reduce costs, and enable teams to focus on high-value work.</p>
-      <div class="footer-social">
-        <a class="social-btn" href="#">in</a>
-        <a class="social-btn" href="#">tw</a>
-        <a class="social-btn" href="#">gh</a>
-        <a class="social-btn" href="#">yt</a>
-      </div>
+      
     </div>
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="#">RPA Solutions</a></li>
+        <li><a href="#">Customer Support</a></li>
         <li><a href="#">AI Workflows</a></li>
-        <li><a href="#">IoT Systems</a></li>
+        <li><a href="#">HR Automation</a></li>
         <li><a href="#">ERP Integration</a></li>
         <li><a href="#">Cloud DevOps</a></li>
       </ul>
@@ -842,16 +842,14 @@ footer{
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
-        <li><a href="#">Patna HQ</a></li>
-        <li><a href="#">Mumbai Office</a></li>
-        <li><a href="#">Bangalore Office</a></li>
+        <li><span>Purnea, Bihar, India</span></li>
         <li><a href="mailto:business@n2nautomation">business@n2nautomation</a></li>
         <li><a href="tel:+918677813088">+91 8677813088</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 N2N Automation Service. All rights reserved. | Patna, Bihar, India</div>
+    <div class="footer-copy">© 2025 N2N Automation Service. All rights reserved. | Patna, Bihar, India</div>
     <div class="footer-legal">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>
