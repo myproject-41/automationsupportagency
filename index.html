@@ -58,6 +58,15 @@ nav{
 .nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center;}
 .nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;letter-spacing:.3px;font-weight:500;transition:color .2s;}
 .nav-links a:hover{color:var(--orange);}
+.nav-toggle{
+  display:none;width:44px;height:44px;padding:0;border:1px solid var(--border);
+  border-radius:10px;background:var(--bg3);cursor:pointer;
+  align-items:center;justify-content:center;flex-direction:column;gap:5px;
+}
+.nav-toggle span{
+  display:block;width:20px;height:2px;background:var(--text);
+  border-radius:2px;transition:transform .25s,opacity .25s;
+}
 .nav-cta{
   background:var(--orange)!important;color:#fff!important;
   -webkit-text-fill-color:#fff!important;
@@ -323,15 +332,31 @@ h2{font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;letter-spacing:-1.5px;line
 .cta-inner{position:relative;z-index:1;text-align:center;}
 .cta-inner h2{max-width:800px;margin:0 auto 1.5rem;}
 .cta-inner p{color:var(--text2);max-width:500px;margin:0 auto 3rem;font-size:1.05rem;line-height:1.75;}
-.cta-form{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;}
-.cta-form input{
+.cta-form{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;
+  width:100%;max-width:760px;margin:0 auto 1.5rem;text-align:left;
+}
+.cta-form input,.cta-form select{
   background:rgba(255,255,255,.06);border:1px solid var(--borderW);border-radius:10px;
   padding:.9rem 1.6rem;color:var(--text);font-size:.95rem;font-family:var(--font);
-  outline:none;width:300px;transition:border-color .2s;
+  outline:none;width:100%;transition:border-color .2s,box-shadow .2s;
 }
-.cta-form input:focus{border-color:var(--orange);}
+.cta-form input:focus,.cta-form select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,0,.12);}
 .cta-form input::placeholder{color:var(--text3);}
-.cta-note{color:var(--text3);font-size:.78rem;}
+.cta-form select{appearance:none;cursor:pointer;color:var(--text2);}
+.cta-form select:valid{color:var(--text);}
+.cta-form select option{background:var(--bg2);color:var(--text);}
+.cta-form .btn-primary{
+  grid-column:1/-1;border:0;cursor:pointer;font-family:var(--font);
+}
+.cta-form .btn-primary:disabled{cursor:wait;opacity:.7;transform:none;}
+.form-status{
+  min-height:1.4rem!important;margin:-.25rem auto 1rem!important;
+  color:var(--text2)!important;font-size:.85rem!important;
+}
+.form-status.success{color:#7ee2a8!important;}
+.form-status.error{color:#ff8f8f!important;}
+.cta-note{color:var(--text3);font-size:.78rem;margin:0 auto!important;}
 .cta-trust{display:flex;justify-content:center;gap:2.5rem;margin-top:3.5rem;flex-wrap:wrap;}
 .trust-item{display:flex;align-items:center;gap:.6rem;color:var(--text2);font-size:.82rem;}
 .trust-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;}
@@ -374,7 +399,23 @@ footer{
 /* ─── MOBILE ─── */
 @media(max-width:1024px){
   nav{padding:1rem 2rem;}
-  .nav-links{display:none;}
+  .nav-toggle{display:flex;}
+  .nav-links{
+    position:absolute;top:calc(100% + 1px);left:1rem;right:1rem;
+    display:flex;flex-direction:column;align-items:stretch;gap:.35rem;
+    padding:1rem;background:rgba(17,17,19,.98);
+    border:1px solid var(--border);border-radius:0 0 16px 16px;
+    box-shadow:0 20px 40px rgba(0,0,0,.45);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(-10px);transition:opacity .25s,transform .25s,visibility .25s;
+  }
+  nav.menu-open .nav-links{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+  .nav-links a{display:block;padding:.85rem 1rem;border-radius:8px;}
+  .nav-links a:hover{background:rgba(255,107,0,.08);}
+  .nav-links .nav-cta{text-align:center;margin-top:.35rem;}
+  nav.menu-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  nav.menu-open .nav-toggle span:nth-child(2){opacity:0;}
+  nav.menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
   section{padding:5rem 2rem;}
   .stats-bar{grid-template-columns:repeat(2,1fr);padding:2rem;}
   .stat-item{border-right:none;border-bottom:1px solid var(--borderW);padding:1.5rem 0;}
@@ -393,6 +434,8 @@ footer{
   #clients{padding:4rem 2rem;}
 }
 @media(max-width:640px){
+  .cta-form{grid-template-columns:1fr;}
+  .cta-form .btn-primary{grid-column:auto;}
   footer{padding:3rem 1.25rem 2rem;}
   .footer-top{grid-template-columns:1fr;gap:2.25rem;margin-bottom:2.5rem;}
   .footer-brand{grid-column:auto;}
@@ -416,16 +459,21 @@ footer{
 <nav id="navbar">
   <div class="logo">
     <div class="logo-icon">N2</div>
-    <span class="logo-text">N<span class="logo-dot">.</span>automation</span>
+    <span class="logo-text">N2N Automation</span>
   </div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="primary-navigation">
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#process">Process</a></li>
     <li><a href="#tech">Tech</a></li>
     <li><a href="#cases">Work</a></li>
-    <li><a href="#cta" class="nav-cta">Book a Demo</a></li>
+    <li><a href="#cta" class="nav-cta">Book Free Audit</a></li>
   </ul>
+  <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <!-- ─── HERO ─── -->
@@ -800,12 +848,24 @@ footer{
     <span class="section-tag">Get Started Today</span>
     <h2>Ready to Automate Everything<br>That Slows You Down?</h2>
     <p>Tell us about your business, and we'll show you how AI and automation can streamline operations and drive measurable results.</p>
-    <div class="cta-form">
-      <input type="email" placeholder="your@company.com">
-      <a href="#" class="btn-primary">Get My Free Audit →</a>
-    </div>
+    <form class="cta-form" id="audit-form">
+      <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
+      <input type="text" name="companyName" placeholder="Company name" autocomplete="organization" required>
+      <input type="email" name="email" placeholder="your@company.com" autocomplete="email" required>
+      <select name="service" required>
+        <option value="" selected disabled>Select a service</option>
+        <option value="AI Customer Support">AI Customer Support</option>
+        <option value="AI Workflows">AI Workflows</option>
+        <option value="HR Automation">HR Automation</option>
+        <option value="ERP Integration">ERP Integration</option>
+        <option value="Cloud DevOps">Cloud DevOps</option>
+        <option value="Other">Other</option>
+      </select>
+      <button type="submit" class="btn-primary">Get My Free Audit →</button>
+    </form>
+    <p class="form-status" id="audit-form-status" role="status" aria-live="polite"></p>
     <p class="cta-note">No spam. Honest assessment. We respond within one business day.</p>
-   
+  </div>
 </section>
 
 <!-- ─── FOOTER ─── -->
@@ -1012,10 +1072,73 @@ const cObs=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
 
+/* ── FREE AUDIT FORM ── */
+const auditForm=document.getElementById('audit-form');
+const auditFormStatus=document.getElementById('audit-form-status');
+const auditSubmitButton=auditForm.querySelector('button[type="submit"]');
+const auditWebhook='https://automation008.app.n8n.cloud/webhook/83067b08-3356-4008-91fa-639659693958';
+
+auditForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!auditForm.reportValidity()) return;
+
+  const formData=new FormData(auditForm);
+  const payload={
+    name:formData.get('name'),
+    companyName:formData.get('companyName'),
+    email:formData.get('email'),
+    service:formData.get('service'),
+    source:'N2N Automation website',
+    submittedAt:new Date().toISOString()
+  };
+
+  auditSubmitButton.disabled=true;
+  auditSubmitButton.textContent='Submitting...';
+  auditFormStatus.className='form-status';
+  auditFormStatus.textContent='Sending your audit request...';
+
+  try{
+    const response=await fetch(auditWebhook,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
+    });
+    if(!response.ok) throw new Error(`Webhook returned ${response.status}`);
+
+    auditForm.reset();
+    auditFormStatus.className='form-status success';
+    auditFormStatus.textContent='Thank you! Your free audit request has been submitted.';
+  }catch(error){
+    console.error('Audit form submission failed:',error);
+    auditFormStatus.className='form-status error';
+    auditFormStatus.textContent='We could not submit your request. Please try again.';
+  }finally{
+    auditSubmitButton.disabled=false;
+    auditSubmitButton.textContent='Get My Free Audit →';
+  }
+});
+
 /* ── NAV SCROLL ── */
+const navbar=document.getElementById('navbar');
+const navToggle=document.querySelector('.nav-toggle');
+const navLinks=document.querySelector('.nav-links');
+
+navToggle.addEventListener('click',()=>{
+  const isOpen=navbar.classList.toggle('menu-open');
+  navToggle.setAttribute('aria-expanded',String(isOpen));
+  navToggle.setAttribute('aria-label',isOpen?'Close navigation menu':'Open navigation menu');
+});
+
+navLinks.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    navbar.classList.remove('menu-open');
+    navToggle.setAttribute('aria-expanded','false');
+    navToggle.setAttribute('aria-label','Open navigation menu');
+  });
+});
+
 window.addEventListener('scroll',()=>{
-  const nav=document.getElementById('navbar');
-  nav.style.background=window.scrollY>50?'rgba(10,10,11,0.97)':'rgba(10,10,11,0.75)';
+  navbar.style.background=window.scrollY>50?'rgba(10,10,11,0.97)':'rgba(10,10,11,0.75)';
 });
 </script>
 </body>
