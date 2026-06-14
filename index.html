@@ -1076,21 +1076,15 @@ document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
 const auditForm=document.getElementById('audit-form');
 const auditFormStatus=document.getElementById('audit-form-status');
 const auditSubmitButton=auditForm.querySelector('button[type="submit"]');
-const auditWebhook='https://automation008.app.n8n.cloud/webhook/83067b08-3356-4008-91fa-639659693958';
+const auditWebhook='https://automation008.app.n8n.cloud/webhook/n2naiautomation';
 
 auditForm.addEventListener('submit',async event=>{
   event.preventDefault();
   if(!auditForm.reportValidity()) return;
 
   const formData=new FormData(auditForm);
-  const payload={
-    name:formData.get('name'),
-    companyName:formData.get('companyName'),
-    email:formData.get('email'),
-    service:formData.get('service'),
-    source:'N2N Automation website',
-    submittedAt:new Date().toISOString()
-  };
+  formData.set('source','N2N Automation website');
+  formData.set('submittedAt',new Date().toISOString());
 
   auditSubmitButton.disabled=true;
   auditSubmitButton.textContent='Submitting...';
@@ -1100,8 +1094,7 @@ auditForm.addEventListener('submit',async event=>{
   try{
     const response=await fetch(auditWebhook,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
+      body:new URLSearchParams(formData)
     });
     if(!response.ok) throw new Error(`Webhook returned ${response.status}`);
 
