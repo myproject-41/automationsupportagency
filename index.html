@@ -3,1136 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>N2N Automation – Intelligent Systems for Tomorrow</title>
+<meta name="description" content="N2N Automation builds AI agents, workflow automation, WhatsApp automation, CRM integrations and connected business systems.">
+<meta name="theme-color" content="#08090a">
+<title>N2N Automation | AI Agents & Business Automation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <style>
-:root {
-  --orange:   #FF6B00;
-  --orange2:  #FF8C2A;
-  --orange3:  #FFB347;
-  --orangeD:  #CC4E00;
-  --bg:       #0A0A0B;
-  --bg2:      #111113;
-  --bg3:      #161618;
-  --card:     rgba(255,107,0,0.04);
-  --border:   rgba(255,107,0,0.18);
-  --borderW:  rgba(255,255,255,0.07);
-  --text:     #F0EDE8;
-  --text2:    #8A8580;
-  --text3:    #5A5550;
-  --white:    #FFFFFF;
-  --font:     'Space Grotesk', 'Inter', sans-serif;
+:root{
+  --bg:#08090a;--bg2:#0d0f11;--card:#111417;--card2:#15191d;
+  --text:#f7f7f5;--muted:#a5a9af;--muted2:#747a82;
+  --orange:#ff6b00;--orange2:#ff9a3d;--gold:#ffbf73;
+  --line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.05);
+  --radius:24px;--max:1240px;
 }
-
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-
-/* ─── CANVAS ─── */
-#hero-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
-
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 5rem;
-  background:rgba(10,10,11,0.75);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);
-  transition:all .3s;
-}
-.logo{
-  font-size:1.5rem;font-weight:800;letter-spacing:-0.5px;
-  display:flex;align-items:center;gap:.4rem;
-}
-.logo-icon{
-  width:36px;height:36px;background:linear-gradient(135deg,var(--orange),var(--orange2));
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:1rem;font-weight:900;color:#fff;flex-shrink:0;
-}
-.logo-text{background:linear-gradient(135deg,var(--orange),var(--orange3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.logo-dot{color:var(--orange3);-webkit-text-fill-color:var(--orange3);}
-.nav-links{display:flex;gap:2.2rem;list-style:none;align-items:center;}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;letter-spacing:.3px;font-weight:500;transition:color .2s;}
-.nav-links a:hover{color:var(--orange);}
-.nav-toggle{
-  display:none;width:44px;height:44px;padding:0;border:1px solid var(--border);
-  border-radius:10px;background:var(--bg3);cursor:pointer;
-  align-items:center;justify-content:center;flex-direction:column;gap:5px;
-}
-.nav-toggle span{
-  display:block;width:20px;height:2px;background:var(--text);
-  border-radius:2px;transition:transform .25s,opacity .25s;
-}
-.nav-cta{
-  background:var(--orange)!important;color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  padding:.55rem 1.6rem;border-radius:8px;font-weight:700!important;
-  transition:background .2s,transform .2s,box-shadow .2s!important;
-  box-shadow:0 0 20px rgba(255,107,0,.3);
-}
-.nav-cta:hover{background:var(--orangeD)!important;transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,0,.5)!important;}
-
-/* ─── HERO ─── */
-#hero{
-  position:relative;z-index:1;
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:0 2rem;padding-top:80px;
-}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:.6rem;
-  background:rgba(255,107,0,.08);
-  border:1px solid rgba(255,107,0,.3);
-  padding:.45rem 1.4rem;border-radius:50px;
-  font-size:.78rem;color:var(--orange2);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
-  margin-bottom:2rem;
-  animation:fadeUp .7s ease both;
-}
-.hero-eyebrow-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.5);}}
-
-h1{
-  font-size:clamp(3.2rem,7.5vw,6.5rem);
-  font-weight:900;line-height:1.02;letter-spacing:-3px;
-  margin-bottom:1.8rem;
-  animation:fadeUp .7s .08s ease both;
-}
-.h1-line2{display:block;}
-.h1-grad{
-  background:linear-gradient(135deg,var(--orange) 0%,var(--orange2) 40%,var(--orange3) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.hero-sub{
-  max-width:580px;font-size:1.15rem;color:var(--text2);
-  line-height:1.75;margin-bottom:3rem;font-weight:400;
-  animation:fadeUp .7s .16s ease both;
-}
-.hero-btns{
-  display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;
-  animation:fadeUp .7s .24s ease both;margin-bottom:5rem;
-}
-.btn-primary{
-  background:var(--orange);color:#fff;text-decoration:none;
-  padding:.9rem 2.4rem;border-radius:10px;font-weight:700;font-size:1rem;
-  transition:background .2s,transform .2s,box-shadow .2s;
-  box-shadow:0 4px 24px rgba(255,107,0,.4);
-}
-.btn-primary:hover{background:var(--orangeD);transform:translateY(-3px);box-shadow:0 12px 40px rgba(255,107,0,.55);}
-.btn-outline{
-  background:transparent;color:var(--text);text-decoration:none;
-  padding:.9rem 2.4rem;border-radius:10px;font-weight:600;font-size:1rem;
-  border:1px solid var(--borderW);
-  transition:border-color .2s,background .2s;
-}
-.btn-outline:hover{border-color:var(--orange);background:rgba(255,107,0,.06);}
-
-/* Hero image strip */
-.hero-img-strip{
-  display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;
-  animation:fadeUp .7s .35s ease both;
-  width:100%;max-width:1100px;
-}
-.hero-img-card{
-  position:relative;border-radius:18px;overflow:hidden;
-  border:1px solid var(--border);flex:1;min-width:200px;max-width:250px;height:160px;
-  transition:transform .3s,box-shadow .3s;
-}
-.hero-img-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(255,107,0,.25);}
-.hero-img-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.7);}
-.hero-img-card-label{
-  position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(to top,rgba(10,10,11,.9),transparent);
-  padding:.8rem 1rem .7rem;
-  font-size:.75rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--orange2);
-}
-
-/* scroll cue */
-.hero-scroll{
-  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:.4rem;
-  color:var(--text3);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;
-  animation:fadeUp .7s .5s ease both;
-}
-.scroll-track{width:1px;height:50px;background:linear-gradient(to bottom,var(--orange),transparent);animation:scTrack 1.6s ease-in-out infinite;}
-@keyframes scTrack{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-
-/* ─── STATS BAR ─── */
-.stats-bar{
-  position:relative;z-index:1;
-  background:var(--bg2);
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:2.8rem 5rem;
-  display:grid;grid-template-columns:repeat(4,1fr);
-}
-.stat-item{padding:0 2rem;border-right:1px solid var(--borderW);text-align:center;}
-.stat-item:last-child{border-right:none;}
-.stat-num{
-  font-size:2.8rem;font-weight:900;letter-spacing:-1.5px;
-  background:linear-gradient(135deg,var(--orange),var(--orange3));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.stat-lbl{color:var(--text2);font-size:.82rem;margin-top:.35rem;letter-spacing:.3px;}
-
-/* ─── SECTIONS ─── */
-section{position:relative;z-index:1;padding:8rem 5rem;}
-.section-tag{
-  display:inline-flex;align-items:center;gap:.5rem;
-  color:var(--orange);font-size:.75rem;font-weight:800;
-  letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem;
-}
-.section-tag::before{content:'';width:24px;height:2px;background:var(--orange);border-radius:2px;}
-h2{font-size:clamp(2.2rem,4vw,3.8rem);font-weight:800;letter-spacing:-1.5px;line-height:1.08;margin-bottom:1.2rem;}
-.section-lead{color:var(--text2);font-size:1.05rem;line-height:1.75;max-width:520px;}
-
-/* ─── SERVICES ─── */
-#services{background:var(--bg2);}
-.services-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:2rem;}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.service-card{
-  background:var(--bg3);border:1px solid var(--borderW);border-radius:20px;
-  overflow:hidden;transition:transform .35s,border-color .3s,box-shadow .3s;cursor:pointer;
-}
-.service-card:hover{transform:translateY(-10px);border-color:var(--border);box-shadow:0 24px 60px rgba(255,107,0,.12);}
-.service-card-img{width:100%;height:200px;object-fit:cover;display:block;filter:brightness(.65);transition:filter .3s;}
-.service-card:hover .service-card-img{filter:brightness(.85);}
-.service-card-body{padding:1.8rem 2rem 2rem;}
-.service-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px;}
-.service-card p{color:var(--text2);font-size:.88rem;line-height:1.65;}
-.service-pill{
-  display:inline-block;margin-top:1.2rem;
-  background:rgba(255,107,0,.1);color:var(--orange2);
-  font-size:.72rem;font-weight:700;letter-spacing:.5px;
-  padding:.3rem .9rem;border-radius:50px;border:1px solid rgba(255,107,0,.18);
-}
-
-/* ─── ABOUT / SPLIT ─── */
-#about{background:var(--bg);}
-.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
-.about-imgs{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.about-img-main{border-radius:20px;overflow:hidden;grid-column:1/-1;height:280px;}
-.about-img-main img{width:100%;height:100%;object-fit:cover;filter:brightness(.75);}
-.about-img-sm{border-radius:16px;overflow:hidden;height:180px;}
-.about-img-sm img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);}
-.about-badge{
-  position:absolute;top:16px;left:16px;
-  background:var(--orange);color:#fff;
-  font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-  padding:.4rem 1rem;border-radius:6px;
-}
-.about-content{padding:2rem 0;}
-.about-content p{color:var(--text2);font-size:1rem;line-height:1.8;margin-bottom:1.5rem;}
-.about-list{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-bottom:2.5rem;}
-.about-list li{display:flex;align-items:flex-start;gap:.9rem;color:var(--text2);font-size:.95rem;line-height:1.6;}
-.about-list li::before{content:'';width:20px;height:20px;background:rgba(255,107,0,.12);border:1px solid var(--border);border-radius:6px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;background-image:url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%23FF6B00' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;}
-
-/* ─── PROCESS ─── */
-#process{background:var(--bg2);}
-.process-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-top:4rem;}
-.process-steps{display:flex;flex-direction:column;gap:0;}
-.process-step{
-  display:flex;gap:1.8rem;padding:2rem 0;
-  border-bottom:1px solid var(--borderW);
-  transition:all .3s;
-}
-.process-step:last-child{border-bottom:none;}
-.step-num{
-  font-size:2.8rem;font-weight:900;letter-spacing:-1px;
-  background:linear-gradient(135deg,var(--orange),var(--orange2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  min-width:3rem;line-height:1;transition:transform .3s;
-}
-.process-step:hover .step-num{transform:scale(1.15);}
-.step-body h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-.2px;}
-.step-body p{color:var(--text2);font-size:.88rem;line-height:1.65;}
-.process-visual{
-  position:relative;border-radius:24px;overflow:hidden;
-  aspect-ratio:.9;border:1px solid var(--border);
-}
-.process-visual-img{width:100%;height:100%;object-fit:cover;filter:brightness(.5);}
-.process-canvas-overlay{position:absolute;top:0;left:0;width:100%;height:100%;}
-#process-canvas{width:100%;height:100%;}
-
-/* ─── TECH STACK ─── */
-#tech{background:var(--bg);}
-.tech-header{text-align:center;margin-bottom:4rem;}
-.tech-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.2rem;}
-.tech-chip{
-  background:var(--bg2);border:1px solid var(--borderW);border-radius:16px;
-  padding:1.5rem 1rem;text-align:center;
-  transition:transform .25s,border-color .25s,box-shadow .25s;
-}
-.tech-chip:hover{transform:translateY(-5px);border-color:var(--border);box-shadow:0 12px 30px rgba(255,107,0,.12);}
-.tech-chip .t-icon{font-size:2rem;display:block;margin-bottom:.7rem;}
-.tech-chip .t-name{font-size:.8rem;color:var(--text2);font-weight:600;}
-
-/* ─── CASE STUDIES ─── */
-#cases{background:var(--bg2);}
-.cases-intro{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:2rem;}
-.cases-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;}
-.case-card{
-  background:var(--bg3);border:1px solid var(--borderW);border-radius:24px;
-  overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .3s;
-}
-.case-card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(0,0,0,.5);border-color:var(--border);}
-.case-img-wrap{position:relative;height:240px;overflow:hidden;}
-.case-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.6);transition:filter .4s,transform .4s;}
-.case-card:hover .case-img-wrap img{filter:brightness(.8);transform:scale(1.04);}
-.case-cat{
-  position:absolute;top:16px;left:16px;
-  background:var(--orange);color:#fff;
-  font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-  padding:.3rem .9rem;border-radius:6px;
-}
-.case-body{padding:2rem 2.2rem;}
-.case-body h3{font-size:1.15rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.2px;}
-.case-body p{color:var(--text2);font-size:.88rem;line-height:1.65;margin-bottom:1.5rem;}
-.case-metrics{display:flex;gap:2rem;flex-wrap:wrap;}
-.metric-val{font-size:1.6rem;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--orange),var(--orange3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.metric-lbl{font-size:.72rem;color:var(--text2);font-weight:500;}
-
-/* ─── TESTIMONIALS ─── */
-#testimonials{background:var(--bg);}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem;}
-.testi-card{
-  background:var(--bg2);border:1px solid var(--borderW);border-radius:20px;
-  padding:2rem;transition:border-color .3s,box-shadow .3s;
-}
-.testi-card:hover{border-color:var(--border);box-shadow:0 12px 30px rgba(255,107,0,.08);}
-.testi-stars{color:var(--orange);font-size:1rem;margin-bottom:1rem;letter-spacing:2px;}
-.testi-text{color:var(--text2);font-size:.9rem;line-height:1.75;margin-bottom:1.5rem;font-style:italic;}
-.testi-author{display:flex;align-items:center;gap:.9rem;}
-.testi-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--border);}
-.testi-name{font-size:.9rem;font-weight:700;}
-.testi-role{font-size:.75rem;color:var(--text2);}
-
-/* ─── CLIENTS ─── */
-#clients{background:var(--bg2);padding:5rem 5rem;}
-.clients-wrap{text-align:center;}
-.clients-label{color:var(--text3);font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:2.5rem;}
-.clients-logos{display:flex;flex-wrap:wrap;justify-content:center;gap:2.5rem 4rem;align-items:center;}
-.client-logo{color:var(--text3);font-size:1rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;transition:color .2s;}
-.client-logo:hover{color:var(--orange);}
-
-/* ─── CTA ─── */
-#cta{
-  background:var(--bg);
-  position:relative;overflow:hidden;
-}
-.cta-bg-img{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  z-index:0;
-}
-.cta-bg-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.12);}
-.cta-inner{position:relative;z-index:1;text-align:center;}
-.cta-inner h2{max-width:800px;margin:0 auto 1.5rem;}
-.cta-inner p{color:var(--text2);max-width:500px;margin:0 auto 3rem;font-size:1.05rem;line-height:1.75;}
-.cta-form{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;
-  width:100%;max-width:760px;margin:0 auto 1.5rem;text-align:left;
-}
-.cta-form input,.cta-form select{
-  background:rgba(255,255,255,.06);border:1px solid var(--borderW);border-radius:10px;
-  padding:.9rem 1.6rem;color:var(--text);font-size:.95rem;font-family:var(--font);
-  outline:none;width:100%;transition:border-color .2s,box-shadow .2s;
-}
-.cta-form input:focus,.cta-form select:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,0,.12);}
-.cta-form input::placeholder{color:var(--text3);}
-.cta-form select{appearance:none;cursor:pointer;color:var(--text2);}
-.cta-form select:valid{color:var(--text);}
-.cta-form select option{background:var(--bg2);color:var(--text);}
-.cta-form .btn-primary{
-  grid-column:1/-1;border:0;cursor:pointer;font-family:var(--font);
-}
-.cta-form .btn-primary:disabled{cursor:wait;opacity:.7;transform:none;}
-.form-status{
-  min-height:1.4rem!important;margin:-.25rem auto 1rem!important;
-  color:var(--text2)!important;font-size:.85rem!important;
-}
-.form-status.success{color:#7ee2a8!important;}
-.form-status.error{color:#ff8f8f!important;}
-.cta-note{color:var(--text3);font-size:.78rem;margin:0 auto!important;}
-.cta-trust{display:flex;justify-content:center;gap:2.5rem;margin-top:3.5rem;flex-wrap:wrap;}
-.trust-item{display:flex;align-items:center;gap:.6rem;color:var(--text2);font-size:.82rem;}
-.trust-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;}
-
-/* ─── FOOTER ─── */
-footer{
-  background:var(--bg2);border-top:1px solid var(--borderW);
-  padding:4rem 5rem 2.5rem;position:relative;z-index:1;
-}
-.footer-top,.footer-bottom{width:100%;max-width:1280px;margin-left:auto;margin-right:auto;}
-.footer-top{display:grid;grid-template-columns:minmax(280px,1.7fr) repeat(3,minmax(150px,1fr));gap:clamp(2rem,4vw,4.5rem);margin-bottom:3rem;}
-.footer-brand .logo{align-items:flex-start;}
-.footer-brand .logo-text{line-height:1.2;}
-.footer-brand p{color:var(--text2);font-size:.88rem;line-height:1.7;margin:.9rem 0 1.5rem;max-width:420px;}
-.footer-social{display:flex;gap:.8rem;}
-.social-btn{
-  width:36px;height:36px;background:var(--bg3);border:1px solid var(--borderW);border-radius:9px;
-  display:flex;align-items:center;justify-content:center;font-size:.9rem;
-  color:var(--text2);font-weight:700;
-  transition:border-color .2s,background .2s,color .2s;text-decoration:none;
-}
-.social-btn:hover{border-color:var(--border);background:rgba(255,107,0,.08);color:var(--orange);}
-.footer-col h4{font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:1.2rem;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
-.footer-col ul a,.footer-col ul span{color:var(--text2);text-decoration:none;font-size:.88rem;line-height:1.5;transition:color .2s;overflow-wrap:anywhere;}
-.footer-col ul a:hover{color:var(--orange);}
-.footer-bottom{border-top:1px solid var(--borderW);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
-.footer-copy{color:var(--text3);font-size:.8rem;}
-.footer-legal{display:flex;gap:1.5rem;flex-wrap:wrap;}
-.footer-legal a{color:var(--text3);text-decoration:none;font-size:.8rem;transition:color .2s;}
-.footer-legal a:hover{color:var(--orange);}
-
-/* ─── REVEAL ─── */
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .75s ease,transform .75s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-
-/* ─── GLOW ORBS ─── */
-.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;opacity:.35;}
-
-/* ─── MOBILE ─── */
-@media(max-width:1024px){
-  nav{padding:1rem 2rem;}
-  .nav-toggle{display:flex;}
-  .nav-links{
-    position:absolute;top:calc(100% + 1px);left:1rem;right:1rem;
-    display:flex;flex-direction:column;align-items:stretch;gap:.35rem;
-    padding:1rem;background:rgba(17,17,19,.98);
-    border:1px solid var(--border);border-radius:0 0 16px 16px;
-    box-shadow:0 20px 40px rgba(0,0,0,.45);
-    opacity:0;visibility:hidden;pointer-events:none;
-    transform:translateY(-10px);transition:opacity .25s,transform .25s,visibility .25s;
-  }
-  nav.menu-open .nav-links{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
-  .nav-links a{display:block;padding:.85rem 1rem;border-radius:8px;}
-  .nav-links a:hover{background:rgba(255,107,0,.08);}
-  .nav-links .nav-cta{text-align:center;margin-top:.35rem;}
-  nav.menu-open .nav-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  nav.menu-open .nav-toggle span:nth-child(2){opacity:0;}
-  nav.menu-open .nav-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  section{padding:5rem 2rem;}
-  .stats-bar{grid-template-columns:repeat(2,1fr);padding:2rem;}
-  .stat-item{border-right:none;border-bottom:1px solid var(--borderW);padding:1.5rem 0;}
-  .stat-item:nth-child(even){border-right:none;}
-  .services-grid{grid-template-columns:1fr;}
-  .about-wrap{grid-template-columns:1fr;gap:3rem;}
-  .process-grid{grid-template-columns:1fr;gap:3rem;}
-  .tech-grid{grid-template-columns:repeat(3,1fr);}
-  .cases-grid{grid-template-columns:1fr;}
-  .testi-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;gap:2rem;}
-  .footer-brand{grid-column:1/-1;}
-  .hero-img-strip{display:none;}
-  footer{padding:3rem 2rem 2rem;}
-  .clients-logos{gap:1.5rem 2rem;}
-  #clients{padding:4rem 2rem;}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,Arial,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.bg-glow{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.12),transparent 68%);top:-300px;left:-250px;pointer-events:none;z-index:-1}
+.bg-glow.two{width:500px;height:500px;top:55%;left:auto;right:-250px;background:radial-gradient(circle,rgba(255,150,60,.08),transparent 70%)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 0;background:rgba(8,9,10,.62);backdrop-filter:blur(22px);border-bottom:1px solid transparent;transition:.3s}
+nav.scrolled{background:rgba(8,9,10,.94);border-color:var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.logo-mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--orange),var(--gold));color:#fff;font-size:12px;box-shadow:0 8px 28px rgba(255,107,0,.25)}
+.logo-name{font-size:16px;letter-spacing:-.4px}
+.logo-name span{color:var(--orange2)}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none;color:var(--muted);font-size:13px;font-weight:600}
+.nav-links a:hover{color:#fff}
+.nav-cta{padding:11px 17px;border-radius:10px;background:var(--orange);color:#fff!important;box-shadow:0 8px 28px rgba(255,107,0,.2);transition:.2s}
+.nav-cta:hover{transform:translateY(-2px);background:#ff7b1c}
+.menu{display:none;background:none;border:1px solid var(--line);color:#fff;width:42px;height:42px;border-radius:10px}
+.hero{min-height:100vh;position:relative;display:grid;place-items:center;padding:130px 0 70px;overflow:hidden}
+#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:.58;filter:saturate(.9) contrast(1.05)}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(8,9,10,.10),rgba(8,9,10,.78) 72%),linear-gradient(180deg,rgba(8,9,10,.25),rgba(8,9,10,.88));pointer-events:none}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.025);color:#d7d9dc;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 16px var(--orange)}
+h1{font-size:clamp(52px,8vw,104px);line-height:.92;letter-spacing:-5px;margin:28px 0 24px;font-weight:800}
+.grad{background:linear-gradient(100deg,#fff 10%,#fff 38%,var(--orange2) 68%,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:680px;margin:auto;color:var(--muted);font-size:17px;line-height:1.75}
+.actions{display:flex;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:12px;font-weight:800;font-size:13px;transition:.25s;border:1px solid var(--line)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 12px 35px rgba(255,107,0,.22)}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(255,107,0,.3)}
+.btn.ghost{background:rgba(255,255,255,.035);color:#eee}
+.btn.ghost:hover{background:rgba(255,255,255,.07)}
+.hero-note{margin-top:18px!important;font-size:11px!important;color:var(--muted2)!important}
+.section{padding:105px 0;position:relative}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:45px}
+.tag{color:var(--orange2);font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
+h2{font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-3px;margin-top:12px}
+.lead{max-width:540px;color:var(--muted);line-height:1.75;font-size:14px}
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:30px 22px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat strong{font-size:34px;letter-spacing:-1px}
+.stat span{display:block;color:var(--muted2);font-size:11px;margin-top:7px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.3s}
+.card:hover{transform:translateY(-6px);border-color:rgba(255,139,42,.38);box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.card-img{height:210px;overflow:hidden;background:#101214}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.card:hover .card-img img{transform:scale(1.04)}
+.card-body{padding:23px}
+.card-body h3{font-size:18px;letter-spacing:-.6px}
+.card-body p{color:var(--muted);font-size:13px;line-height:1.7;margin:10px 0 17px}
+.pills{display:flex;gap:7px;flex-wrap:wrap}
+.pill{font-size:10px;padding:6px 9px;border-radius:999px;border:1px solid var(--line);color:#c5c8cc;background:rgba(255,255,255,.025)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
+.about-media{position:relative;min-height:540px}
+.about-main{position:absolute;inset:0 75px 40px 0;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:#111}
+.about-main img{width:100%;height:100%;object-fit:cover}
+.about-small{position:absolute;width:42%;height:190px;right:0;bottom:0;border:8px solid var(--bg);border-radius:20px;overflow:hidden;background:#111}
+.about-small img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:18px;left:18px;padding:9px 12px;border-radius:999px;background:rgba(8,9,10,.75);border:1px solid var(--line);font-size:10px;font-weight:800;backdrop-filter:blur(12px)}
+.list{list-style:none;margin-top:28px;display:grid;gap:15px}
+.list li{display:flex;gap:12px;color:#c5c8cc;font-size:13px;line-height:1.55}
+.list li:before{content:"✓";color:var(--orange2);font-weight:800}
+.process{display:grid;grid-template-columns:.9fr 1.1fr;gap:45px;align-items:stretch}
+.steps{display:grid;gap:12px}
+.step{padding:22px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025);display:grid;grid-template-columns:48px 1fr;gap:17px}
+.step-num{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--orange2);border:1px solid rgba(255,107,0,.25);background:rgba(255,107,0,.07);font-size:11px;font-weight:800}
+.step h3{font-size:15px}.step p{color:var(--muted);font-size:12px;line-height:1.65;margin-top:5px}
+.process-visual{min-height:520px;border:1px solid var(--line);border-radius:28px;overflow:hidden;position:relative;background:#0d0f11}
+.process-visual>img{width:100%;height:100%;object-fit:cover;opacity:.32;filter:saturate(.8)}
+#process3d{position:absolute;inset:0;width:100%;height:100%}
+.tech{display:flex;flex-wrap:wrap;gap:10px}
+.tech span{padding:13px 17px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);color:#d4d6da;font-size:12px;font-weight:700}
+.tech span:hover{border-color:rgba(255,107,0,.35);color:#fff}
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.case{position:relative;min-height:390px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#111}
+.case img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;transition:.5s}
+.case:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.92),rgba(0,0,0,.05) 70%)}
+.case:hover img{transform:scale(1.035)}
+.case-content{position:absolute;z-index:2;left:25px;right:25px;bottom:23px}
+.case-cat{color:var(--orange2);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.case h3{font-size:23px;margin:7px 0}
+.case p{color:#bfc2c7;font-size:12px;line-height:1.6;max-width:580px}
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.why .card{padding:25px}
+.icon{width:42px;height:42px;border-radius:12px;background:rgba(255,107,0,.08);border:1px solid rgba(255,107,0,.2);display:grid;place-items:center;color:var(--orange2);font-weight:900;margin-bottom:25px}
+.why h3{font-size:16px}.why p{color:var(--muted);font-size:12px;line-height:1.7;margin-top:8px}
+.cta{padding:75px;border:1px solid rgba(255,107,0,.22);border-radius:32px;background:radial-gradient(circle at 50% 0,rgba(255,107,0,.15),transparent 50%),linear-gradient(145deg,#14110e,#0e1012)}
+.cta-inner{text-align:center;max-width:760px;margin:auto}
+.cta h2{font-size:clamp(38px,5vw,65px)}
+.form{margin-top:35px;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.form input,.form select,.form textarea{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.045);color:#fff;outline:none}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:rgba(255,107,0,.7);box-shadow:0 0 0 3px rgba(255,107,0,.08)}
+.form textarea{min-height:120px;resize:vertical;grid-column:1/-1}
+.form .full{grid-column:1/-1}
+.form select option{background:#111}
+.form button{border:0;cursor:pointer}
+.status{min-height:22px;text-align:center;margin-top:12px;color:var(--muted);font-size:12px}
+footer{border-top:1px solid var(--line);padding:55px 0 25px;background:#090a0b}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(2,1fr);gap:45px}
+.footer-brand p{color:var(--muted);font-size:12px;line-height:1.7;max-width:390px;margin-top:15px}
+footer h4{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#fff;margin-bottom:17px}
+footer ul{list-style:none;display:grid;gap:10px}
+footer li,footer a{font-size:12px;color:var(--muted)}
+footer a:hover{color:#fff}
+.bottom{border-top:1px solid var(--line);margin-top:45px;padding-top:20px;color:var(--muted2);font-size:11px;display:flex;justify-content:space-between}
+.reveal{opacity:0;transform:translateY(22px);transition:.7s ease}
+.reveal.show{opacity:1;transform:none}
+@media(max-width:950px){
+  .nav-links{display:none;position:absolute;top:76px;left:20px;right:20px;background:rgba(13,15,17,.98);padding:18px;border:1px solid var(--line);border-radius:18px;flex-direction:column;align-items:stretch}
+  .nav-links.open{display:flex}.nav-links a{padding:10px}.menu{display:grid;place-items:center}
+  .stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .grid{grid-template-columns:repeat(2,1fr)}.why{grid-template-columns:repeat(2,1fr)}
+  .about,.process{grid-template-columns:1fr}.about-media{min-height:460px}.process-visual{min-height:420px}
 }
 @media(max-width:640px){
-  .cta-form{grid-template-columns:1fr;}
-  .cta-form .btn-primary{grid-column:auto;}
-  footer{padding:3rem 1.25rem 2rem;}
-  .footer-top{grid-template-columns:1fr;gap:2.25rem;margin-bottom:2.5rem;}
-  .footer-brand{grid-column:auto;}
-  .footer-brand p{max-width:none;}
-  .footer-bottom{align-items:flex-start;flex-direction:column;}
-  .footer-legal{gap:.75rem 1.25rem;}
+  .container{width:min(var(--max),calc(100% - 28px))}
+  nav{padding:13px 0}.hero{padding-top:105px}.hero p{font-size:14px}.hero h1{letter-spacing:-3px}
+  .section{padding:75px 0}.section-head{display:block}.lead{margin-top:18px}
+  .stats{grid-template-columns:1fr 1fr}.stat{padding:22px 8px}.stat strong{font-size:25px}
+  .grid,.cases,.why{grid-template-columns:1fr}.card-img{height:190px}
+  .about-media{min-height:360px}.about-main{right:40px;bottom:25px}.about-small{width:46%;height:125px}
+  .process-visual{min-height:340px}.cta{padding:35px 18px}.form{grid-template-columns:1fr}.form textarea,.form .full{grid-column:auto}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}.footer-brand{grid-column:1/-1}.bottom{display:block}.bottom span{display:block;margin-top:8px}
 }
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{transition:none}.card,.btn{transition:none}}
 </style>
 </head>
 <body>
+<div class="noise"></div><div class="bg-glow"></div><div class="bg-glow two"></div>
 
-<!-- BG Orbs -->
-<div class="orb" style="width:700px;height:700px;background:radial-gradient(circle,rgba(255,107,0,.15),transparent);top:-200px;left:-200px;"></div>
-<div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(255,140,42,.1),transparent);top:60%;right:-150px;"></div>
-<div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(255,107,0,.08),transparent);bottom:0;left:30%;"></div>
-
-<!-- HERO 3D CANVAS -->
-<canvas id="hero-canvas"></canvas>
-
-<!-- ─── NAV ─── -->
-<nav id="navbar">
-  <div class="logo">
-    <div class="logo-icon">N2</div>
-    <span class="logo-text">N2N Automation</span>
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo"><span class="logo-mark">N2</span><span class="logo-name">N2N <span>Automation</span></span></a>
+    <button class="menu" id="menu" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="links">
+      <li><a href="#services">Services</a></li><li><a href="#solutions">Solutions</a></li><li><a href="#process">How It Works</a></li>
+      <li><a href="#tech">Technology</a></li><li><a href="#work">Work</a></li><li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Book Free Audit →</a></li>
+    </ul>
   </div>
-  <ul class="nav-links" id="primary-navigation">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#tech">Tech</a></li>
-    <li><a href="#cases">Work</a></li>
-    <li><a href="#cta" class="nav-cta">Book Free Audit</a></li>
-  </ul>
-  <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-controls="primary-navigation" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
 </nav>
 
-<!-- ─── HERO ─── -->
-<section id="hero">
-  <div class="hero-eyebrow">
-    <span class="hero-eyebrow-dot"></span>
-    Next-Gen AI Automation
-  </div>
-  <h1>
-  AI Agents That<br>
-  <span class="h1-line2">
-    <span class="h1-grad">Work</span> 24/7
-  </span>
-</h1>
-  <p class="hero-sub">We design AI agents, automated workflows, and business systems that eliminate manual work, increase efficiency, and drive measurable growth.</p>
-  <div class="hero-btns">
-    <a href="#cases" class="btn-primary">Explore Our Work</a>
-    <a href="#cta" class="btn-outline">Book Free Audit →</a>
-  </div>
-
-  <!-- Premium image strip -->
-  <div class="hero-img-strip">
-    <div class="hero-img-card">
-      <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80" alt="Robotics">
-      <div class="hero-img-card-label">Robotics</div>
-    </div>
-    <div class="hero-img-card">
-      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80" alt="Electronics">
-      <div class="hero-img-card-label">Electronics</div>
-    </div>
-    <div class="hero-img-card">
-      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" alt="AI Systems">
-      <div class="hero-img-card-label">AI Systems</div>
-    </div>
-    <div class="hero-img-card">
-      <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=600&q=80" alt="Manufacturing">
-      <div class="hero-img-card-label">Manufacturing</div>
-    </div>
-    <div class="hero-img-card">
-      <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&q=80" alt="Data Centers">
-      <div class="hero-img-card-label">Data Centers</div>
-    </div>
-  </div>
-
-  <div class="hero-scroll">
-    <div class="scroll-track"></div>
-    <span>Scroll</span>
+<main id="top">
+<section class="hero">
+  <video id="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="image/letsimage.mp4" type="video/mp4"></video><div class="hero-overlay" aria-hidden="true"></div>
+  <div class="container hero-content reveal">
+    <div class="eyebrow"><span class="dot"></span> AI Automation • AI Agents • Integrations</div>
+    <h1>AI Agents That<br><span class="grad">Work 24/7</span></h1>
+    <p>We build AI agents, automated workflows, and connected business systems that eliminate repetitive work, respond faster, and keep your operations moving 24/7.</p>
+    <div class="actions"><a class="btn primary" href="#contact">Book Free Automation Audit →</a><a class="btn ghost" href="#work">Explore Our Work</a></div>
+    <p class="hero-note">Custom systems for customer support, leads, appointments, CRM, e-commerce and operations.</p>
   </div>
 </section>
 
-<!-- ─── STATS ─── -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num" data-count="40" data-suffix="+">0+</div>
-    <div class="stat-lbl">Projects Delivered Worldwide</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num" data-count="98" data-suffix="%">0%</div>
-    <div class="stat-lbl">Client Satisfaction Rate</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num" data-count="12" data-suffix="+">0+</div>
-    <div class="stat-lbl">Industries Served</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num" data-count="12" data-suffix="K+">0K+</div>
-    <div class="stat-lbl">Hours Saved Per Month</div>
-  </div>
-</div>
+<section class="container stats reveal" aria-label="N2N Automation highlights">
+  <div class="stat"><strong>10+</strong><span>Automation Workflows</span></div>
+  <div class="stat"><strong>24/7</strong><span>Automated Operations</span></div>
+  <div class="stat"><strong>API</strong><span>Connected Systems</span></div>
+  <div class="stat"><strong>End-to-End</strong><span>Implementation</span></div>
+</section>
 
-<!-- ─── SERVICES ─── -->
-<section id="services">
-  <div class="services-top reveal">
-    <div>
-      <span class="section-tag">What We Do</span>
-     <h2>AI Solutions Built<br>for Business Growth</h2>
-    </div>
-    <p class="section-lead">Our focus is on building practical automation workflows that save time, reduce manual effort, and improve operational efficiency.From workflow automation and AI agents to system integrations and process optimization, we create solutions tailored to your business needs..</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <img class="service-card-img" src="image/workflow.png" alt="Workflow automation">
-      <div class="service-card-body">
-        <h3>How We Deliver Automation</h3>
-        <p>From discovery to deployment, we follow a proven approach to create efficient, scalable, and reliable automation solutions.</p>
-       <span class="service-pill">AI Agents · Workflow Automation · Integrations</span>
-      </div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.1s">
-      <img class="service-card-img" src="image/customer suppport.png" alt="Customer support automation">
-      <div class="service-card-body">
-        <h3>Support That Never Stops</h3>
-        <p>Smarter Customer Support, ticket handling, and follow-ups to deliver reliable and efficient support at scale.</p>
-        <span class="service-pill">Customer Service · Helpdesk · AI Agents</span>
-      </div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.2s">
-      <img class="service-card-img" src="image/supply chain1.png" alt="Supply chain automation">
-      <div class="service-card-body">
-        <h3>Supply Chain Intelligence</h3>
-        <p>Gain visibility across procurement, inventory, logistics, and distribution with intelligent automation and data-driven insights.</p>
-       <span class="service-pill">Supply Chain · Warehouse · Automation</span>
-      </div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.05s">
-      <img class="service-card-img" src="image/data and anylatic.png" alt="Data and analytics">
-      <div class="service-card-body">
-        <h3>Data & Analytics Automation</h3>
-        <p>Transform business data into actionable insights with automated reporting, real-time dashboards, and intelligent analytics workflows.</p>
-        <span class="service-pill">Business Intelligence · Analytics · KPIs</span>
-      </div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.15s">
-      <img class="service-card-img" src="image/erp and system integiration.png" alt="ERP and system integration">
-      <div class="service-card-body">
-        <h3>ERP & System Integration</h3>
-        <p>Connect your business applications, databases, and workflows into one unified ecosystem for seamless operations and real-time data flow.</p>
-        <span class="service-pill">ERP Systems · APIs · Data Sync</span>
-      </div>
-    </div>
-    <div class="service-card reveal" style="transition-delay:.25s">
-      <img class="service-card-img" src="image/hr automation.png" alt="HR automation">
-      <div class="service-card-body">
-        <h3>HR Automation</h3>
-        <p>Simplify recruitment, onboarding, attendance, and employee management with automated workflows that reduce manual effort and improve productivity.</p>
-        <span class="service-pill">Recruitment · Onboarding · HR Workflows</span>
-      </div>
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">What We Do</div><h2>Automate the work<br>your team shouldn't do.</h2></div><p class="lead">Practical AI and workflow automation that connects your existing tools, removes repetitive tasks, and makes operations more efficient.</p></div>
+    <div class="grid">
+      <article class="card reveal"><div class="card-img"><img src="image/workflow.png" alt="Workflow automation"></div><div class="card-body"><h3>AI & Workflow Automation</h3><p>Design reliable workflows that move information and actions automatically from trigger to outcome.</p><div class="pills"><span class="pill">AI Agents</span><span class="pill">n8n</span><span class="pill">Webhooks</span></div></div></article>
+      <article class="card reveal"><div class="card-img"><img src="image/customer suppport.png" alt="Customer support automation"></div><div class="card-body"><h3>AI Customer Support</h3><p>Automate customer conversations, ticket handling, FAQs, routing and follow-ups at scale.</p><div class="pills"><span class="pill">WhatsApp</span><span class="pill">AI</span><span class="pill">Helpdesk</span></div></div></article>
+      <article class="card reveal"><div class="card-img"><img src="image/supply chain1.png" alt="Supply chain automation"></div><div class="card-body"><h3>Supply Chain Intelligence</h3><p>Connect procurement, inventory, logistics and distribution workflows for better visibility.</p><div class="pills"><span class="pill">Inventory</span><span class="pill">Logistics</span><span class="pill">Automation</span></div></div></article>
+      <article class="card reveal"><div class="card-img"><img src="image/data and anylatic.png" alt="Data and analytics automation"></div><div class="card-body"><h3>Data & Analytics Automation</h3><p>Turn business data into automated reports, dashboards and actionable operational insights.</p><div class="pills"><span class="pill">Analytics</span><span class="pill">KPIs</span><span class="pill">Reports</span></div></div></article>
+      <article class="card reveal"><div class="card-img"><img src="image/erp and system integiration.png" alt="ERP and system integration"></div><div class="card-body"><h3>ERP & System Integration</h3><p>Connect business applications, databases and workflows into one unified ecosystem.</p><div class="pills"><span class="pill">APIs</span><span class="pill">ERP</span><span class="pill">Data Sync</span></div></div></article>
+      <article class="card reveal"><div class="card-img"><img src="image/hr automation.png" alt="HR automation"></div><div class="card-body"><h3>HR Automation</h3><p>Streamline recruitment, onboarding, attendance and employee workflows with automation.</p><div class="pills"><span class="pill">Recruitment</span><span class="pill">Onboarding</span><span class="pill">HR</span></div></div></article>
     </div>
   </div>
 </section>
 
-<!-- ─── ABOUT ─── -->
-<section id="about">
-  <div class="about-wrap">
-    <div class="about-imgs reveal">
-      <div class="about-img-main">
-        <div class="about-badge">Since 2025</div>
-        <img src="image/tem.jpg" alt="N2N Automation team">
-      </div>
-      <div class="about-img-sm">
-        <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=500&q=80" alt="Server room">
-      </div>
-      <div class="about-img-sm">
-        <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500&q=80" alt="Code">
-      </div>
-    </div>
-    <div class="about-content reveal" style="transition-delay:.15s">
-      <span class="section-tag">Who We Are</span>
-      <h2>Experts Who Build<br>Intelligent Automation</h2>
-      <p>Founded in 2025, N2N Automation is a specialized team of AI automation engineers, workflow architects, and integration experts helping businesses transform operations through intelligent automation and connected systems.</p>
-      <p>We don't believe in one-size-fits-all solutions. We design and implement custom AI-powered workflows that seamlessly integrate with your existing tools, processes, and business objectives.</p>
-      <ul class="about-list">
-        <li>Custom AI automation solutions tailored to your industry and operational needs</li>
-        <li>End-to-end implementation, integration, testing, and deployment support</li>
-        <li>Agile delivery approach with transparent communication and rapid iterations</li>
-        <li>Ongoing optimization, monitoring, and support to maximize long-term business value</li>
-        <li>Expertise across customer support, HR, finance, ERP, healthcare, retail, and supply chain automation</li>
-        <li>Scalable automation architectures designed to grow alongside your business</li>
-      </ul>
-      <a href="#cta" class="btn-primary">Meet the Team →</a>
+<section class="section" id="solutions">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">Automation Systems</div><h2>From trigger<br>to action — automatically.</h2></div><p class="lead">Build connected systems that respond to events, understand context, update records and take action without manual handoffs.</p></div>
+    <div class="grid">
+      <article class="card reveal"><div class="card-body"><h3>Customer Support</h3><p>WhatsApp → AI Agent → Knowledge → CRM → Response → Human escalation.</p></div></article>
+      <article class="card reveal"><div class="card-body"><h3>Lead Follow-up</h3><p>Website form → Webhook → AI qualification → CRM → WhatsApp/email follow-up.</p></div></article>
+      <article class="card reveal"><div class="card-body"><h3>Appointment Booking</h3><p>Customer request → AI assistant → Calendar → Booking → Confirmation → Reminder.</p></div></article>
+      <article class="card reveal"><div class="card-body"><h3>E-commerce</h3><p>Order → Shopify → Inventory → CRM → Customer notification → Internal alert.</p></div></article>
+      <article class="card reveal"><div class="card-body"><h3>CRM Automation</h3><p>Lead capture → qualification → assignment → follow-up → pipeline update.</p></div></article>
+      <article class="card reveal"><div class="card-body"><h3>Operations</h3><p>Event → workflow logic → database → notification → action → reporting.</p></div></article>
     </div>
   </div>
 </section>
 
-<!-- ─── PROCESS ─── -->
-<section id="process">
-  <div class="reveal" style="margin-bottom:1rem;">
-    <span class="section-tag">How We Work</span>
-    <h2>From Discovery<br>to Deployment</h2>
-  </div>
-  <div class="process-grid">
-    <div class="process-steps reveal" style="transition-delay:.05s">
-      <div class="process-step">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Discover & Analyze</h3>
-          <p>We conduct a detailed assessment of your business operations, existing systems, and automation requirements to identify the highest-impact opportunities.</p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>Design & Strategy</h3>
-          <p>Our experts create a customized automation roadmap and workflow architecture that aligns with your business objectives and growth plans.</p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>Build & Integrate</h3>
-          <p>We develop, test, and seamlessly integrate AI automation solutions with your existing tools, platforms, and business processes.</p>
-        </div>
-      </div>
-      <div class="process-step">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>Launch, Monitor & Optimize</h3>
-          <p>After deployment, we continuously monitor performance, optimize workflows, and provide ongoing support to ensure maximum efficiency and ROI.</p>
-        </div>
-      </div>
+<section class="section" id="about">
+  <div class="container about">
+    <div class="about-media reveal">
+      <div class="about-main"><img src="image/tem.jpg" alt="N2N Automation team"><span class="badge">Since 2025</span></div>
+      <div class="about-small"><img src="image/animation.png" alt="Automation workflow visualization"></div>
     </div>
-    <div class="process-visual reveal" style="transition-delay:.2s">
-      <img class="process-visual-img" src="image/animation.png" alt="How N2N Automation works">
-      <div class="process-canvas-overlay">
-        <canvas id="process-canvas"></canvas>
-      </div>
+    <div class="reveal"><div class="tag">Who We Are</div><h2>We build intelligent systems around your business.</h2><p class="lead" style="margin-top:22px">N2N Automation helps businesses replace repetitive manual processes with AI agents, workflow automation, APIs, databases and connected business tools.</p>
+      <ul class="list"><li>Custom AI automation designed around your process</li><li>End-to-end workflow and API implementation</li><li>CRM, WhatsApp, e-commerce and operational integrations</li><li>Monitoring, optimization and ongoing support</li><li>Scalable systems built to grow with the business</li></ul>
     </div>
   </div>
 </section>
 
-<!-- ─── TECH ─── -->
-<section id="tech">
-  <div class="tech-header reveal">
-    <span class="section-tag">Technology Stack</span>
-    <h2>Built on Battle-Tested Platforms</h2>
-  </div>
-  <div class="tech-grid">
-    <div class="tech-chip reveal"><span class="t-icon">⚙️</span><span class="t-name">UiPath</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.04s"><span class="t-icon">🐍</span><span class="t-name">Python</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.08s"><span class="t-icon">☁️</span><span class="t-name">AWS</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.12s"><span class="t-icon">🔷</span><span class="t-name">Azure</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.16s"><span class="t-icon">🐳</span><span class="t-name">Docker</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.2s"><span class="t-icon">⚡</span><span class="t-name">Node.js</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.04s"><span class="t-icon">🔧</span><span class="t-name">Terraform</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.08s"><span class="t-icon">🗄️</span><span class="t-name">PostgreSQL</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.12s"><span class="t-icon">🤖</span><span class="t-name">LangChain</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.16s"><span class="t-icon">📊</span><span class="t-name">Power BI</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.2s"><span class="t-icon">🔗</span><span class="t-name">Kafka</span></div>
-    <div class="tech-chip reveal" style="transition-delay:.24s"><span class="t-icon">🌊</span><span class="t-name">Kubernetes</span></div>
-  </div>
-</section>
-
-<!-- ─── CASE STUDIES ─── -->
-<section id="cases">
-  <div class="cases-intro reveal">
-    <div>
-      <span class="section-tag">Case Studies</span>
-      <h2>Results Our Clients<br>Can Measure</h2>
-    </div>
-    <p class="section-lead">Four transformations across four industries — each one delivering measurable ROI within the first quarter of deployment.</p>
-  </div>
-  <div class="cases-grid">
-    <div class="case-card reveal">
-      <div class="case-img-wrap">
-        <img src="image/operation.png?v=20260613" alt="Operations automation">
-        <span class="case-cat">Manufacturing</span>
+<section class="section" id="process">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">How We Work</div><h2>From discovery<br>to deployment.</h2></div><p class="lead">A focused process for turning repetitive business work into dependable automated systems.</p></div>
+    <div class="process">
+      <div class="steps">
+        <article class="step reveal"><div class="step-num">01</div><div><h3>Discover & Analyze</h3><p>Understand the current process, tools, bottlenecks and highest-impact automation opportunities.</p></div></article>
+        <article class="step reveal"><div class="step-num">02</div><div><h3>Design & Strategy</h3><p>Map the workflow architecture, AI behavior, integrations, data and business rules.</p></div></article>
+        <article class="step reveal"><div class="step-num">03</div><div><h3>Build & Integrate</h3><p>Develop, test and connect the automation with the systems your business already uses.</p></div></article>
+        <article class="step reveal"><div class="step-num">04</div><div><h3>Launch & Optimize</h3><p>Deploy, monitor performance, fix edge cases and improve the system as it runs.</p></div></article>
       </div>
-      <div class="case-body">
-        <h3>Smart Factory Monitoring</h3>
-        <p>Monitor machines, production lines, and operational performance in real time. Detect issues early, reduce downtime, and improve overall manufacturing efficiency.</p>
-        <div class="case-metrics">
-          <div><div class="metric-val">73%</div><div class="metric-lbl">Downtime Reduced</div></div>
-          <div><div class="metric-val">₹10L</div><div class="metric-lbl">Annual Savings</div></div>
-          <div><div class="metric-val">6 wks</div><div class="metric-lbl">Deployment Time</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="case-card reveal" style="transition-delay:.1s">
-      <div class="case-img-wrap">
-        <img src="image/finance.png" alt="Finance automation">
-        <span class="case-cat">Finance</span>
-      </div>
-      <div class="case-body">
-        <h3>Smarter Finance Management with AI</h3>
-        <p>Automate repetitive accounting and finance processes effortlessly.
-          Track expenses, reconcile transactions, and manage payments in one place.</p>
-        <div class="case-metrics">
-          <div><div class="metric-val">94%</div><div class="metric-lbl">Processing Time Cut</div></div>
-          <div><div class="metric-val">12K</div><div class="metric-lbl">Loans/Month Automated</div></div>
-          <div><div class="metric-val">0.2%</div><div class="metric-lbl">Error Rate</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="case-card reveal" style="transition-delay:.1s">
-      <div class="case-img-wrap">
-        <img src="image/health care.png" alt="Healthcare automation">
-        <span class="case-cat">Healthcare</span>
-      </div>
-      <div class="case-body">
-        <h3>Patient Record Automation — CareSync Hospitals</h3>
-        <p>streamlines patient care, appointments, records, and administrative workflows through intelligent AI-powered systems. Improve efficiency, enhance patient experiences, and enable healthcare professionals to focus more on quality care.</p>
-        <div class="case-metrics">
-          <div><div class="metric-val">4 hrs</div><div class="metric-lbl">Admin Saved/Nurse/Day</div></div>
-          <div><div class="metric-val">99.1%</div><div class="metric-lbl">Data Accuracy</div></div>
-          <div><div class="metric-val">30%</div><div class="metric-lbl">Faster Billing</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="case-card reveal" style="transition-delay:.2s">
-      <div class="case-img-wrap">
-        <img src="image/retail.png" alt="Retail automation">
-        <span class="case-cat">Retail</span>
-      </div>
-      <div class="case-body">
-        <h3>Transform Retail Operations with Intelligent Automation</h3>
-        <p>Automate inventory, sales, and customer engagement across every channel.
-           Gain real-time visibility into products, orders, and store performance.</p>
-        <div class="case-metrics">
-          <div><div class="metric-val">41%</div><div class="metric-lbl">Overstock Reduced</div></div>
-          <div><div class="metric-val">+18%</div><div class="metric-lbl">Margin Improvement</div></div>
-          <div><div class="metric-val">Live</div><div class="metric-lbl">Inventory Sync</div></div>
-        </div>
-      </div>
+      <div class="process-visual reveal"><img src="image/motion.png" alt="N2N automation process"><canvas id="process3d" aria-hidden="true"></canvas></div>
     </div>
   </div>
 </section>
 
-<div class="testi-card reveal">
-  <div class="testi-stars">★★★★★</div>
-  <p class="testi-text">
-    "The AI customer support agent now handles over 70% of our routine inquiries automatically. Our response times dropped from hours to seconds, and our team can focus on complex customer issues."
-  </p>
-  <div class="testi-author">
-    <img class="testi-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="David Chen">
-    <div>
-      <div class="testi-name">David Chen</div>
-      <div class="testi-role">Head of Customer Success</div>
+<section class="section" id="tech">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">Technology</div><h2>Connected to the tools<br>your business already uses.</h2></div></div>
+    <div class="tech reveal">
+      <span>n8n</span><span>OpenAI</span><span>WhatsApp</span><span>Shopify</span><span>Google Sheets</span><span>Google Calendar</span><span>REST APIs</span><span>Webhooks</span><span>PostgreSQL</span><span>Supabase</span><span>CRM</span><span>Email</span><span>Telegram</span>
     </div>
-  </div>
-</div>
-
-<div class="testi-card reveal" style="transition-delay:.1s">
-  <div class="testi-stars">★★★★★</div>
-  <p class="testi-text">
-    "Their workflow automation eliminated countless manual tasks between our CRM, email, and internal systems. What used to require several hours each day now runs automatically in the background."
-  </p>
-  <div class="testi-author">
-    <img class="testi-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Mitchell">
-    <div>
-      <div class="testi-name">Sarah Mitchell</div>
-      <div class="testi-role">Operations Manager</div>
-    </div>
-  </div>
-</div>
-
-<div class="testi-card reveal" style="transition-delay:.2s">
-  <div class="testi-stars">★★★★★</div>
-  <p class="testi-text">
-    "The team integrated our ERP, CRM, and reporting tools into a single automated workflow. We now have real-time visibility across departments and make decisions with far greater confidence."
-  </p>
-  <div class="testi-author">
-    <img class="testi-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Michael Roberts">
-    <div>
-      <div class="testi-name">Michael Roberts</div>
-      <div class="testi-role">Director of Operations</div>
-    </div>
-  </div>
-</div>
-<!-- ─── CLIENTS ─── -->
-<div id="clients">
-  <div class="clients-wrap reveal">
-    <div class="clients-label">Services trusted by 10+ companies across India & Southeast Asia</div>
-    <div class="clients-logos">
-      <span class="client-logo">Agency</span>
-      <span class="client-logo">Medico</span>
-      <span class="client-logo">Marketing</span>
-      <span class="client-logo">Custome Service</span>
-      <span class="client-logo">Retail</span>
-      <span class="client-logo">Health Care</span>
-      <span class="client-logo">ecommerece</span>
-      <span class="client-logo">SaaS Companies</span>
-    </div>
-  </div>
-</div>
-
-<!-- ─── CTA ─── -->
-<section id="cta">
-  <div class="cta-bg-img">
-    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1800&q=80" alt="Background">
-  </div>
-  <div class="cta-inner reveal">
-    <span class="section-tag">Get Started Today</span>
-    <h2>Ready to Automate Everything<br>That Slows You Down?</h2>
-    <p>Tell us about your business, and we'll show you how AI and automation can streamline operations and drive measurable results.</p>
-    <form class="cta-form" id="audit-form">
-      <input type="text" name="name" placeholder="Your name" autocomplete="name" required>
-      <input type="text" name="companyName" placeholder="Company name" autocomplete="organization" required>
-      <input type="email" name="email" placeholder="your@company.com" autocomplete="email" required>
-      <select name="service" required>
-        <option value="" selected disabled>Select a service</option>
-        <option value="AI Customer Support">AI Customer Support</option>
-        <option value="AI Workflows">AI Workflows</option>
-        <option value="HR Automation">HR Automation</option>
-        <option value="ERP Integration">ERP Integration</option>
-        <option value="Cloud DevOps">Cloud DevOps</option>
-        <option value="Other">Other</option>
-      </select>
-      <button type="submit" class="btn-primary">Get My Free Audit →</button>
-    </form>
-    <p class="form-status" id="audit-form-status" role="status" aria-live="polite"></p>
-    <p class="cta-note">No spam. Honest assessment. We respond within one business day.</p>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
+<section class="section" id="work">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">Selected Work</div><h2>Automation<br>in action.</h2></div><p class="lead">Use your real projects and concepts here. Keep client names and metrics factual and editable.</p></div>
+    <div class="cases">
+      <article class="case reveal"><img src="image/operation.png?v=20260613" alt="Operations automation"><div class="case-content"><div class="case-cat">Operations / Manufacturing</div><h3>Operations Automation</h3><p>Connect operational events, monitoring, data and notifications into a streamlined workflow.</p></div></article>
+      <article class="case reveal"><img src="image/finance.png" alt="Finance automation"><div class="case-content"><div class="case-cat">Finance</div><h3>Finance Automation</h3><p>Automate repetitive finance processes, data movement, reporting and internal notifications.</p></div></article>
+      <article class="case reveal"><img src="image/health care.png" alt="Healthcare automation"><div class="case-content"><div class="case-cat">Healthcare</div><h3>Healthcare Automation</h3><p>Connect appointments, records, customer communication and administrative workflows.</p></div></article>
+      <article class="case reveal"><img src="image/retail.png" alt="Retail automation"><div class="case-content"><div class="case-cat">Retail</div><h3>Retail Automation</h3><p>Automate inventory, sales operations, customer engagement and connected workflows.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal"><div><div class="tag">Why N2N</div><h2>Less manual work.<br>More intelligent operations.</h2></div></div>
+    <div class="why">
+      <article class="card reveal"><div class="icon">01</div><h3>Save Time</h3><p>Remove repetitive manual tasks and reduce unnecessary handoffs.</p></article>
+      <article class="card reveal"><div class="icon">02</div><h3>Respond Faster</h3><p>Let AI handle repetitive customer interactions and routine requests instantly.</p></article>
+      <article class="card reveal"><div class="icon">03</div><h3>Connect Systems</h3><p>Bring CRM, WhatsApp, email, calendars, databases and e-commerce together.</p></article>
+      <article class="card reveal"><div class="icon">04</div><h3>Scale Operations</h3><p>Build systems that continue working as your business grows.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <div class="cta reveal">
+      <div class="cta-inner">
+        <div class="tag">Free Automation Audit</div>
+        <h2>What could you automate?</h2>
+        <p class="lead" style="margin:18px auto 0">Tell us how your business works today. We'll identify repetitive processes that can be automated and show you where AI can create the biggest impact.</p>
+        <form class="form" id="audit-form">
+          <input name="name" required placeholder="Your name">
+          <input name="companyName" required placeholder="Company name">
+          <input type="email" name="email" required placeholder="Business email">
+          <input name="phone" placeholder="Phone / WhatsApp">
+          <select name="service" required><option value="">What do you need?</option><option>AI Agents</option><option>Workflow Automation</option><option>WhatsApp Automation</option><option>CRM Automation</option><option>E-commerce Automation</option><option>API Integration</option><option>Other</option></select>
+          <input name="subject" placeholder="What would you like to automate?">
+          <textarea class="full" name="message" placeholder="Tell us briefly about your current process..."></textarea>
+          <button class="btn primary full" type="submit">Get My Free Automation Audit →</button>
+        </form>
+        <div class="status" id="status"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
 <footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="logo">
-        <div class="logo-icon">N2</div>
-        <span class="logo-text">N2N Automation Service</span>
-      </div>
-      <p>N2N Automation helps businesses streamline repetitive processes through intelligent AI-powered workflows and seamless system integrations. We design scalable automation solutions that save time, reduce costs, and enable teams to focus on high-value work.</p>
-      
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a class="logo" href="#top"><span class="logo-mark">N2</span><span class="logo-name">N2N <span>Automation</span></span></a><p>AI agents, workflow automation and connected business systems that eliminate repetitive work and help businesses operate more efficiently.</p></div>
+      <div><h4>Solutions</h4><ul><li><a href="#services">AI Agents</a></li><li><a href="#services">Workflow Automation</a></li><li><a href="#services">WhatsApp Automation</a></li><li><a href="#services">CRM Automation</a></li><li><a href="#services">API Integrations</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#about">About</a></li><li><a href="#process">How It Works</a></li><li><a href="#work">Work</a></li><li><a href="#contact">Contact</a></li></ul></div>
     </div>
-    <div class="footer-col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="#">Customer Support</a></li>
-        <li><a href="#">AI Workflows</a></li>
-        <li><a href="#">HR Automation</a></li>
-        <li><a href="#">ERP Integration</a></li>
-        <li><a href="#">Cloud DevOps</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#">About N2N</a></li>
-        <li><a href="#">Case Studies</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Partners</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><span>Purnea, Bihar, India</span></li>
-        <li><a href="mailto:business@n2nautomation">business@n2nautomation</a></li>
-        <li><a href="tel:+918677813088">+91 8677813088</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2025 N2N Automation Service. All rights reserved. | Patna, Bihar, India</div>
-    <div class="footer-legal">
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Cookie Policy</a>
-    </div>
+    <div class="bottom"><span>© 2026 N2N Automation. All rights reserved.</span><span>Purnea, Bihar, India</span></div>
   </div>
 </footer>
 
-<!-- ─── THREE.JS SCRIPTS ─── -->
 <script>
-/* ── HERO 3D SCENE ── */
-(function(){
-  const canvas = document.getElementById('hero-canvas');
-  const renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setSize(window.innerWidth,window.innerHeight);
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55,window.innerWidth/window.innerHeight,.1,1000);
-  camera.position.set(0,0,5);
+const menu=document.getElementById('menu'), links=document.getElementById('links');
+menu.addEventListener('click',()=>{const open=links.classList.toggle('open');menu.setAttribute('aria-expanded',open);menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});
+links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');menu.setAttribute('aria-expanded','false')}));
 
-  /* Torus knot wireframe */
-  const tkGeo = new THREE.TorusKnotGeometry(1.8,.45,240,32);
-  const tkMat = new THREE.MeshPhongMaterial({color:0xFF6B00,wireframe:true,transparent:true,opacity:.07});
-  const tk = new THREE.Mesh(tkGeo,tkMat);
-  scene.add(tk);
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));
 
-  /* Rings */
-  const addRing = (r,c,ox,t) => {
-    const m = new THREE.Mesh(
-      new THREE.TorusGeometry(r,.015,16,200),
-      new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:ox})
-    );
-    m.rotation.x = t; scene.add(m); return m;
-  };
-  const r1 = addRing(3.2,0xFF6B00,.2,Math.PI/2);
-  const r2 = addRing(2.6,0xFF8C2A,.15,Math.PI/3);
-  const r3 = addRing(2.0,0xFFB347,.12,Math.PI/4);
-
-  /* Particles */
-  const N=400;const pos=new Float32Array(N*3);
-  for(let i=0;i<N*3;i++) pos[i]=(Math.random()-.5)*22;
-  const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-  const pts=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xFF8C2A,size:.04,transparent:true,opacity:.55}));
-  scene.add(pts);
-
-  /* Grid */
-  const grid=new THREE.GridHelper(40,40,0xFF6B00,0xFF6B00);
-  grid.position.y=-4.5;grid.material.transparent=true;grid.material.opacity=.04;scene.add(grid);
-
-  /* Lights */
-  scene.add(new THREE.AmbientLight(0xffffff,.4));
-  const pl1=new THREE.PointLight(0xFF6B00,1.5,25);pl1.position.set(3,3,3);scene.add(pl1);
-  const pl2=new THREE.PointLight(0xFFB347,1,20);pl2.position.set(-3,-2,-3);scene.add(pl2);
-
-  let mouse={x:0,y:0};
-  document.addEventListener('mousemove',e=>{
-    mouse.x=(e.clientX/window.innerWidth-.5)*2;
-    mouse.y=-(e.clientY/window.innerHeight-.5)*2;
-  });
-
-  window.addEventListener('resize',()=>{
-    camera.aspect=window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth,window.innerHeight);
-  });
-
-  let t=0;
-  (function loop(){
-    requestAnimationFrame(loop);t+=.005;
-    tk.rotation.x=t*.3;tk.rotation.y=t*.5;
-    r1.rotation.z=t*.18;r2.rotation.y=t*.25;r3.rotation.z=-t*.2;
-    pts.rotation.y=t*.04;pts.rotation.x=t*.025;
-    camera.position.x+=(mouse.x*.6-camera.position.x)*.05;
-    camera.position.y+=(mouse.y*.35-camera.position.y)*.05;
-    camera.lookAt(scene.position);
-    renderer.render(scene,camera);
-  })();
-})();
-
-/* ── PROCESS 3D SCENE ── */
-(function(){
-  const canvas=document.getElementById('process-canvas');
-  if(!canvas) return;
-  const par=canvas.parentElement;
-  const W=par.offsetWidth,H=par.offsetHeight;
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-
-  const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(50,W/H,.1,100);
-  camera.position.z=3.5;
-
-  /* Central icosahedron */
-  const ico=new THREE.Mesh(
-    new THREE.IcosahedronGeometry(.8,1),
-    new THREE.MeshPhongMaterial({color:0xFF6B00,wireframe:true,transparent:true,opacity:.35})
-  );
-  scene.add(ico);
-
-  /* Orbiting spheres */
-  const colors=[0xFF6B00,0xFF8C2A,0xFFB347,0xCC4E00];
-  const orbs=colors.map((c,i)=>{
-    const m=new THREE.Mesh(
-      new THREE.SphereGeometry(.12,16,16),
-      new THREE.MeshPhongMaterial({color:c,transparent:true,opacity:.9})
-    );
-    scene.add(m);
-    return {mesh:m,angle:(i/colors.length)*Math.PI*2,r:1.5+i*.12,speed:.4+i*.15};
-  });
-
-  /* Rings */
-  for(let i=0;i<3;i++){
-    const rr=new THREE.Mesh(
-      new THREE.TorusGeometry(1.6+i*.2,.008,8,120),
-      new THREE.MeshBasicMaterial({color:0xFF6B00,transparent:true,opacity:.12})
-    );
-    rr.rotation.x=Math.PI/(2+i*.7)*(i%2?-1:1);rr.rotation.y=i*.6;scene.add(rr);
-  }
-
-  scene.add(new THREE.AmbientLight(0xffffff,.5));
-  const pl=new THREE.PointLight(0xFF6B00,2.5,12);pl.position.set(2,2,2);scene.add(pl);
-
-  let t=0;
-  (function loop(){
-    requestAnimationFrame(loop);t+=.01;
-    ico.rotation.y=t*.4;ico.rotation.x=t*.2;
-    orbs.forEach(o=>{
-      o.angle+=o.speed*.012;
-      o.mesh.position.x=Math.cos(o.angle)*o.r;
-      o.mesh.position.z=Math.sin(o.angle)*o.r;
-      o.mesh.position.y=Math.sin(o.angle*1.5)*.6;
-      o.mesh.rotation.x+=.03;
-    });
-    renderer.render(scene,camera);
-  })();
-})();
-
-/* ── SCROLL REVEAL ── */
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible');});
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-/* ── COUNTER ── */
-const cObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting) return;
-    const el=e.target;
-    const target=+el.getAttribute('data-count');
-    const suffix=el.getAttribute('data-suffix')||'';
-    let cur=0;const step=target/60;
-    const timer=setInterval(()=>{
-      cur+=step;
-      if(cur>=target){cur=target;clearInterval(timer);}
-      el.textContent=Math.floor(cur)+suffix;
-    },20);
-    cObs.unobserve(el);
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
-
-/* ── FREE AUDIT FORM ── */
-const auditForm=document.getElementById('audit-form');
-const auditFormStatus=document.getElementById('audit-form-status');
-const auditSubmitButton=auditForm.querySelector('button[type="submit"]');
-const auditWebhook='https://automation008.app.n8n.cloud/webhook/n2naiautomation';
-
-auditForm.addEventListener('submit',async event=>{
-  event.preventDefault();
-  if(!auditForm.reportValidity()) return;
-
-  const formData=new FormData(auditForm);
-  formData.set('source','N2N Automation website');
-  formData.set('submittedAt',new Date().toISOString());
-
-  auditSubmitButton.disabled=true;
-  auditSubmitButton.textContent='Submitting...';
-  auditFormStatus.className='form-status';
-  auditFormStatus.textContent='Sending your audit request...';
-
+const webhook='https://automation008.app.n8n.cloud/webhook/n2naiautomation';
+const form=document.getElementById('audit-form'), status=document.getElementById('status');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!form.reportValidity()) return;
+  const btn=form.querySelector('button');
+  const data=new FormData(form);
+  data.set('source','N2N Automation website');
+  data.set('submittedAt',new Date().toISOString());
+  btn.disabled=true;btn.textContent='Submitting...';status.textContent='Sending your audit request...';
   try{
-    const response=await fetch(auditWebhook,{
-      method:'POST',
-      body:new URLSearchParams(formData)
-    });
-    if(!response.ok) throw new Error(`Webhook returned ${response.status}`);
+    const r=await fetch(webhook,{method:'POST',body:new URLSearchParams(data)});
+    if(!r.ok) throw new Error('Webhook '+r.status);
+    form.reset();status.textContent='Thanks! Your automation audit request has been received.';
+  }catch(err){console.error(err);status.textContent="We couldn't submit your request. Please try again."}
+  finally{btn.disabled=false;btn.textContent='Get My Free Automation Audit →'}
+});
 
-    auditForm.reset();
-    auditFormStatus.className='form-status success';
-    auditFormStatus.textContent='Thank you! Your free audit request has been submitted.';
-  }catch(error){
-    console.error('Audit form submission failed:',error);
-    auditFormStatus.className='form-status error';
-    auditFormStatus.textContent='We could not submit your request. Please try again.';
-  }finally{
-    auditSubmitButton.disabled=false;
-    auditSubmitButton.textContent='Get My Free Audit →';
+function scene3D(canvas,mode){
+  if(!canvas || !window.THREE) return;
+  const mobile=matchMedia('(max-width:640px)').matches;
+  const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!mobile});
+  renderer.setPixelRatio(mobile?1:Math.min(devicePixelRatio,1.5));
+  const w=canvas.clientWidth||innerWidth,h=canvas.clientHeight||innerHeight;
+  renderer.setSize(w,h,false);
+  const scene=new THREE.Scene(), camera=new THREE.PerspectiveCamera(50,w/h,.1,100);
+  camera.position.z=mode==='hero'?5:4.2;
+  const group=new THREE.Group();scene.add(group);
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(mode==='hero'?1.05:.72,2),new THREE.MeshBasicMaterial({color:0xff8c2a,wireframe:true,transparent:true,opacity:.7}));
+  group.add(core);
+  const colors=[0x4db8ff,0xb47cff,0x35d69a,0x55e6ff,0xff5fb7,0xffc857,0xff7f66];
+  const nodes=[];
+  const count=mobile?5:7;
+  for(let i=0;i<count;i++){
+    const a=i/count*Math.PI*2;
+    const r=mode==='hero'?2.25:1.7;
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.12,12,12),new THREE.MeshBasicMaterial({color:colors[i],transparent:true,opacity:.95}));
+    m.position.set(Math.cos(a)*r,Math.sin(a)*r*.58,Math.sin(a)*r);
+    group.add(m);nodes.push({m,a,r});
   }
-});
-
-/* ── NAV SCROLL ── */
-const navbar=document.getElementById('navbar');
-const navToggle=document.querySelector('.nav-toggle');
-const navLinks=document.querySelector('.nav-links');
-
-navToggle.addEventListener('click',()=>{
-  const isOpen=navbar.classList.toggle('menu-open');
-  navToggle.setAttribute('aria-expanded',String(isOpen));
-  navToggle.setAttribute('aria-label',isOpen?'Close navigation menu':'Open navigation menu');
-});
-
-navLinks.querySelectorAll('a').forEach(link=>{
-  link.addEventListener('click',()=>{
-    navbar.classList.remove('menu-open');
-    navToggle.setAttribute('aria-expanded','false');
-    navToggle.setAttribute('aria-label','Open navigation menu');
-  });
-});
-
-window.addEventListener('scroll',()=>{
-  navbar.style.background=window.scrollY>50?'rgba(10,10,11,0.97)':'rgba(10,10,11,0.75)';
-});
+  const rings=[];
+  [1.45,1.9,2.35].forEach((r,i)=>{const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.012,8,100),new THREE.MeshBasicMaterial({color:[0xff6b00,0x8c6cff,0x35d69a][i],transparent:true,opacity:.22}));ring.rotation.x=Math.PI/2+(i*.35);group.add(ring);rings.push(ring)});
+  scene.add(new THREE.AmbientLight(0xffffff,.8));
+  const light=new THREE.PointLight(0xff6b00,2.5,15);light.position.set(2,2,3);scene.add(light);
+  let t=0, raf;
+  function loop(){
+    raf=requestAnimationFrame(loop);
+    if(!reduced){t+=.006;core.rotation.x=t*.35;core.rotation.y=t*.55;group.rotation.y=t*.12;rings.forEach((r,i)=>r.rotation.z=t*(.1+i*.05));nodes.forEach((n,i)=>{n.m.position.y=Math.sin(t*1.5+n.a)*.18+Math.sin(n.a)*n.r*.58})}
+    renderer.render(scene,camera);
+  }
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?loop():cancelAnimationFrame(raf)),{threshold:0});
+  io.observe(canvas);
+  addEventListener('resize',()=>{const W=canvas.clientWidth,H=canvas.clientHeight;camera.aspect=W/H;camera.updateProjectionMatrix();renderer.setSize(W,H,false)},{passive:true});
+}
+scene3D(document.getElementById('process3d'),'process');
 </script>
 </body>
 </html>
