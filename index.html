@@ -93,7 +93,7 @@ h2{font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-3px;margin-top:1
 .step-num{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--orange2);border:1px solid rgba(255,107,0,.25);background:rgba(255,107,0,.07);font-size:11px;font-weight:800}
 .step h3{font-size:15px}.step p{color:var(--muted);font-size:12px;line-height:1.65;margin-top:5px}
 .process-visual{min-height:520px;border:1px solid var(--line);border-radius:28px;overflow:hidden;position:relative;background:#0d0f11}
-.process-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;filter:none}
+.process-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;filter:none;background:#050607}
 .tech{display:flex;flex-wrap:wrap;gap:10px}
 .tech span{padding:13px 17px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);color:#d4d6da;font-size:12px;font-weight:700}
 .tech span:hover{border-color:rgba(255,107,0,.35);color:#fff}
@@ -230,12 +230,13 @@ footer a:hover{color:#fff}
     <div class="section-head reveal"><div><div class="tag">How We Work</div><h2>From discovery<br>to deployment.</h2></div><p class="lead">A focused process for turning repetitive business work into dependable automated systems.</p></div>
     <div class="process">
       <div class="steps">
-        <article class="step reveal"><div class="step-num">01</div><div><h3>Discover & Analyze</h3><p>Understand the current process, tools, bottlenecks and highest-impact automation opportunities.</p></div></article>
-        <article class="step reveal"><div class="step-num">02</div><div><h3>Design & Strategy</h3><p>Map the workflow architecture, AI behavior, integrations, data and business rules.</p></div></article>
-        <article class="step reveal"><div class="step-num">03</div><div><h3>Build & Integrate</h3><p>Develop, test and connect the automation with the systems your business already uses.</p></div></article>
-        <article class="step reveal"><div class="step-num">04</div><div><h3>Launch & Optimize</h3><p>Deploy, monitor performance, fix edge cases and improve the system as it runs.</p></div></article>
+        <article class="step reveal"><div class="step-num">01</div><div><h3>Discover</h3><p>Understand requirement.</p></div></article>
+        <article class="step reveal"><div class="step-num">02</div><div><h3>Design</h3><p>Plan the workflow.</p></div></article>
+        <article class="step reveal"><div class="step-num">03</div><div><h3>Build</h3><p>Connect your tools.</p></div></article>
+        <article class="step reveal"><div class="step-num">04</div><div><h3>Test</h3><p>Fix & optimize.</p></div></article>
+        <article class="step reveal"><div class="step-num">05</div><div><h3>Deploy</h3><p>Go live.</p></div></article>
       </div>
-      <div class="process-visual reveal"><img src="image/motion.png" alt="N2N automation process"></div>
+      <div class="process-visual reveal"><img src="image/process-discovery-to-deployment.png" alt="Discover, design, build, test and deploy automation process"></div>
     </div>
   </div>
 </section>
