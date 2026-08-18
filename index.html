@@ -93,7 +93,7 @@ h2{font-size:clamp(38px,5vw,64px);line-height:1;letter-spacing:-3px;margin-top:1
 .step-num{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:var(--orange2);border:1px solid rgba(255,107,0,.25);background:rgba(255,107,0,.07);font-size:11px;font-weight:800}
 .step h3{font-size:15px}.step p{color:var(--muted);font-size:12px;line-height:1.65;margin-top:5px}
 .process-visual{min-height:520px;border:1px solid var(--line);border-radius:28px;overflow:hidden;position:relative;background:#0d0f11}
-.process-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;filter:none;background:#050607}
+.process-visual>img,.process-visual>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;filter:none;background:#050607}
 .tech{display:flex;flex-wrap:wrap;gap:10px}
 .tech span{padding:13px 17px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);color:#d4d6da;font-size:12px;font-weight:700}
 .tech span:hover{border-color:rgba(255,107,0,.35);color:#fff}
@@ -145,7 +145,7 @@ footer a:hover{color:#fff}
   .stats{grid-template-columns:1fr 1fr}.stat{padding:22px 8px}.stat strong{font-size:25px}
   .grid,.cases,.why{grid-template-columns:1fr}.card-img{height:190px}
   .about-media{min-height:360px}.about-main{right:40px;bottom:25px}.about-small{width:46%;height:125px}
-  .process-visual{min-height:340px}.cta{padding:35px 18px}.form{grid-template-columns:1fr}.form textarea,.form .full{grid-column:auto}
+  .process-visual{min-height:300px;height:300px}.cta{padding:35px 18px}.form{grid-template-columns:1fr}.form textarea,.form .full{grid-column:auto}
   .footer-grid{grid-template-columns:1fr 1fr;gap:30px}.footer-brand{grid-column:1/-1}.bottom{display:block}.bottom span{display:block;margin-top:8px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{transition:none}.card,.btn{transition:none}}
@@ -236,7 +236,7 @@ footer a:hover{color:#fff}
         <article class="step reveal"><div class="step-num">04</div><div><h3>Test</h3><p>Fix & optimize.</p></div></article>
         <article class="step reveal"><div class="step-num">05</div><div><h3>Deploy</h3><p>Go live.</p></div></article>
       </div>
-      <div class="process-visual reveal"><img src="image/process-discovery-to-deployment.png" alt="Discover, design, build, test and deploy automation process"></div>
+      <div class="process-visual reveal"><video autoplay muted loop playsinline preload="metadata" aria-label="Automation process from discovery to deployment"><source src="image/process-discovery-to-deployment.mp4" type="video/mp4"></video></div>
     </div>
   </div>
 </section>
