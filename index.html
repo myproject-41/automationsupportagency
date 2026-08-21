@@ -218,6 +218,61 @@ a.service-card:focus-visible{outline:3px solid rgba(255,90,31,.28);outline-offse
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href="https://n2nautomation.in/sitemap.xml">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+<style id="n2n-whatsapp-widget">
+.n2n-wa-float{
+  position:fixed;right:22px;bottom:22px;width:58px;height:58px;border-radius:50%;
+  background:#25D366;color:#fff;display:grid;place-items:center;z-index:120;
+  border:3px solid #fff;box-shadow:0 12px 32px rgba(18,140,70,.28);
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+}
+.n2n-wa-float:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 16px 38px rgba(18,140,70,.35)}
+.n2n-wa-float:focus-visible{outline:3px solid rgba(37,211,102,.35);outline-offset:4px}
+.n2n-wa-float svg{width:31px;height:31px;fill:currentColor}
+.n2n-wa-badge{
+  position:absolute;right:-1px;top:-2px;width:15px;height:15px;border-radius:50%;
+  background:#ff5a1f;border:2px solid #fff
+}
+.n2n-wa-panel{
+  position:fixed;right:22px;bottom:92px;width:350px;max-width:calc(100vw - 32px);
+  background:#fff;border:1px solid #e4e8ee;border-radius:20px;overflow:hidden;
+  box-shadow:0 22px 65px rgba(16,26,43,.18);z-index:121;
+  opacity:0;visibility:hidden;transform:translateY(12px) scale(.98);
+  transform-origin:bottom right;transition:.2s ease;
+}
+.n2n-wa-panel.open{opacity:1;visibility:visible;transform:none}
+.n2n-wa-head{
+  background:#075E54;color:#fff;padding:17px 18px;display:flex;align-items:center;
+  justify-content:space-between;gap:12px
+}
+.n2n-wa-brand{display:flex;align-items:center;gap:11px}
+.n2n-wa-brand-icon{width:39px;height:39px;border-radius:50%;background:#25D366;display:grid;place-items:center}
+.n2n-wa-brand-icon svg{width:24px;height:24px;fill:#fff}
+.n2n-wa-head strong{display:block;font-size:13px}.n2n-wa-head small{font-size:10px;opacity:.82}
+.n2n-wa-close{border:0;background:transparent;color:#fff;font-size:23px;line-height:1;cursor:pointer;width:32px;height:32px}
+.n2n-wa-body{padding:18px;background:#f0f2f5}
+.n2n-wa-message{
+  background:#fff;border-radius:4px 14px 14px 14px;padding:13px 14px;
+  color:#344054;font-size:12px;line-height:1.55;box-shadow:0 2px 6px rgba(16,24,40,.05)
+}
+.n2n-wa-time{display:block;text-align:right;color:#98a2b3;font-size:9px;margin-top:6px}
+.n2n-wa-actions{padding:14px 18px 18px;background:#fff}
+.n2n-wa-actions p{font-size:10px;color:#667085;margin-bottom:10px}
+.n2n-wa-open{
+  width:100%;justify-content:center;background:#25D366!important;color:#fff!important;
+  border:0!important;border-radius:10px;padding:12px 15px;font-size:12px;font-weight:900;
+  box-shadow:0 8px 20px rgba(37,211,102,.2)
+}
+.n2n-wa-phone{margin-top:9px;text-align:center;font-size:10px;color:#667085}
+@media(max-width:767px){
+  .n2n-wa-float{right:16px;bottom:17px;width:55px;height:55px}
+  .n2n-wa-panel{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .n2n-wa-float,.n2n-wa-panel{transition:none}
+}
+</style>
+
 </head>
 <body>
 <header id="siteHeader">
@@ -421,6 +476,77 @@ form.addEventListener('submit',async e=>{e.preventDefault();if(!inputs.map(valid
    });
   });
  });
+})();
+</script>
+
+
+<!-- N2N WhatsApp contact widget -->
+<div class="n2n-wa-panel" id="n2nWaPanel" aria-hidden="true" role="dialog" aria-label="WhatsApp chat">
+  <div class="n2n-wa-head">
+    <div class="n2n-wa-brand">
+      <div class="n2n-wa-brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.9 11.9 0 0 0 12.05 0C5.48 0 .13 5.35.13 11.92c0 2.1.55 4.16 1.6 5.96L.03 24l6.27-1.65a11.9 11.9 0 0 0 5.75 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.46-8.42ZM12.06 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.72.98.99-3.63-.23-.37a9.85 9.85 0 0 1-1.51-5.27C2.19 6.47 6.61 2.05 12.06 2.05c2.64 0 5.12 1.03 6.99 2.9a9.84 9.84 0 0 1 2.9 7c0 5.44-4.43 9.85-9.89 9.85Zm5.42-7.39c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
+      </div>
+      <div><strong>N2N AI Automation</strong><small>Typically replies quickly</small></div>
+    </div>
+    <button class="n2n-wa-close" id="n2nWaClose" type="button" aria-label="Close WhatsApp chat">×</button>
+  </div>
+  <div class="n2n-wa-body">
+    <div class="n2n-wa-message">
+      Hi 👋 How can we help you automate your business?
+      <span class="n2n-wa-time">Now</span>
+    </div>
+  </div>
+  <div class="n2n-wa-actions">
+    <p>Continue the conversation on WhatsApp.</p>
+    <a class="cta n2n-wa-open" href="https://wa.me/918677813088" target="_blank" rel="noopener">
+      Open WhatsApp <span>→</span>
+    </a>
+    <div class="n2n-wa-phone">+91 86778 13088</div>
+  </div>
+</div>
+
+<button class="n2n-wa-float" id="n2nWaButton" type="button" aria-label="Chat with N2N on WhatsApp" aria-expanded="false">
+  <span class="n2n-wa-badge" aria-hidden="true"></span>
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.9 11.9 0 0 0 12.05 0C5.48 0 .13 5.35.13 11.92c0 2.1.55 4.16 1.6 5.96L.03 24l6.27-1.65a11.9 11.9 0 0 0 5.75 1.47h.01c6.57 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.17-3.46-8.42ZM12.06 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.72.98.99-3.63-.23-.37a9.85 9.85 0 0 1-1.51-5.27C2.19 6.47 6.61 2.05 12.06 2.05c2.64 0 5.12 1.03 6.99 2.9a9.84 9.84 0 0 1 2.9 7c0 5.44-4.43 9.85-9.89 9.85Zm5.42-7.39c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/></svg>
+</button>
+
+
+<script id="n2n-whatsapp-script">
+(function(){
+  const button=document.getElementById('n2nWaButton');
+  const panel=document.getElementById('n2nWaPanel');
+  const close=document.getElementById('n2nWaClose');
+  const mobile=()=>window.matchMedia('(max-width:767px)').matches;
+  const whatsapp='https://wa.me/918677813088';
+
+  function openWhatsApp(){
+    window.location.href=whatsapp;
+  }
+  function togglePanel(){
+    if(mobile()){openWhatsApp();return}
+    const open=!panel.classList.contains('open');
+    panel.classList.toggle('open',open);
+    panel.setAttribute('aria-hidden',String(!open));
+    button.setAttribute('aria-expanded',String(open));
+  }
+  button.addEventListener('click',togglePanel);
+  close.addEventListener('click',function(){
+    panel.classList.remove('open');
+    panel.setAttribute('aria-hidden','true');
+    button.setAttribute('aria-expanded','false');
+    button.focus();
+  });
+  document.addEventListener('click',function(e){
+    if(!panel.contains(e.target)&&!button.contains(e.target)){
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden','true');
+      button.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&panel.classList.contains('open')) close.click();
+  });
 })();
 </script>
 
