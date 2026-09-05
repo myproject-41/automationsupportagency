@@ -550,5 +550,932 @@ form.addEventListener('submit',async e=>{e.preventDefault();if(!inputs.map(valid
 })();
 </script>
 
+<!-- =========================================================
+     N2N FIVERR POPUP
+     ========================================================= -->
+
+<style>
+/* ---------- Overlay ---------- */
+
+.n2n-fiverr-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(8, 8, 10, 0.62);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
+}
+
+.n2n-fiverr-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+/* ---------- Popup ---------- */
+
+.n2n-fiverr-popup {
+    position: relative;
+
+    width: min(930px, 100%);
+
+    background: #fff;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(0,0,0,.08);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.30);
+
+    overflow: hidden;
+
+    transform:
+        translateY(20px)
+        scale(.97);
+
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1);
+}
+
+.n2n-fiverr-overlay.active
+.n2n-fiverr-popup {
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* ---------- Header ---------- */
+
+.n2n-fiverr-header {
+
+    position: relative;
+
+    padding:
+        28px
+        60px
+        18px;
+
+    text-align: center;
+}
+
+.n2n-fiverr-title {
+
+    margin: 0 0 7px;
+
+    color: #111;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: clamp(24px,4vw,34px);
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    letter-spacing: -.045em;
+}
+
+.n2n-fiverr-subtitle {
+
+    margin: 0;
+
+    color: #777;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* ---------- Close ---------- */
+
+.n2n-fiverr-close {
+
+    position: absolute;
+
+    top: 17px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #f2f2f3;
+
+    color: #333;
+
+    cursor: pointer;
+
+    font-size: 23px;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.n2n-fiverr-close:hover {
+
+    background: #e7e7e8;
+
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   CAROUSEL
+   ========================================================= */
+
+.n2n-fiverr-carousel {
+
+    position: relative;
+
+    padding:
+        8px
+        30px
+        22px;
+}
+
+
+/* ---------- Track ---------- */
+
+.n2n-fiverr-track {
+
+    display: flex;
+
+    gap: 18px;
+
+    overflow-x: auto;
+
+    scroll-behavior: smooth;
+
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+
+    padding: 3px 2px 8px;
+}
+
+.n2n-fiverr-track::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ---------- Card ---------- */
+
+.n2n-fiverr-card {
+
+    flex:
+        0 0
+        calc((100% - 36px) / 3);
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    border:
+        1px solid
+        #e7e7e7;
+
+    border-radius: 17px;
+
+    scroll-snap-align: start;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.n2n-fiverr-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.11);
+}
+
+
+/* ---------- Thumbnail ---------- */
+
+.n2n-fiverr-thumbnail {
+
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+
+    background: #f1f1f1;
+
+    cursor: pointer;
+
+    transition:
+        transform .3s ease;
+}
+
+.n2n-fiverr-card:hover
+.n2n-fiverr-thumbnail {
+
+    transform: scale(1.025);
+}
+
+
+/* ---------- Contact Button ---------- */
+
+.n2n-fiverr-contact {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: calc(100% - 24px);
+
+    min-height: 42px;
+
+    margin:
+        12px;
+
+    border-radius: 10px;
+
+    background: #1dbf73;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.n2n-fiverr-contact:hover {
+
+    background: #19a865;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   ARROWS
+   ========================================================= */
+
+.n2n-fiverr-arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 5;
+
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(0,0,0,.10);
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.96);
+
+    color: #111;
+
+    cursor: pointer;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    box-shadow:
+        0 7px 20px
+        rgba(0,0,0,.13);
+
+    transform:
+        translateY(-50%);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.n2n-fiverr-arrow:hover {
+
+    transform:
+        translateY(-50%)
+        scale(1.07);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.18);
+}
+
+.n2n-fiverr-prev {
+    left: 9px;
+}
+
+.n2n-fiverr-next {
+    right: 9px;
+}
+
+
+/* ---------- Footer ---------- */
+
+.n2n-fiverr-footer {
+
+    padding:
+        0
+        30px
+        22px;
+
+    text-align: center;
+
+    color: #999;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .n2n-fiverr-card {
+
+        flex:
+            0 0
+            calc((100% - 18px) / 2);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .n2n-fiverr-overlay {
+        padding: 12px;
+    }
+
+    .n2n-fiverr-popup {
+        border-radius: 20px;
+    }
+
+    .n2n-fiverr-header {
+
+        padding:
+            25px
+            48px
+            17px;
+    }
+
+    .n2n-fiverr-title {
+        font-size: 25px;
+    }
+
+    .n2n-fiverr-subtitle {
+        font-size: 13px;
+    }
+
+    .n2n-fiverr-carousel {
+
+        padding:
+            6px
+            18px
+            18px;
+    }
+
+    .n2n-fiverr-track {
+
+        gap: 12px;
+
+        scroll-snap-type: x mandatory;
+    }
+
+    .n2n-fiverr-card {
+
+        flex:
+            0 0
+            82vw;
+
+        max-width: 310px;
+    }
+
+    .n2n-fiverr-arrow {
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 22px;
+    }
+
+    .n2n-fiverr-prev {
+        left: 4px;
+    }
+
+    .n2n-fiverr-next {
+        right: 4px;
+    }
+
+    .n2n-fiverr-footer {
+
+        padding:
+            0
+            18px
+            18px;
+    }
+}
+
+
+/* ---------- Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .n2n-fiverr-overlay,
+    .n2n-fiverr-popup,
+    .n2n-fiverr-card,
+    .n2n-fiverr-thumbnail,
+    .n2n-fiverr-contact,
+    .n2n-fiverr-arrow {
+
+        transition: none !important;
+    }
+
+    .n2n-fiverr-track {
+        scroll-behavior: auto;
+    }
+}
+</style>
+
+
+<!-- =========================================================
+     FIVERR POPUP HTML
+     ========================================================= -->
+
+<div
+    class="n2n-fiverr-overlay"
+    id="n2nFiverrPopup"
+    aria-hidden="true"
+>
+
+    <div
+        class="n2n-fiverr-popup"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Fiverr services"
+    >
+
+
+        <!-- HEADER -->
+
+        <div class="n2n-fiverr-header">
+
+            <button
+                type="button"
+                class="n2n-fiverr-close"
+                id="n2nFiverrClose"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+            <h2 class="n2n-fiverr-title">
+                Work With Me on Fiverr
+            </h2>
+
+            <p class="n2n-fiverr-subtitle">
+                Choose a service and contact me directly.
+            </p>
+
+        </div>
+
+
+
+        <!-- CAROUSEL -->
+
+        <div class="n2n-fiverr-carousel">
+
+
+            <!-- LEFT ARROW -->
+
+            <button
+                type="button"
+                class="n2n-fiverr-arrow n2n-fiverr-prev"
+                id="n2nFiverrPrev"
+                aria-label="Previous gig"
+            >
+                ‹
+            </button>
+
+
+
+            <!-- GIG TRACK -->
+
+            <div
+                class="n2n-fiverr-track"
+                id="n2nFiverrTrack"
+            >
+
+
+                <!-- =========================================
+                     GIG 1
+                     ========================================= -->
+
+                <article class="n2n-fiverr-card">
+
+                    <a
+                        href="https://www.fiverr.com/s/aex2ZdQ"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <img
+                            class="n2n-fiverr-thumbnail"
+                            src="https://res.cloudinary.com/vlhhr9nh/image/upload/v1788609722/WhatsApp_2.png"
+                            alt="Fiverr automation service"
+                        >
+
+                    </a>
+
+
+                    <a
+                        class="n2n-fiverr-contact"
+                        href="https://www.fiverr.com/s/aex2ZdQ"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Contact Me on Fiverr →
+                    </a>
+
+                </article>
+
+
+
+                <!-- =========================================
+                     GIG 2
+                     ========================================= -->
+
+                <article class="n2n-fiverr-card">
+
+                    <a
+                        href="https://www.fiverr.com/s/GPxZWga"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <img
+                            class="n2n-fiverr-thumbnail"
+                            src="https://res.cloudinary.com/vlhhr9nh/image/upload/v1788609905/create-whatsapp-automation-or-chatbot-for-lead-sales-using-n8n-or-api-or-tool_1.webp"
+                            alt="Fiverr WhatsApp automation service"
+                        >
+
+                    </a>
+
+
+                    <a
+                        class="n2n-fiverr-contact"
+                        href="https://www.fiverr.com/s/GPxZWga"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Contact Me on Fiverr →
+                    </a>
+
+                </article>
+
+
+
+                <!-- =========================================
+                     GIG 3
+                     ========================================= -->
+
+                <article class="n2n-fiverr-card">
+
+                    <a
+                        href="https://www.fiverr.com/s/2pGBlDN"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+
+                        <img
+                            class="n2n-fiverr-thumbnail"
+                            src="https://res.cloudinary.com/vlhhr9nh/image/upload/v1788609811/build-wahtsapp-chatbot-for-small-business-and-setup-whatsapp-business-api.jpg"
+                            alt="Fiverr WhatsApp Business API service"
+                        >
+
+                    </a>
+
+
+                    <a
+                        class="n2n-fiverr-contact"
+                        href="https://www.fiverr.com/s/2pGBlDN"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Contact Me on Fiverr →
+                    </a>
+
+                </article>
+
+
+            </div>
+
+
+
+            <!-- RIGHT ARROW -->
+
+            <button
+                type="button"
+                class="n2n-fiverr-arrow n2n-fiverr-next"
+                id="n2nFiverrNext"
+                aria-label="Next gig"
+            >
+                ›
+            </button>
+
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="n2n-fiverr-footer">
+            Swipe or use the arrows to explore services
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     FIVERR POPUP JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+(function () {
+
+    const popup =
+        document.getElementById("n2nFiverrPopup");
+
+    const closeButton =
+        document.getElementById("n2nFiverrClose");
+
+    const track =
+        document.getElementById("n2nFiverrTrack");
+
+    const previous =
+        document.getElementById("n2nFiverrPrev");
+
+    const next =
+        document.getElementById("n2nFiverrNext");
+
+
+    if (
+        !popup ||
+        !closeButton ||
+        !track
+    ) {
+        return;
+    }
+
+
+
+    /* =========================================
+       OPEN
+       ========================================= */
+
+    function openFiverrPopup() {
+
+        popup.classList.add("active");
+
+        popup.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+    }
+
+
+
+    /* =========================================
+       CLOSE
+       ========================================= */
+
+    function closeFiverrPopup() {
+
+        popup.classList.remove("active");
+
+        popup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+        sessionStorage.setItem(
+            "n2nFiverrPopupClosed",
+            "true"
+        );
+    }
+
+
+
+    /* =========================================
+       CLOSE BUTTON
+       ========================================= */
+
+    closeButton.addEventListener(
+        "click",
+        closeFiverrPopup
+    );
+
+
+
+    /* =========================================
+       CLICK OUTSIDE
+       ========================================= */
+
+    popup.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target === popup
+            ) {
+
+                closeFiverrPopup();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================
+       ESC KEY
+       ========================================= */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                popup.classList.contains("active")
+            ) {
+
+                closeFiverrPopup();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================
+       LEFT ARROW
+       ========================================= */
+
+    if (previous) {
+
+        previous.addEventListener(
+            "click",
+            function () {
+
+                track.scrollBy({
+                    left: -300,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================
+       RIGHT ARROW
+       ========================================= */
+
+    if (next) {
+
+        next.addEventListener(
+            "click",
+            function () {
+
+                track.scrollBy({
+                    left: 300,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================
+       SHOW POPUP AFTER 3 SECONDS
+       ========================================= */
+
+    if (
+        !sessionStorage.getItem(
+            "n2nFiverrPopupClosed"
+        )
+    ) {
+
+        setTimeout(
+            openFiverrPopup,
+            3000
+        );
+
+    }
+
+})();
+
+</script>
+
 </body>
 </html>
